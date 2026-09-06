@@ -1,0 +1,74 @@
+[
+  {
+    "id": "S01",
+    "name": "HTML/메타 (H1 1개·title·description·canonical·OG·lang)",
+    "status": "PASS",
+    "detail": "12개 페이지 정상"
+  },
+  {
+    "id": "S01b",
+    "name": "title·canonical 페이지별 고유",
+    "status": "PASS",
+    "detail": "title 12종 / canonical 12종 (기대 12)"
+  },
+  {
+    "id": "I04",
+    "name": "이미지 dimensions·alt",
+    "status": "PASS",
+    "detail": "전 이미지 width/height/alt 지정"
+  },
+  {
+    "id": "R04",
+    "name": "빈 # CTA·unsafe scheme",
+    "status": "PASS",
+    "detail": "없음"
+  },
+  {
+    "id": "U03",
+    "name": "반응형 가로 넘침 (320·390·768·1280·1440)",
+    "status": "PASS",
+    "detail": "5개 뷰포트 × 12페이지 넘침 없음"
+  },
+  {
+    "id": "U04",
+    "name": "모바일 메뉴 (button·aria-expanded·Escape·focus 복귀)",
+    "status": "FAIL",
+    "detail": "tag=BUTTON open=true visible=false escape닫힘=true focus복귀=true"
+  },
+  {
+    "id": "I03",
+    "name": "모바일 Hero 중복 요청",
+    "status": "FAIL",
+    "detail": "mobile=true desktop=true (요청 이미지 4건)"
+  },
+  {
+    "id": "A01",
+    "name": "접근성 axe (WCAG 2.1 AA)",
+    "status": "PASS",
+    "detail": "4개 대표 페이지 위반 0건"
+  },
+  {
+    "id": "A01b",
+    "name": "skip link 최초 Tab 노출",
+    "status": "PASS",
+    "detail": "첫 Tab → \"본문으로 건너뛰기\" (#main)"
+  },
+  {
+    "id": "A02",
+    "name": "200% 확대 상당(640px) 가로 넘침",
+    "status": "PASS",
+    "detail": "넘침 없음"
+  },
+  {
+    "id": "P01",
+    "name": "클라이언트 번들 비밀 노출",
+    "status": "PASS",
+    "detail": "JS 8개 + HTML 검사, 노출 0"
+  },
+  {
+    "id": "B02",
+    "name": "Vite/React Router/SPA 프리렌더 미사용",
+    "status": "PASS",
+    "detail": "번들에 흔적 없음"
+  }
+]

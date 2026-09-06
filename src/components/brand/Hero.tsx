@@ -50,11 +50,18 @@ export function Hero({ eyebrow, titleEn, titleKo, lead, ctas, badge, image, imag
         {image && (
           <div className="overflow-hidden rounded-2xl border border-[var(--color-line)]/50">
             {imageMobile ? (
+              /*
+               * next/image 의 priority 는 런타임에 desktop 이미지 preload 를 주입해
+               * <picture> 의 media 선택을 우회한다(모바일에서 desktop 원본까지 내려받음).
+               * docs/05 §5 검증 항목이므로 순수 <picture> 로 구현한다.
+               */
               <picture>
-                <source media="(max-width: 767px)" srcSet={imageMobile.src} />
-                <Image
+                <source media="(max-width: 767px)" srcSet={imageMobile.src} width={imageMobile.width} height={imageMobile.height} />
+                <source media="(min-width: 768px)" srcSet={image.src} width={image.width} height={image.height} />
+                <img
                   src={image.src} alt={image.alt} width={image.width} height={image.height}
-                  priority={priority} sizes="(max-width: 767px) 100vw, 45vw"
+                  fetchPriority={priority ? 'high' : undefined}
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               </picture>
