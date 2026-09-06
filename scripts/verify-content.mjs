@@ -51,7 +51,7 @@ for (const p of products) {
   if (!title.includes('Merge1')) fails.push('Capture title 에 Merge1 없음');
   if ((title.match(/휴미즈/g) ?? []).length > 1) fails.push('Capture title 브랜드 중복');
   if (!h.includes('기존 Merge1으로 알려진')) fails.push('Capture 첫 문단 누락');
-  if (!h.includes('Merge1과 Enterprise Vault Capture는 서로 다른 제품인가요?')) fails.push('Capture FAQ 누락');
+  if (!h.includes('Merge1과 Enterprise Vault Capture는 다른 제품인가요?')) fails.push('Capture FAQ 누락');
   // Merge1 을 단독 제품으로 남긴 별도 페이지가 없어야 한다
   if (products.filter((p) => p.name === 'Merge1').length) fails.push('Merge1 단독 제품 존재');
 }
@@ -64,7 +64,13 @@ const NEGATED = /(아닙니다|아니며|뜻하지\s*않습니다|없습니다|�
 for (const r of ['/solutions', '/solutions/enterprise-vault', '/solutions/enterprise-vault-capture',
   '/solutions/data-insight', '/solutions/ediscovery-platform', '/', '/about']) {
   const h = await html(r);
-  const text = h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  // Next 의 RSC 페이로드(self.__next_f)가 본문으로 새면 문장 단위 부정 판정이 깨진다.
+  // script/style 블록을 먼저 제거한다.
+  const text = h
+    .replace(/<script[\s\S]*?<\/script>/g, ' ')
+    .replace(/<style[\s\S]*?<\/style>/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ');
   for (const m of text.matchAll(PARTNER)) {
     // 해당 표현이 등장한 문장 단위로 부정 여부를 판정한다
     const start = text.lastIndexOf('.', m.index) + 1;

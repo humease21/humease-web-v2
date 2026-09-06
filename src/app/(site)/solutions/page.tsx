@@ -2,6 +2,9 @@ import { CinematicHero } from '@/components/brand/CinematicHero';
 import { Scene, Statement } from '@/components/sections/Scene';
 import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
+import { AnswerBlock } from '@/components/content/AnswerBlock';
+import { QuestionList } from '@/components/content/QuestionList';
+import { SourceNotes } from '@/components/content/SourceNotes';
 import { assets } from '@/content/assets';
 import { challenges, products, RELATIONSHIP_NOTICE, PRODUCT_INFO_VERIFIED_AT } from '@/content/solutions';
 import { pageMeta } from '@/lib/seo';
@@ -35,10 +38,16 @@ export default function Page() {
       />
 
       <Scene mask="none">
-        <Statement
-          eyebrow="OUR ROLE"
-          titleKo="휴미즈는 고객의 데이터 환경과 운영 요구를 바탕으로 제품의 적용 범위와 연계 구성을 함께 검토합니다."
+        <AnswerBlock
+          term="Arctera Solutions 란?"
+          definition="Arctera Solutions는 기업 데이터의 수집, 보존, 검토와 조사에 활용되는 제품 정보를 한국어로 소개하는 영역입니다. 제품의 역할과 휴미즈가 함께 검토할 적용 항목을 구분해 안내합니다."
         />
+        <div className="mt-14">
+          <Statement
+            eyebrow="OUR ROLE"
+            titleKo="휴미즈는 고객의 데이터 환경과 운영 요구를 바탕으로 제품의 적용 범위와 연계 구성을 함께 검토합니다."
+          />
+        </div>
       </Scene>
 
       <Scene image={assets.A04} mask="scene">
@@ -98,12 +107,23 @@ export default function Page() {
             <li><A className="transition-colors hover:text-[var(--color-accent)]" href="/consulting/exchange-archive">Exchange Archive 컨설팅</A></li>
           </ul>
         </Reveal>
-        <Reveal delay={4}>
-          <div className="mt-16 border-t border-[color-mix(in_srgb,var(--color-line)_55%,transparent)] pt-8">
-            <p className="measure text-[14px] leading-[1.8] text-[var(--color-muted)]">{RELATIONSHIP_NOTICE}</p>
-            <p className="mt-3 text-[13px] text-[var(--color-muted)]">제품 정보 확인일: {PRODUCT_INFO_VERIFIED_AT}</p>
-          </div>
-        </Reveal>
+        <div className="mt-20">
+          <QuestionList
+            items={[
+              { q: 'Arctera Solutions에서는 무엇을 확인할 수 있나요?',
+                a: 'Arctera Solutions는 기업 데이터의 수집, 보존, 검토와 조사에 활용되는 제품 정보를 한국어로 소개하는 영역입니다. 제품의 역할과 휴미즈가 함께 검토할 적용 항목을 구분해 안내합니다.' },
+              { q: '휴미즈는 Arctera 공식 파트너인가요?',
+                a: '휴미즈는 Arctera의 공식 파트너가 아닙니다. 이 페이지는 제품 정보와 기술 검토 영역을 소개하며 공식 파트너·총판·공인 판매자 지위를 뜻하지 않습니다.' },
+            ]}
+          />
+        </div>
+
+        <SourceNotes
+          sourcesCheckedAt={PRODUCT_INFO_VERIFIED_AT}
+          references={[{ label: 'Arctera 공식 제품 정보', url: 'https://www.arctera.io/' }]}
+          scopeNotice="실제 지원 기능과 연결 범위는 제품 버전, 라이선스, 데이터 소스 및 구성에 따라 달라질 수 있습니다."
+          relationshipNotice={RELATIONSHIP_NOTICE}
+        />
       </Scene>
 
       <ClosingContact />

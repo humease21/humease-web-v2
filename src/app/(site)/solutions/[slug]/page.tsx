@@ -1,6 +1,9 @@
 import { notFound } from 'next/navigation';
 import { CinematicHero } from '@/components/brand/CinematicHero';
-import { Scene, Faq } from '@/components/sections/Scene';
+import { Scene } from '@/components/sections/Scene';
+import { AnswerBlock } from '@/components/content/AnswerBlock';
+import { QuestionList } from '@/components/content/QuestionList';
+import { SourceNotes } from '@/components/content/SourceNotes';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import {
@@ -70,8 +73,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       />
 
       <Scene mask="none">
-        <Reveal as="p" className="eyebrow">제품 역할</Reveal>
-        <Reveal delay={1}><p className="lead measure mt-7">{p.intro}</p></Reveal>
+        <AnswerBlock term={`${p.name}란?`} definition={p.definition} />
+        <Reveal delay={2}><p className="lead measure mt-9">{p.intro}</p></Reveal>
 
         <Reveal as="p" delay={2} className="eyebrow mt-20">주요 기능</Reveal>
         <dl className="mt-8">
@@ -101,6 +104,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <Scene mask="none">
         <Reveal as="p" className="eyebrow">휴미즈 적용 검토</Reveal>
         <Reveal delay={1}><p className="lead measure mt-7">{p.review}</p></Reveal>
+        <ul className="mt-8">
+          {p.reviewChecklist.map((c, i) => (
+            <Reveal as="li" key={c} delay={((i % 4) + 1) as 1 | 2 | 3 | 4}>
+              <span className="block border-t border-[color-mix(in_srgb,var(--color-line)_45%,transparent)] py-3 text-[15px] text-[var(--color-muted)]">
+                {c}
+              </span>
+            </Reveal>
+          ))}
+        </ul>
         <Reveal delay={2}>
           <p className="measure mt-6 text-[13px] leading-[1.8] text-[var(--color-muted)]">
             위 항목은 휴미즈가 제안하는 검토 프레임이며, 제조사가 제공하는 기능이나 보장 조건과 구분됩니다.
@@ -108,10 +120,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </Reveal>
 
         {p.faq && p.faq.length > 0 && (
-          <>
-            <Reveal as="p" delay={2} className="eyebrow mt-20">자주 묻는 질문</Reveal>
-            <Faq items={p.faq} />
-          </>
+          <div className="mt-20"><QuestionList items={p.faq} /></div>
         )}
 
         <Reveal delay={3}>
@@ -129,19 +138,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <A href="/contact" className="cta-primary mt-14">{p.ctaLabel}<span aria-hidden="true">→</span></A>
         </Reveal>
 
-        <Reveal delay={4}>
-          <div className="mt-16 border-t border-[color-mix(in_srgb,var(--color-line)_55%,transparent)] pt-8">
-            <p className="measure text-[14px] leading-[1.8] text-[var(--color-muted)]">{SUPPORT_SCOPE_NOTICE}</p>
-            <p className="measure mt-4 text-[14px] leading-[1.8] text-[var(--color-muted)]">{RELATIONSHIP_NOTICE}</p>
-            <p className="mt-4 text-[13px] text-[var(--color-muted)]">
-              <A className="underline underline-offset-4 transition-colors hover:text-[var(--color-accent)]"
-                 href={p.officialSource.url} target="_blank" rel="noopener noreferrer">
-                {p.officialSource.label}<span aria-hidden="true"> ↗</span>
-              </A>
-              <span className="ml-4">제품 정보 확인일: {PRODUCT_INFO_VERIFIED_AT}</span>
-            </p>
-          </div>
-        </Reveal>
+        <SourceNotes
+          sourcesCheckedAt={PRODUCT_INFO_VERIFIED_AT}
+          references={[{ label: p.officialName ?? p.name, url: p.officialSource.url }]}
+          scopeNotice={SUPPORT_SCOPE_NOTICE}
+          relationshipNotice={RELATIONSHIP_NOTICE}
+        />
       </Scene>
     </>
   );

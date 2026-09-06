@@ -6,6 +6,7 @@ import { ExperienceScene } from '@/components/sections/ExperienceScene';
 import { InsightsEditorial } from '@/components/sections/InsightsEditorial';
 import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
+import { QuestionList } from '@/components/content/QuestionList';
 import { assets } from '@/content/assets';
 import { featuredProjects } from '@/content/portfolio';
 import { pageMeta } from '@/lib/seo';
@@ -136,6 +137,21 @@ export default function HomePage() {
       </Scene>
 
       <ExperienceScene />
+
+      {/* §6.2 — 홈에서 실제로 궁금해할 것만. 상담 문구를 반복하지 않는다. */}
+      <Scene mask="none">
+        <QuestionList
+          items={[
+            { q: '휴미즈는 어떤 회사인가요?',
+              a: '휴미즈는 기업 데이터의 보존·검색·통제와 AI 서비스의 설계·구현을 전문 영역으로 하는 기술 기업입니다. 홈페이지에서는 제공하는 전문 서비스, 개발 포트폴리오, Arctera 제품 정보를 구분해 소개합니다.' },
+            { q: 'Applied AI와 AI Portfolio는 무엇이 다른가요?',
+              a: 'Applied AI는 고객의 문제를 AI 서비스와 업무 시스템으로 구체화하는 휴미즈의 접근 방식을 설명합니다. AI Portfolio는 실제 개발 프로젝트의 문제 정의, 구현 범위와 현재 단계를 보여줍니다.' },
+            { q: '프로젝트 문의 전에 무엇을 준비하면 되나요?',
+              a: '해결하고 싶은 문제, 현재 사용하는 시스템이나 데이터, 예상 사용자와 검토 일정을 알려주시면 됩니다.',
+              note: '초기 문의에는 비밀번호, 개인정보 원문, 실제 고객 데이터 등 민감한 자료를 보내지 마세요.' },
+          ]}
+        />
+      </Scene>
 
       <Scene mask="none">
         <InsightsEditorial articles={[]} />
