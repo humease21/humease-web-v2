@@ -33,20 +33,17 @@ jobs:
       - name: Lint
         run: npx eslint .
 
-
-      - name: Lint
-        run: npx next lint --max-warnings=0 || npx eslint .
-
-      - name: Build (static export · preview)
-        # 검증 배포. 색인 승인이 없으므로 sitemap URL·canonical·JSON-LD 를 내지 않는다.
+      # ── 1) preview 빌드 — 회귀 검증 전용. 업로드하지 않는다 ──────────────
+      # basePath 가 있는 조건에서만 드러나는 결함(자산 경로 이탈, 이중 접두사,
+      # 검증 환경의 noindex·canonical 미출력 계약)을 잡기 위해 계속 실행한다.
+      - name: Build — preview (회귀 검증 전용)
         run: npm run build
         env:
           NEXT_PUBLIC_SITE_DEPLOY_TARGET: preview
           NEXT_PUBLIC_SITE_ORIGIN: https://humease21.github.io
           NEXT_PUBLIC_BASE_PATH: /humease-web-v2
 
-      - name: 검증 (docs/04 §2)
-        # basePath 이탈·이중 적용 검사는 빌드와 같은 환경값이 있어야 동작한다.
+      - name: 검증 — preview 산출물
         env:
           NEXT_PUBLIC_SITE_DEPLOY_TARGET: preview
           NEXT_PUBLIC_BASE_PATH: /humease-web-v2
@@ -61,22 +58,36 @@ jobs:
           node scripts/verify-client-exposure.mjs
           node scripts/verify-font-subset.mjs
 
-      - name: 운영 dry-run 검사
-        # 운영 산출물의 canonical·sitemap·JSON-LD 계약을 검사한다.
-        # ⚠ 이 산출물은 업로드하지 않는다. 검증 Pages 에 게시하면 색인 가능한 복제본이 생긴다.
-        run: |
-          cp -r out /tmp/out-preview
-          rm -rf .next out
-          npm run build
-          node scripts/verify-indexing-policy.mjs
-          node scripts/verify-entities.mjs
-          rm -rf .next out
-          mv /tmp/out-preview out
+      - name: preview 산출물 폐기
+        # 배포되는 것은 production 산출물이다. preview out 을 복원하지 않는다.
+        run: rm -rf .next out
+
+      # ── 2) production 빌드 — 실제 배포되는 산출물 ────────────────────────
+      - name: Build — production (배포 대상)
+        run: npm run build
         env:
           NEXT_PUBLIC_SITE_DEPLOY_TARGET: production
           NEXT_PUBLIC_SITE_ORIGIN: https://www.humease.com
           NEXT_PUBLIC_BASE_PATH: ''
           NEXT_PUBLIC_SEARCH_INDEXING_ENABLED: 'true'
+
+      - name: 검증 — production 산출물
+        env:
+          NEXT_PUBLIC_SITE_DEPLOY_TARGET: production
+          NEXT_PUBLIC_SITE_ORIGIN: https://www.humease.com
+          NEXT_PUBLIC_BASE_PATH: ''
+          NEXT_PUBLIC_SEARCH_INDEXING_ENABLED: 'true'
+        run: |
+          node scripts/verify-routes.mjs
+          node scripts/verify-indexing-policy.mjs
+          node scripts/verify-copy.mjs
+          node scripts/verify-request-copy.mjs
+          node scripts/verify-content.mjs
+          node scripts/verify-aliases.mjs
+          node scripts/verify-assets.mjs
+          node scripts/verify-client-exposure.mjs
+          node scripts/verify-font-subset.mjs
+          node scripts/verify-entities.mjs
 
       - name: Disable Jekyll
         run: touch out/.nojekyll
