@@ -6,7 +6,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const SPEC = '/mnt/e/VibeCoding/Humease-homepage-v2/docs/03_PAGES_AND_COPY.md';
+const SPEC = path.join(process.cwd(), 'docs/03_PAGES_AND_COPY.md');
 const OUT = path.join(process.cwd(), 'out');
 
 const PAGE_OF = {

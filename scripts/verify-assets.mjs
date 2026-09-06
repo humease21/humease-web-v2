@@ -36,20 +36,27 @@ const UNUSED = {
 };
 
 const md5 = async (f) => createHash('md5').update(await readFile(f)).digest('hex');
-const files = await readdir(ORIG_DIR);
+
+// 원본 46MB 는 저장소 밖에 보관한다(docs/05 §4). CI 에는 없으므로 접근 가능할 때만 대조한다.
+let files = [];
+let hasOriginals = true;
+try { files = await readdir(ORIG_DIR); }
+catch { hasOriginals = false; console.log('  원본 디렉터리 없음 — 웹 출력본만 검증한다(CI 모드)'); }
 const rows = [], inv = [], problems = [];
 
 for (const [id, base, webBase, prefix, pages] of MAP) {
-  const origName = files.find((f) => f.startsWith(prefix));
+  const origName = hasOriginals ? files.find((f) => f.startsWith(prefix)) : null;
   const webFile = path.join(WEB_DIR, `${webBase}.webp`);
-  if (!origName) { problems.push(`${id} 원본 없음 (${prefix})`); continue; }
+  if (hasOriginals && !origName) { problems.push(`${id} 원본 없음 (${prefix})`); continue; }
   try { await stat(webFile); } catch { problems.push(`${id} 웹 출력본 없음 (${webBase}.webp)`); continue; }
 
-  const origPath = path.join(ORIG_DIR, origName);
-  const [om, wm] = [await md5(origPath), await md5(webFile)];
-  const [os_, ws] = [(await stat(origPath)).size, (await stat(webFile)).size];
+  const wm = await md5(webFile);
+  const ws = (await stat(webFile)).size;
   const meta = await sharp(webFile).metadata();
-  const omet = await sharp(origPath).metadata();
+  const origPath = origName ? path.join(ORIG_DIR, origName) : null;
+  const om = origPath ? await md5(origPath) : '—';
+  const os_ = origPath ? (await stat(origPath)).size : 0;
+  const omet = origPath ? await sharp(origPath).metadata() : { width: 0, height: 0 };
 
   rows.push([id, base, pages, 'Hero/섹션', `Images/${origName}`, `public/images/${webBase}.webp`,
     meta.width, meta.height, 'optimized'].join(','));
@@ -87,8 +94,14 @@ lines.push('', '## 확인 상태', '',
   '`verification_status: optimized` — 원본을 찾아 연결하고 웹 최적화까지 마쳤다.',
   '파일명(생성 프롬프트)에 근거한 매핑이며 **시각 확인은 대표님 승인 대상이다.**',
   '승인 후 `verified` 로 올린다. 시각 확인 전에는 최종 시각 PASS 로 보고하지 않는다.', '');
-await writeFile(path.join(REPORTS, 'ASSET_INVENTORY.md'), lines.join('\n'));
+if (hasOriginals) {
+  await writeFile(path.join(REPORTS, 'ASSET_INVENTORY.md'), lines.join('\n'));
+} else {
+  console.log('  원본 미접근 — ASSET_INVENTORY.md 는 갱신하지 않는다(기존 기록 보존)');
+}
 
 if (problems.length) { console.error('FAIL  ' + problems.join('; ')); process.exit(1); }
 console.log(`PASS  자산 ${rows.length}종 원본·웹 출력본 정합 · 미사용 ${Object.keys(UNUSED).length}종 사유 기록`);
-console.log(`      원본 ${(totO / 1048576).toFixed(1)}MB → 웹 ${(totW / 1024).toFixed(0)}KB`);
+console.log(hasOriginals
+  ? `      원본 ${(totO / 1048576).toFixed(1)}MB → 웹 ${(totW / 1024).toFixed(0)}KB`
+  : `      웹 출력본 ${(totW / 1024).toFixed(0)}KB`);
