@@ -31,6 +31,20 @@ for (const route of ROUTES) {
   const res = await page.goto(BASE + route, { waitUntil: 'networkidle' });
   if (res.status() !== 200) { metaIssues.push(`${route} HTTP ${res.status()}`); continue; }
 
+  // lazy 이미지는 뷰포트에 들어와야 로드된다. 끝까지 훑은 뒤 디코딩 완료를 명시적으로 기다린다.
+  // 고정 대기 시간에 의존하면 긴 페이지에서 오탐이 난다.
+  await page.evaluate(async () => {
+    const step = window.innerHeight * 0.6;
+    for (let y = 0; y < document.body.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 80));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForFunction(() => [...document.images].every((i) => i.complete), null, { timeout: 15000 })
+    .catch(() => { /* 아래 naturalWidth 검사에서 잡힌다 */ });
+  await page.waitForLoadState('networkidle');
+
   const d = await page.evaluate(() => ({
     h1: [...document.querySelectorAll('h1')].map((e) => e.textContent.trim()),
     title: document.title,

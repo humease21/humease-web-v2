@@ -45,7 +45,7 @@
     "id": "I03",
     "name": "모바일 Hero — mobile 200 수신 · desktop 미요청",
     "status": "PASS",
-    "detail": "mobile200=true desktop요청=false 실패응답=0 (이미지 4건)"
+    "detail": "mobile200=true desktop요청=false 실패응답=0 (이미지 5건)"
   },
   {
     "id": "A01",
@@ -69,7 +69,7 @@
     "id": "P01",
     "name": "클라이언트 번들 비밀 노출",
     "status": "PASS",
-    "detail": "JS 7개 + HTML 검사, 노출 0"
+    "detail": "JS 9개 + HTML 검사, 노출 0"
   },
   {
     "id": "B02",
