@@ -152,7 +152,7 @@ canonical·meta refresh·실제 링크로 최종 경로를 가리킨다. 사이�
 | 4 | [04_NEXTJS_ARCHITECTURE.md](docs/04_NEXTJS_ARCHITECTURE.md) | App Router·정적 Export·SEO·CI |
 | 5 | [05_EXISTING_ASSETS.md](docs/05_EXISTING_ASSETS.md) | 기존 이미지의 연결·최적화 |
 | 6 | [06_CONTACT_SECURITY_OPERATIONS.md](docs/06_CONTACT_SECURITY_OPERATIONS.md) | 문의·환경·보안 |
-| 7 | [07_VERCEL_RELEASE_AND_ROLLBACK.md](docs/07_VERCEL_RELEASE_AND_ROLLBACK.md) | **이름이 Vercel 이나 내용은 폐기.** Pages 릴리스는 `docs/04` §8 |
+| 7 | [07_RELEASE_AND_ROLLBACK.md](docs/07_RELEASE_AND_ROLLBACK.md) | GitHub Pages 배포·운영 전환·롤백 |
 | 8 | [08_QA_AND_HANDOFF.md](docs/08_QA_AND_HANDOFF.md) | 게이트·검수·작업자 지시 |
 | 9 | [09_SOURCES_AND_CHANGELOG.md](docs/09_SOURCES_AND_CHANGELOG.md) | 출처·구버전 대체 내역 |
 

@@ -1,5 +1,30 @@
 # 06. 문의·관리자·환경·보안
 
+- 개정 2026-09-06 (v2) — 정적 Export 기준으로 재정리.
+
+> **⚠ v1 의 서버 전제는 폐기됐다.** GitHub Pages 는 정적 호스팅이라
+> Next.js Route Handler·Server Actions·서버 인증·rate limit·honeypot 서버 검사를
+> 구현할 수 없다. 아래 v1 본문의 서버 측 계약은 **미구현**이며,
+> 실제 문의 어댑터를 붙일 때 아래 현행 계약을 따른다.
+>
+> ### 현행 문의 상태 — mock/disabled
+>
+> - `src/content/contact.ts` 의 `CONTACT_MODE = 'disabled'`
+> - 화면에는 폼 대신 이메일 CTA 를 노출한다. 죽은 폼을 공개하지 않는다(`docs/03` P11).
+> - 운영 문의·메일·로그에 쓰지 않는다. 운영 자격정보를 번들에 넣지 않는다.
+>
+> ### 기존 운영 사이트의 문의 계약 — READ-ONLY 조사 결과(2026-09-06)
+>
+> | 경로 | secret 노출 | 재사용 판정 |
+> |---|---|---|
+> | client → Supabase `inquiries` insert (anon key + RLS) | 없음(anon 은 공개 전제) | 재사용 가능 — RLS 확인 후 |
+> | Supabase DB Webhook → Edge Function → Discord | webhook URL 이 Supabase Secrets 에 있음 | **안전·재사용 가능** |
+> | client → FormSubmit → contact@humease.com | secret 없음. 개인정보를 제3자에 직접 전송 | **보류** — 처리위탁 검토 필요 |
+>
+> 실제 어댑터 선택은 동의·개인정보처리방침 승인 시점의 결정 사항이다.
+> 서버가 필요한 방식을 고르면 호스팅 결정부터 다시 논의해야 한다.
+
+
 ## 1. 기능 이관 원칙
 
 새 프런트엔드는 Next.js로 새로 작성한다. 기존 문의 저장소·메일·관리자 업무는 실제 계약을 조사해 필요한 동작을 이어받되 실행 코드·키·인증 우회 방법을 복사하지 않는다. 기존 v2 자료의 Supabase·FormSubmit 설명은 확인 단서이며 현재 운영이 그렇다고 단정하지 않는다.
@@ -20,7 +45,7 @@ ContactForm (Client Component)
 
 브라우저가 DB나 메일 발송 서비스에 직접 접속하지 않는다. `route.ts`의 POST handler를 사용하며 HTTP method·JSON 응답·상태를 명확히 정의한다. route handler 실행과 서버 전용 모듈은 Client Component에 import하지 않는다. [S08]
 
-홈페이지 문의 내용을 LLM에 보내지 않는다. Vercel 빌드나 페이지 렌더만으로 문의·메일·관리자 작업이 실행되면 실패다.
+홈페이지 문의 내용을 LLM에 보내지 않는다. 호스팅 빌드나 페이지 렌더만으로 문의·메일·관리자 작업이 실행되면 실패다.
 
 ## 3. 입력 계약
 
@@ -88,7 +113,7 @@ ContactForm (Client Component)
 
 `NEXT_PUBLIC_`에는 비밀을 넣지 않는다. `.env.local`·실제 키·원본 문의 데이터는 Git에 커밋하지 않는다. `.env.example`에는 이름과 빈 값·설명만 둔다. 비밀을 `next.config`의 공개 env 치환이나 클라이언트 props에 넣지 않는다.
 
-실제 운영 쓰기는 서버에서 **Vercel production 환경 + SITE_RELEASE_STATE=live + CONTACT_MODE=live + 요청 host가 www.humease.com + 검증된 저장·정책 준비 상태**를 모두 충족할 때만 허용한다. 사용자가 보내는 `environment=production` 등의 값은 신뢰하지 않는다.
+실제 운영 쓰기는 서버에서 **호스팅 production 환경 + SITE_RELEASE_STATE=live + CONTACT_MODE=live + 요청 host가 www.humease.com + 검증된 저장·정책 준비 상태**를 모두 충족할 때만 허용한다. 사용자가 보내는 `environment=production` 등의 값은 신뢰하지 않는다.
 
 빌드·테스트·정적 렌더·Preview에서는 운영 어댑터를 로드해도 부작용이 없어야 한다. 가장 안전하게 운영 자격정보 자체를 제공하지 않는다. 환경변수 변경이 빌드 산출물·화면에 영향을 주면 재배포하고 해당 배포를 다시 검증한다.
 

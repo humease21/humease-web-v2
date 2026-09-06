@@ -1,5 +1,8 @@
 # 09. 공식 출처·확인 범위·변경 이력
 
+- 개정 2026-09-06 (v2) — Vercel·서버 기능 출처를 폐기 표시하고 v3.1 변경 이력을 추가했다.
+
+
 ## 1. 확인 기준
 
 공식 기술 문서 확인일: **2026-09-06**. 아래 자료는 기술 기능·설정의 근거다. 페이지 카피·브랜드 비중·색상·API 상태·성능 예산·작업 게이트는 이 프로젝트의 설계 결정이며 타사 문서의 보장이나 인증이 아니다.
@@ -36,15 +39,15 @@
 - 원문: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots
 - 사용 범위: robots.ts 규칙; sitemap 공식 문서도 아래 병기
 
-### [S08] Next.js Route Handlers
+### [S08] Next.js Route Handlers — **폐기(v2)**
 - 원문: https://nextjs.org/docs/app/api-reference/file-conventions/route
 - 사용 범위: route.ts·HTTP method·Request/Response
 
-### [S09] Vercel GitHub Deployments
+### [S09] Vercel GitHub Deployments — **폐기(v2)**
 - 원문: https://vercel.com/docs/git/vercel-for-github
 - 사용 범위: 신규 저장소 연결·브랜치 배포
 
-### [S10] Vercel Supported Node.js Versions
+### [S10] Vercel Supported Node.js Versions — **폐기(v2)**
 - 원문: https://vercel.com/docs/functions/runtimes/node-js/node-js-versions
 - 사용 범위: Node.js 24.x 지원·메이저 설정·패치 운영
 
@@ -52,11 +55,11 @@
 - 원문: https://motion.dev/docs/react-accessibility
 - 사용 범위: 감소된 움직임 지원
 
-### [S12] Vercel Add a Domain
+### [S12] Vercel Add a Domain — **폐기(v2)**
 - 원문: https://vercel.com/docs/domains/working-with-domains/add-a-domain
 - 사용 범위: 프로젝트별 도메인·DNS 설정
 
-### [S13] Next.js redirects
+### [S13] Next.js redirects — **폐기(v2)**
 - 원문: https://nextjs.org/docs/app/api-reference/config/next-config-js/redirects
 - 사용 범위: 명시적 redirect·영구 308
 
@@ -68,15 +71,15 @@
 - 원문: https://web.dev/articles/vitals
 - 사용 범위: LCP·INP·CLS와 현장 측정 기준
 
-### [S16] Vercel Deployment Protection
+### [S16] Vercel Deployment Protection — **폐기(v2)**
 - 원문: https://vercel.com/docs/deployment-protection
 - 사용 범위: 배포 URL 보호와 범위·요금제 확인
 
-### [S17] Vercel Hobby Plan
+### [S17] Vercel Hobby Plan — **폐기(v2)**
 - 원문: https://vercel.com/docs/plans/hobby
 - 사용 범위: 비상업적 개인 용도 정책·기업 운영 플랜 확인
 
-### [S18] Next.js proxy.js
+### [S18] Next.js proxy.js — **폐기(v2)**
 - 원문: https://nextjs.org/docs/app/api-reference/file-conventions/proxy
 - 사용 범위: 요청/응답 경계·proxy 파일 규칙
 
@@ -109,3 +112,33 @@ S07 보조 원문: https://nextjs.org/docs/app/api-reference/file-conventions/me
 정책 변경은 관련 세부 문서와 SPEC.md 버전을 함께 갱신한다. 이미지 재생성·프레임워크 메이저 변경·기존 저장소 수정·DB/RLS 변경·운영 도메인 전환을 일반 UI 수정에 끼워 넣지 않는다. 승인된 변경만 changelog에 사유·영향·승인자·적용 커밋으로 남긴다.
 
 구버전 문서가 작업 지시로 남아 있으면 새 프로젝트 내부에서 본 v3.0 기준으로 교체한다. 기존 운영 저장소 문서를 바꾸는 것은 이번 작업이 아니다.
+
+
+## 6. v3.0 → v3.1 변경 (2026-09-06)
+
+| 항목 | v3.0 | v3.1 |
+|---|---|---|
+| 호스팅 | Vercel | **GitHub Actions → GitHub Pages** |
+| 빌드 | 서버 포함 | **`output: 'export'` 정적** |
+| 문의 | 서버 Route Handler | **mock/disabled + 이메일 CTA** |
+| 표시 언어 | 영문 섹션명·영문 Hero | **Korean-first** |
+| 공개 페이지 | 12개 | **19개** + 별칭 11개 |
+
+### 폐기된 출처
+
+Vercel 전용 문서(S09·S10·S12·S16·S17)와 서버 기능 문서(S08 Route Handlers·S13 redirects·
+S18 proxy.js)는 현재 구조에서 적용되지 않는다. 이력 보존용으로만 남긴다.
+
+### 추가 확인 출처
+
+| ID | 자료 | 확인일 | 적용 범위 |
+|---|---|---|---|
+| [A01] | Anthropic — 웹 크롤링 및 차단 방법 (`support.claude.com/en/articles/8896518`) | 2026-09-06 | 현행 크롤러 토큰 `ClaudeBot`·`Claude-User`·`Claude-SearchBot`. `Claude-Web`·`anthropic-ai` 는 공식 목록에 없음 |
+| [P01] | Arctera 공식 제품 정보 (`arctera.io`) | 2026-09-06 | Enterprise Vault Complete·Capture·Data Insight·eDiscovery Platform 의 역할과 기능 범위 |
+
+출처와 확인일은 `src/content/sources.ts` 에서 코드와 함께 관리한다.
+
+### 변경 근거 문서
+
+`docs/reports/ADR-001`(호스팅), `HUMEASE-WEB-20260906-CONTENT-01`(포트폴리오·Arctera),
+`HUMEASE-SEO-AEO-GEO-20260906`(검색), `HUMEASE-KOREAN-FIRST-PREMIUM-20260906`(표시 언어).

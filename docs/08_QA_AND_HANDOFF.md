@@ -1,5 +1,41 @@
 # 08. 검수·게이트·작업자 인수인계
 
+- 개정 2026-09-06 (v2) — 실제 실행된 검수 체계 반영.
+
+## 0. 현재 자동 검수 — CI 가 매 배포마다 실행
+
+| 스크립트 | 검사 |
+|---|---|
+| `verify:routes` | 공개 라우트·404·sitemap·robots 생성 |
+| `verify:copy` | `docs/03` 승인 카피·SEO 메타 대조 |
+| `verify:request` | 후속 요청서 지정 카피 대조 |
+| `verify:content` | slug 중복·필수 누락·draft 노출·제품 경로·Capture 표기·파트너 주장·앵커·basePath |
+| `verify:aliases` | 별칭 11개의 meta refresh·canonical·noindex·사이트맵 제외 |
+| `verify:indexing` | preview/production 각각의 robots·sitemap·canonical·noindex 계약, 봇 정책 회귀 |
+| `verify:entities` | JSON-LD 금지 필드·엔터티 관계·안전 직렬화 (운영 dry-run) |
+| `verify:assets` | 원본↔배포본 정합, 인벤토리 생성 |
+| `verify:exposure` | 빌드 산출물의 서버 비밀 노출 |
+| `verify:font` | 폰트 서브셋이 현재 카피를 담고 있는지 |
+
+`tests/audit.mjs` 배포본 기능·SEO·접근성 감사, `tests/design-qa.mjs` 디자인 FAIL 기준,
+`tests/font-check.mjs` 한글 세리프 폴백 검사.
+
+**빌드 성공과 200 응답만으로 디자인·콘텐츠를 PASS 로 판단하지 않는다.**
+
+## 0-1. 실행된 게이트
+
+| 게이트 | 결과 | 보고서 |
+|---|---|---|
+| G0 기준선 | 완료 (7항목 중 1 FAIL → ADR-001 로 해소) | `reports/G0_BASELINE.md` |
+| G1 구현·검수 | 13/13 PASS | `reports/G1_QA_RESULTS.md` |
+| G2 리디자인 | FAIL기준 5/5 통과 | `reports/G2_REDESIGN_QA.md` |
+| G3 검색·표시언어 | 검증 9종 PASS | `reports/G3_SEO_AEO_GEO.md` |
+| G4 독립 점검 | **NOT RUN** | — |
+| G5 운영 전환 | **BLOCKED** | `docs/07` §5 |
+
+아래 v1 기준은 계속 유효하다. 서버 기능 관련 항목만 정적 Export 상 **미해당**이다.
+
+
 ## 1. 결과 판정
 
 `PASS`: 명시된 환경·버전·절차로 실행하고 증거가 있음. `FAIL`: 실행 결과가 기준 불충족. `BLOCKED`: 권한·자료·자산·승인 등으로 실행 불가. `NOT RUN`: 아직 실행하지 않음.
@@ -98,7 +134,7 @@ DB/RLS/역할·권한/비밀키/도메인/법적 내용/서비스 소유·상태
 아래 지침은 새 프로젝트에서 실행한다. 기존 프로젝트의 설정 파일을 수정해 적용하지 않는다.
 
 ```text
-HUMEASE v3.0의 SPEC.md와 docs를 유일한 구현 기준으로 사용하고 구버전 Vite 유지 지침은 폐기하라; 기존 홈페이지 저장소·폴더·Pages·DB·DNS는 READ-ONLY로 보존한 채 별도 신규 저장소와 폴더 humease-web-v2에 Next.js 16 안정 패치+App Router+TypeScript strict+Tailwind CSS 4+Node.js 24+npm을 구성하라; 기존 Vite 코드를 이관하거나 기존 사이트를 Vercel에 먼저 복제하지 말고 신규 Next.js 사이트 자체를 새 Vercel 프로젝트에서 검증하라; 12개 공개 페이지의 최종 카피·경로·CTA를 구현하고 이미 생성된 A01–A17 이미지 중 실제 사용 자산을 찾아 연결·최적화하되 신규 생성·재생성·프롬프트 작성은 하지 마라; Server Components 중심 구조와 필요한 Client Components, Metadata API, next/image, next/font, 서버 문의 Route Handler 및 검증된 최소 관리자 기능을 구현하고 운영 연결 전에는 mock/disabled 모드로 테스트하라; 기존 URL·회사정보·정책·관리자 업무·검색 인증을 확인 없이 누락시키지 말고 Preview의 운영 DB·메일·분석 쓰기를 차단하라; 먼저 G0 경계·현황·미확인 목록을 보고한 뒤 가능한 신규 구현을 진행하며 대표님의 명시적 승인 전에는 운영 도메인 연결·DNS 변경·운영 쓰기·기존 저장소 변경·DB/RLS 변경·비용 발생 작업을 실행하지 마라; QA는 PASS/FAIL/BLOCKED/NOT RUN과 증거로 보고하라.
+HUMEASE v3.0의 SPEC.md와 docs를 유일한 구현 기준으로 사용하고 구버전 Vite 유지 지침은 폐기하라; 기존 홈페이지 저장소·폴더·Pages·DB·DNS는 READ-ONLY로 보존한 채 별도 신규 저장소와 폴더 humease-web-v2에 Next.js 16 안정 패치+App Router+TypeScript strict+Tailwind CSS 4+Node.js 24+npm을 구성하라; 기존 Vite 코드를 이관하거나 기존 사이트를 호스팅에 먼저 복제하지 말고 신규 Next.js 사이트 자체를 새 호스팅 프로젝트에서 검증하라; 12개 공개 페이지의 최종 카피·경로·CTA를 구현하고 이미 생성된 A01–A17 이미지 중 실제 사용 자산을 찾아 연결·최적화하되 신규 생성·재생성·프롬프트 작성은 하지 마라; Server Components 중심 구조와 필요한 Client Components, Metadata API, next/image, next/font, 서버 문의 Route Handler 및 검증된 최소 관리자 기능을 구현하고 운영 연결 전에는 mock/disabled 모드로 테스트하라; 기존 URL·회사정보·정책·관리자 업무·검색 인증을 확인 없이 누락시키지 말고 Preview의 운영 DB·메일·분석 쓰기를 차단하라; 먼저 G0 경계·현황·미확인 목록을 보고한 뒤 가능한 신규 구현을 진행하며 대표님의 명시적 승인 전에는 운영 도메인 연결·DNS 변경·운영 쓰기·기존 저장소 변경·DB/RLS 변경·비용 발생 작업을 실행하지 마라; QA는 PASS/FAIL/BLOCKED/NOT RUN과 증거로 보고하라.
 ```
 
 ## 8. Antigravity 전달 지침
