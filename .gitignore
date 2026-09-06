@@ -12,3 +12,6 @@ docs/reports/evidence/lh-*.json
 
 # Lighthouse 가 WSL 에서 남기는 Windows 경로 형태 잔재
 C:*
+
+# TypeScript 증분 빌드 캐시
+*.tsbuildinfo
