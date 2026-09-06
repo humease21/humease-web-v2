@@ -2,7 +2,7 @@
  * 환경·robots·sitemap·색인 정책 검사. (요청서 §4, §10, §11, §15)
  * preview 와 production 산출물의 계약이 서로 다르므로 대상별로 다르게 검사한다.
  */
-import { readFile, readdir, access } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
 const OUT = path.join(process.cwd(), 'out');
