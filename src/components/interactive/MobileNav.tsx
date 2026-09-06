@@ -47,6 +47,21 @@ export function MobileNav() {
               <Link href={item.href} onClick={() => setOpen(false)} className="flex min-h-[68px] items-center text-2xl font-medium">
                 {item.label}
               </Link>
+              {item.children?.length ? (
+                <ul className="pb-5 pl-4">
+                  {item.children.map((c) => (
+                    <li key={c.href}>
+                      <Link
+                        href={c.href}
+                        onClick={() => setOpen(false)}
+                        className="flex min-h-[52px] items-center text-[16px] text-[var(--color-muted)]"
+                      >
+                        {c.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </li>
           ))}
         </ul>

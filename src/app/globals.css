@@ -103,6 +103,19 @@
     letter-spacing: -0.018em;
     font-size: clamp(36px, 5.2vw, 76px);
   }
+  /*
+   * 한글 대형 제목. Source Serif 4 에는 한글 글리프가 없어
+   * .display-en 을 한글에 쓰면 폰트 폴백이 일어나 본문과 다른 글자체가 된다.
+   * 한글 Hero 제목은 이 클래스를 쓴다.
+   */
+  .display-ko {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    font-size: clamp(32px, 5.6vw, 76px);
+  }
+
   /* 한글 섹션 제목 — 40~72px */
   .title-ko {
     font-weight: 500;

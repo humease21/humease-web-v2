@@ -3,6 +3,7 @@ import { primaryNav } from '@/content/navigation';
 import { asset } from '@/lib/asset-path';
 import { HeaderShell } from '@/components/interactive/HeaderShell';
 import { MobileNav } from '@/components/interactive/MobileNav';
+import { NavDropdown } from '@/components/interactive/NavDropdown';
 
 /** 초기 transparent overlay → 스크롤 후 반투명 dark backdrop. desktop 내비게이션은 최소화한다. */
 export function SiteHeader() {
@@ -18,12 +19,16 @@ export function SiteHeader() {
           <ul className="flex items-center gap-9">
             {primaryNav.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-[13px] font-medium tracking-[0.01em] text-[var(--color-muted)] transition-colors duration-200 hover:text-[var(--color-text)]"
-                >
-                  {item.label}
-                </Link>
+                {item.children?.length ? (
+                  <NavDropdown label={item.label} items={item.children} />
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="text-[13px] font-medium tracking-[0.01em] text-[var(--color-muted)] transition-colors duration-200 hover:text-[var(--color-text)]"
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

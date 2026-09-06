@@ -49,7 +49,7 @@ export default function Page() {
         <ul className="mt-12">
           {STEPS.map((s, i) => (
             <Reveal as="li" key={s.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
-              <h3 className="font-[family-name:var(--font-display)] text-[24px] text-[var(--color-accent)] md:text-[30px]">{s.k}</h3>
+              <h3 className="text-[24px] font-medium text-[var(--color-accent)] md:text-[30px]">{s.k}</h3>
               <p className="lead">{s.v}</p>
             </Reveal>
           ))}

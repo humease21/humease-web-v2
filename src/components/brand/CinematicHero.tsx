@@ -26,6 +26,9 @@ export function CinematicHero({
   ambient?: 'silver' | 'cool' | 'warm' | 'none';
   align?: 'bottom' | 'center';
 }) {
+  // Source Serif 4 는 한글 글리프가 없다. 한글이 섞이면 산세리프 대형 제목을 쓴다.
+  const heroTitleClass = /[가-힣]/.test(titleKo) ? 'display-ko' : 'display-en';
+
   const ambientClass =
     ambient === 'cool' ? 'ambient-cool' : ambient === 'warm' ? 'ambient-warm'
     : ambient === 'silver' ? 'ambient-silver' : '';
@@ -66,7 +69,7 @@ export function CinematicHero({
               <Reveal delay={2}><p className="title-ko-sm mt-7 text-[var(--color-text)]">{titleKo}</p></Reveal>
             </>
           ) : (
-            <Reveal delay={1} slow><h1 className="display-en mt-7">{titleKo}</h1></Reveal>
+            <Reveal delay={1} slow><h1 className={`${heroTitleClass} mt-7`}>{titleKo}</h1></Reveal>
           )}
 
           {lead && <Reveal delay={3}><p className="lead measure mt-7">{lead}</p></Reveal>}

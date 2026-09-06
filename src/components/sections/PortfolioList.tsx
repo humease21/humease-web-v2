@@ -24,7 +24,7 @@ export function PortfolioList({ items }: { items: Project[] }) {
                     className="h-40 w-full object-cover md:h-56"
                   />
                 ) : (
-                  <p className="font-[family-name:var(--font-display)] text-[13px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
+                  <p className="text-[13px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     {p.category}
                   </p>
                 )}
