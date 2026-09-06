@@ -34,6 +34,13 @@ export const sources: Source[] = [
     scope: '맘이음의 서비스 방향과 개발 중 상태',
     checkedAt: '2026-09-06',
   },
+  {
+    id: 'anthropic-crawlers',
+    label: 'Anthropic — 웹 크롤링 및 사이트 소유자 차단 방법',
+    url: 'https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler',
+    scope: 'Anthropic 현행 크롤러 토큰(ClaudeBot·Claude-User·Claude-SearchBot)과 robots.txt 준수 여부. Claude-Web·anthropic-ai 는 공식 목록에 없음',
+    checkedAt: '2026-09-06',
+  },
 ];
 
 export const sourceById = (id: string) => sources.find((s) => s.id === id);

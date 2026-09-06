@@ -76,7 +76,20 @@ INDEXNOW_ENABLED                 기본 false
 
 검색용 봇과 학습용 봇을 분리했다. **학습 봇 정책은 기존 상태를 보존**했고 SEO 를 이유로 바꾸지 않았다.
 `OAI-SearchBot`·`PerplexityBot` 을 검색용으로 명시했다.
-`Claude-Web` 은 기존 항목이라 유지했고, 현재 공식 토큰(`Claude-SearchBot`·`Claude-User`) 검증은 **NOT RUN** 이다.
+**Anthropic 토큰 재검증 (2026-09-06, 공식 문서 확인).**
+출처: `support.claude.com/en/articles/8896518`
+
+| 토큰 | 용도 | robots.txt 준수 | 상태 |
+|---|---|---|---|
+| `ClaudeBot` | 모델 학습 | 예 | **현행** |
+| `Claude-User` | 사용자 요청 기반 접근 | 예 | **현행** |
+| `Claude-SearchBot` | 검색 색인 | 예 | **현행** |
+| `Claude-Web` · `anthropic-ai` | — | — | **공식 목록에 없음** |
+
+`Claude-Web` 만으로 Claude 접근이 설정됐다고 판단하지 않는다. 현행 3종을 명시적으로 추가했고,
+기존 허용 정책은 그대로 두었다. `Claude-Web` 은 `User-agent: *` 가 이미 허용이라
+유무가 실제 접근 결과를 바꾸지 않으며, 과거 정책의 연속성 기록으로만 남겼다.
+`verify-indexing-policy` 가 현행 3종의 존재와 기존 봇 정책의 차단 전환을 감지한다.
 
 봇 User-Agent 로 요청을 보낸 결과를 "해당 봇이 실제 방문했다"는 증거로 쓰지 않았다.
 
@@ -103,7 +116,7 @@ Capture title 은 콘텐츠 요청서 `| 휴미즈` 대신 SEO 요청서 `| HUME
 | Google 생성형 AI 설정·성과 보고서 확인 | **BLOCKED** | 동일 |
 | IndexNow 제출 | **NOT RUN** | 기본 비활성. 운영 배포·승인 후 |
 | 검색 등록·사이트맵 제출 | **NOT RUN** | 도메인 전환 후 권한자가 수행 |
-| Claude 현재 공식 봇 토큰 검증 | **NOT RUN** | 공식 자료 재확인 필요 |
+| Claude 현재 공식 봇 토큰 검증 | **PASS** | 2026-09-06 공식 문서 확인. §6 참조 |
 | AEO 질문·답변 콘텐츠 확장 (§6) | **PASS** | §6.2~§6.6 전부 구현. 아래 §10 참조 |
 | GEO 고유 정보·출처 컴포넌트 (§7.3) | **PASS** | SourceNotes 적용. 아래 §10 참조 |
 | 운영 도메인 전환 | **금지** | 별도 승인 |

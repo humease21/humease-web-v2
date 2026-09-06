@@ -27,12 +27,29 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       // 일반 검색 수집
       { userAgent: '*', allow: '/' },
-      // 검색용 AI 봇 — 공개 콘텐츠 접근 허용
+      /*
+       * 검색용 AI 봇 — 공개 콘텐츠 접근 허용.
+       * Claude 토큰은 2026-09-06 Anthropic 공식 문서로 재확인했다.
+       * 현행 토큰은 ClaudeBot(학습) · Claude-User(사용자 요청) · Claude-SearchBot(검색) 셋이며,
+       * Claude-Web 과 anthropic-ai 는 공식 목록에 없다.
+       * 출처: support.claude.com/en/articles/8896518
+       */
       { userAgent: 'OAI-SearchBot', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },
-      // 학습 관련 봇 — 기존 정책 보존. 임의로 바꾸지 않는다.
+      { userAgent: 'Claude-SearchBot', allow: '/' },
+      /*
+       * 학습·사용자 요청 관련 봇 — 기존 허용 정책을 그대로 보존한다.
+       * SEO 구현을 이유로 허용·차단을 바꾸지 않는다(요청서 §10.2).
+       */
       { userAgent: 'GPTBot', allow: '/' },
       { userAgent: 'ChatGPT-User', allow: '/' },
+      { userAgent: 'ClaudeBot', allow: '/' },
+      { userAgent: 'Claude-User', allow: '/' },
+      /*
+       * 레거시 토큰. 현재 Anthropic 공식 목록에 없으므로 공식 토큰으로 간주하지 않는다.
+       * `User-agent: *` 가 이미 허용이라 이 항목의 유무는 실제 접근 결과를 바꾸지 않는다.
+       * 과거 정책의 연속성 기록을 위해 남기며, 제거해도 영향이 없음을 확인했다.
+       */
       { userAgent: 'Claude-Web', allow: '/' },
     ],
     sitemap: `${canonicalUrl('/')}sitemap.xml`.replace('//sitemap.xml', '/sitemap.xml'),

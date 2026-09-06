@@ -68,9 +68,25 @@ if (!indexing) {
   }
 }
 
-// 공통: 학습 봇 정책을 임의로 차단하지 않았는지
-if (/User-Agent:\s*GPTBot[\s\S]{0,40}Disallow:\s*\//i.test(robots)) {
-  fails.push('학습 봇 정책이 차단으로 변경됨 — 기존 정책 보존 위반');
+// 공통: 봇 정책 회귀 검사 (요청서 §10.2)
+// 기존 정책(GPTBot·ChatGPT-User·PerplexityBot 허용)을 임의로 뒤집지 않았는지 확인한다.
+for (const bot of ['GPTBot', 'ChatGPT-User', 'PerplexityBot', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot']) {
+  const re = new RegExp(`User-Agent:\\s*${bot}\\s*\\n\\s*Disallow:\\s*/\\s*$`, 'im');
+  if (re.test(robots)) fails.push(`${bot} 정책이 차단으로 변경됨 — 기존 정책 보존 위반`);
+}
+
+if (indexing) {
+  // Anthropic 현행 공식 토큰(2026-09-06 확인)이 명시돼야 한다.
+  // Claude-Web 은 공식 목록에 없으므로 이것만으로 Claude 접근이 설정됐다고 보지 않는다.
+  for (const bot of ['ClaudeBot', 'Claude-SearchBot', 'Claude-User']) {
+    if (!new RegExp(`User-Agent:\\s*${bot}\\b`, 'i').test(robots)) {
+      fails.push(`Anthropic 현행 토큰 ${bot} 누락`);
+    }
+  }
+  // 검색용 봇도 명시 확인
+  for (const bot of ['OAI-SearchBot', 'PerplexityBot']) {
+    if (!new RegExp(`User-Agent:\\s*${bot}\\b`, 'i').test(robots)) fails.push(`검색용 봇 ${bot} 누락`);
+  }
 }
 
 if (fails.length) { console.error(`FAIL  [${target}] ${fails.length}건:\n  ` + fails.slice(0, 12).join('\n  ')); process.exit(1); }
