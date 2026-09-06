@@ -53,6 +53,7 @@ jobs:
           node scripts/verify-copy.mjs
           node scripts/verify-request-copy.mjs
           node scripts/verify-content.mjs
+          node scripts/verify-aliases.mjs
           node scripts/verify-assets.mjs
           node scripts/verify-client-exposure.mjs
           node scripts/verify-font-subset.mjs

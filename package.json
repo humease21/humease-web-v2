@@ -16,7 +16,8 @@
     "verify:copy": "node scripts/verify-copy.mjs",
     "verify:assets": "node scripts/verify-assets.mjs",
     "verify:content": "node scripts/verify-content.mjs",
-    "verify:request": "node scripts/verify-request-copy.mjs"
+    "verify:request": "node scripts/verify-request-copy.mjs",
+    "verify:aliases": "node scripts/verify-aliases.mjs"
   },
   "dependencies": {
     "next": "16.3.4",
