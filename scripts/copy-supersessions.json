@@ -1,37 +1,7 @@
 {
-  "_note": "요청서 HUMEASE-WEB-20260906-CONTENT-01 §0.2 가 docs/03 의 일부 카피를 대체했다. 여기 없는 docs/03 카피는 여전히 검증 대상이다.",
+  "_note": "docs/03 v2 개정으로 대부분의 대체가 문서 본문에 반영됐다. 여기 남은 항목은 docs/03 에 아직 원문이 있으나 후속 요청서가 대체한 것들이다. 여기 없는 docs/03 카피는 여전히 검증 대상이다.",
   "requestId": "HUMEASE-WEB-20260906-CONTENT-01",
   "supersessions": [
-    {
-      "page": "P01",
-      "supersededBy": "요청서 §4.4",
-      "reason": "Enterprise Data 를 명칭 나열에서 문제 해결 서술로 교체",
-      "text": "기업의 중요한 데이터를 보존하고, 통제하고, 필요한 순간 찾을 수 있도록 설계합니다."
-    },
-    {
-      "page": "P01",
-      "supersededBy": "요청서 §4.5",
-      "reason": "Applied AI 를 고객 제공 역량 서술로 교체",
-      "text": "아이디어와 업무 과제를 사용자에게 필요한 AI 서비스로 구체화합니다. 기획부터 구현과 검증까지 연결합니다."
-    },
-    {
-      "page": "P01",
-      "supersededBy": "요청서 §4.7",
-      "reason": "홈의 맘이음 단일 고정을 포트폴리오 데이터 기반으로 교체",
-      "text": "부모님에게는 일상을 함께하는 대화 상대를, 가족에게는 더 자연스럽게 연결되는 계기를. 휴미즈가 준비하고 있는 가족 소통 AI 서비스입니다."
-    },
-    {
-      "page": "P08",
-      "supersededBy": "요청서 §5.1",
-      "reason": "AI 프로젝트 → AI 포트폴리오 허브로 확장",
-      "text": "AI 프로젝트 | 휴미즈"
-    },
-    {
-      "page": "P08",
-      "supersededBy": "요청서 §5.1",
-      "reason": "허브 설명 교체",
-      "text": "휴미즈가 직접 준비하는 AI 프로젝트를 소개합니다. 가족 소통 AI 서비스 맘이음의 방향과 개발 이야기를 만나보세요."
-    },
     {
       "page": "P08",
       "supersededBy": "요청서 §5.1",
@@ -43,18 +13,6 @@
       "supersededBy": "요청서 §5.2",
       "reason": "맘이음 소개가 상세페이지로 이동",
       "text": "부모님과 자연스럽게 대화하고 일상을 돕는 경험을 통해 가족의 연결을 지원하는 AI 서비스를 준비합니다."
-    },
-    {
-      "page": "P10",
-      "supersededBy": "요청서 §6.2",
-      "reason": "엔터프라이즈 솔루션 → Arctera Solutions 로 명칭 변경",
-      "text": "엔터프라이즈 솔루션 | 휴미즈"
-    },
-    {
-      "page": "P10",
-      "supersededBy": "요청서 §6.2 · §8.2",
-      "reason": "Merge1 단독 표기를 Capture (formerly Merge1) 로 교체",
-      "text": "Enterprise Vault, Merge1, Data Insight 등 기존 데이터 환경과 요구에 맞는 솔루션 적용과 구성 검토를 지원합니다."
     },
     {
       "page": "P10",
@@ -81,124 +39,10 @@
       "text": "비정형 데이터의 현황과 관리 과제를 이해하기 위한 분석 요구를 검토합니다."
     },
     {
-      "page": "P01",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "휴미즈 | Enterprise Data & Applied AI"
-    },
-    {
-      "page": "P01",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "기업 데이터의 보존·검색·통제부터 AI 서비스 설계와 구현까지. 휴미즈의 Enterprise Data, Applied AI, 맘이음 프로젝트를 만나보세요."
-    },
-    {
-      "page": "P02",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "회사소개 | 휴미즈"
-    },
-    {
-      "page": "P02",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "기업 데이터의 신뢰와 AI 서비스의 실행을 연결하는 휴미즈. 문제를 이해하고, 설계하고, 구현하는 접근 방식을 소개합니다."
-    },
-    {
-      "page": "P03",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "Enterprise Data | 휴미즈"
-    },
-    {
-      "page": "P03",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "e-Discovery, 내부 통제, Exchange 아카이빙을 위한 정책과 시스템 설계. 휴미즈와 기업 데이터 환경의 과제를 검토하세요."
-    },
-    {
-      "page": "P04",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "e-Discovery 컨설팅 | 휴미즈"
-    },
-    {
-      "page": "P04",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "조사·감사·분쟁 대응을 위한 데이터 보존, 검색, 검토 흐름을 기업 환경에 맞게 설계하는 휴미즈 e-Discovery 컨설팅."
-    },
-    {
-      "page": "P05",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "Internal Control 컨설팅 | 휴미즈"
-    },
-    {
-      "page": "P05",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "민감정보와 업무 커뮤니케이션의 관리 기준, 점검, 조치와 기록을 연결하는 휴미즈 내부 통제 컨설팅."
-    },
-    {
-      "page": "P06",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "Exchange 아카이빙 컨설팅 | 휴미즈"
-    },
-    {
-      "page": "P06",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "메일 보존·검색·사용자 접근·운영을 함께 고려한 Exchange 아카이빙 설계와 도입·이관 검토를 지원합니다."
-    },
-    {
-      "page": "P07",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "Applied AI · AI 서비스 개발 | 휴미즈"
-    },
-    {
-      "page": "P07",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "AI 서비스, 업무 자동화, 웹 애플리케이션과 MVP를 사용자 흐름에 맞게 설계하고 구현하는 휴미즈 Applied AI."
-    },
-    {
-      "page": "P09",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "맘이음 — 개발 중인 가족 소통 AI | 휴미즈"
-    },
-    {
-      "page": "P09",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI. 휴미즈가 개발 중인 맘이음의 서비스 방향을 소개합니다."
-    },
-    {
-      "page": "P11",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "검색 의도에 맞춘 제목으로 교체",
-      "text": "프로젝트 문의 | 휴미즈"
-    },
-    {
-      "page": "P11",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "Enterprise Data와 Applied AI 프로젝트를 문의하세요. 현재 환경과 해결하고 싶은 과제를 알려주시면 확인 후 회신드리겠습니다."
-    },
-    {
       "page": "P12",
       "supersededBy": "SEO 요청서 §5.3",
       "reason": "검색 의도에 맞춘 제목으로 교체",
       "text": "인사이트 | 휴미즈"
-    },
-    {
-      "page": "P12",
-      "supersededBy": "SEO 요청서 §5.3",
-      "reason": "페이지가 실제 답하는 범위로 설명 교체",
-      "text": "Enterprise Data와 Applied AI를 현장에 연결하는 휴미즈의 생각과 기록. 데이터 컴플라이언스와 AI 서비스 개발 인사이트를 만나보세요."
     },
     {
       "page": "P01",
@@ -213,34 +57,10 @@
       "text": "HUMEASE · ENTERPRISE DATA & APPLIED AI"
     },
     {
-      "page": "P01",
-      "supersededBy": "Korean-first 요청서 §5",
-      "reason": "Data Transition 영문 제거",
-      "text": "FROM DATA"
-    },
-    {
-      "page": "P01",
-      "supersededBy": "Korean-first 요청서 §5",
-      "reason": "Data Transition 영문 제거",
-      "text": "TO INTELLIGENCE"
-    },
-    {
-      "page": "P01",
-      "supersededBy": "Korean-first 요청서 §4",
-      "reason": "메뉴·섹션명 한국어화",
-      "text": "Arctera Solutions — 제품의 기능과 고객 환경에 맞는 적용 범위를 살펴보세요."
-    },
-    {
       "page": "P12",
       "supersededBy": "Korean-first 요청서 §3",
       "reason": "장식 영문 제거",
       "text": "Enterprise Data와 Applied AI의 실무에서 마주하는 질문과 생각을 나눕니다."
-    },
-    {
-      "page": "P01",
-      "supersededBy": "Korean-first 요청서 §3",
-      "reason": "장식 영문 제거",
-      "text": "Enterprise Data와 Applied AI에 대한 휴미즈의 생각과 기록을 만나보세요."
     },
     {
       "page": "P02",

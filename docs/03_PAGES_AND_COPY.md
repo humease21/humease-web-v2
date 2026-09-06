@@ -1,105 +1,184 @@
-# 03. 페이지별 개발명세서와 최종 카피 · 신규 Next.js
+# 03. 페이지별 개발명세서와 최종 카피
 
-아래 따옴표 안의 문구는 바로 적용할 공개 카피다. ‘구현 규칙’은 내부 지시이며 화면에 노출하지 않는다. URL을 새로 바꾸는 것보다 기존 검색 경로 유지가 우선이다. 아래 모든 페이지는 신규 App Router의 독립 라우트로 구현한다. 이미지 번호는 이미 생성된 자산에 연결할 식별자이며 생성 작업 지시가 아니다.
+- 최초 작성 2026-09-06 / **개정 2026-09-06 (v2)**
+- 개정 사유: 후속 요청서 3건이 카피·정보구조·표시 언어를 대체했다.
+  이 문서는 **현재 화면에 실제로 렌더되는 문구**를 기준으로 한다.
+- 대체 이력은 `scripts/copy-supersessions.json` 에 근거 조항과 함께 기록돼 있고,
+  `npm run verify:copy` 와 `npm run verify:request` 가 이 문서와 렌더 결과를 자동 대조한다.
 
-## 0. 사이트맵
+아래 따옴표 안의 문구는 바로 적용할 공개 카피다. '구현 규칙'은 내부 지시이며 화면에 노출하지 않는다.
+URL 은 기존 검색 경로 유지를 위해 변경하지 않는다.
+
+## 0. 표시 언어 원칙 (Korean-first)
+
+사용자가 읽는 설명·섹션명·CTA·질문·프로세스는 한국어를 우선한다.
+영문은 브랜드명, 공식 제품명, 업계 표준 용어, SEO 연속성에 필요한 경우에만 유지한다.
+**장식용 영문 병기는 사용하지 않는다.**
+
+유지하는 영문: HUMEASE · Arctera · Enterprise Vault Complete ·
+**Enterprise Vault Capture (formerly Merge1)** · Data Insight · eDiscovery Platform ·
+e-Discovery · Exchange · Microsoft 365 · Microsoft Teams · Slack ·
+Microsoft MVP · Symantec · Veritas · Enterprise IT · AnyBuild · HairAI.
+
+## 1. 사이트맵 — 공개 19개
 
 | ID | 경로 | 메뉴/제목 | 대표 이미지 |
 |---|---|---|---|
-| P01 | `/` | 홈 | A01 desktop / A02 mobile, A03, A10 |
+| P01 | `/` | 홈 | A01 desktop / A02 mobile, A03, A04, A08, A10, A13 |
 | P02 | `/about` | 회사소개 | A11 |
-| P03 | `/enterprise-data` | Enterprise Data | A04 |
+| P03 | `/enterprise-data` | 기업 데이터 | A04, A05 |
 | P04 | `/consulting/e-discovery` | e-Discovery | A05 |
-| P05 | `/consulting/internal-control` | Internal Control | A06 |
-| P06 | `/consulting/exchange-archive` | Exchange Archive | A07 |
-| P07 | `/consulting/ai-transformation` | Applied AI | A08 |
-| P08 | `/ai-services` | AI 프로젝트 | A09, A10 |
-| P09 | `/ai-services/mom-ie` | 맘이음 | A10 + 실제 승인 제품 캡처 |
-| P10 | `/solutions` | 엔터프라이즈 솔루션 | A12 |
+| P05 | `/consulting/internal-control` | 내부 통제 | A06 |
+| P06 | `/consulting/exchange-archive` | Exchange 아카이빙 | A07 |
+| P07 | `/consulting/ai-transformation` | AI 서비스 | A08, A09, A10 |
+| P08 | `/ai-services` | AI 포트폴리오 허브 | A09, A10 |
+| P09 | `/ai-services/mom-ie` | 맘이음 | A10 |
+| P09a | `/ai-services/anybuild` | AnyBuild | A09 |
+| P09b | `/ai-services/hairai` | HairAI | 없음(텍스트 중심) |
+| P09c | `/ai-services/k-bestie` | 내친구 케이 | 없음(텍스트 중심) |
+| P10 | `/solutions` | Arctera 솔루션 허브 | A12, A04 |
+| P10a | `/solutions/enterprise-vault` | Enterprise Vault Complete | A07 |
+| P10b | `/solutions/enterprise-vault-capture` | Enterprise Vault Capture (formerly Merge1) | A06 |
+| P10c | `/solutions/data-insight` | Data Insight | A04 |
+| P10d | `/solutions/ediscovery-platform` | eDiscovery Platform | A05 |
 | P11 | `/contact` | 문의 | A13 |
-| P12 | `/insights` | 인사이트 | A14/A15/A16을 실제 글 주제에 맞춰 사용 |
+| P12 | `/insights` | 인사이트 | A03 |
 
-글로벌 메뉴: **사업영역 / AI 프로젝트 / 인사이트 / 회사소개 / 문의**. 사업영역 서브메뉴에 Enterprise Data, Applied AI, 엔터프라이즈 솔루션. 모바일도 동일한 명칭을 사용한다. 회사 로고는 홈으로 연결한다.
+프로젝트 상세(P09~P09c)는 `src/content/portfolio.ts`, 제품 상세(P10a~P10d)는 `src/content/solutions.ts`
+단일 출처에서 생성된다. UI 파일에 이름을 하드코딩하지 않는다.
+
+별칭 11개(`/jtbd/*`, `/services/*`, `/consulting/ai-consulting`)는 구 URL 보존용 정적 이동 페이지다.
+**HTTP 301 이 아니라 200** 이며 canonical·meta refresh 로 최종 경로를 가리킨다.
+
+글로벌 메뉴: **사업영역(기업 데이터 · AI 서비스 · Arctera 솔루션) / AI 포트폴리오 / 인사이트 / 회사소개 / 문의**
+모바일도 동일한 명칭을 사용하며 하위 항목을 펼쳐서 노출한다. 회사 로고는 홈으로 연결한다.
 
 ---
 
 ## P01. 홈 `/`
 
-### 목적과 배치
-
-첫 화면에서 ‘기술을 이해하는 고급스러운 회사’라는 인상과 실제 사업을 함께 전달한다. 영문만 읽어야 내용을 알 수 있는 화면으로 만들지 않는다. 콘텐츠 영역 6개, 각 영역마다 하나의 역할만 둔다.
-
 ### 1. Hero
 
-Eyebrow: **HUMEASE · ENTERPRISE DATA & APPLIED AI**
+Eyebrow: **HUMEASE**
 
-H1: **Complexity, made intelligent.**
-
-보조 제목: **복잡한 데이터와 아이디어를, 실제로 작동하는 기술로.**
+H1: **복잡한 데이터와 아이디어를, 실제로 작동하는 기술로.**
 
 본문: “기업 데이터의 보존과 통제부터 AI 서비스의 설계와 구현까지. 휴미즈는 기술을 현실의 문제 해결로 연결합니다.”
 
 CTA1: **사업영역 살펴보기** → `/#business`
 CTA2: **프로젝트 문의** → `/contact`
 
-이미지: A01. 모바일은 A02를 사용한다. 로고·헤드라인·버튼은 모두 HTML. 배경 자산에 글자를 추가 생성하지 않는다. 실제 생성본의 프레이밍에 맞춰 HTML 텍스트를 배치한다.
+이미지: A01(desktop) / A02(mobile) 를 full-bleed 배경으로. 카드 프레임을 두르지 않는다.
 
-### 2. Business `#business`
+> **v2 변경.** v1 의 영문 제목 `Complexity, made intelligent.` 와
+> eyebrow `HUMEASE · ENTERPRISE DATA & APPLIED AI` 는 삭제됐다.
+> 한국어가 첫 화면을 감당하므로 Hero 타이포는 clamp 34~88px 를 사용한다.
 
-Eyebrow: **FROM DATA TO INTELLIGENCE**
+### 2. 흩어진 데이터 → 이해할 수 있는 정보로 `#business`
+
+sticky 장면 안에서 스크롤 진행도에 따라 두 상태가 교차한다. 스크롤을 가로채지 않는다.
+
+전: **흩어진 데이터** / “흩어진 기록, 서로 다른 시스템, 찾기 어려운 정보.”
+후: **이해할 수 있는 정보로** / “정돈된 데이터가 사람에게 쓸모 있는 판단으로 이어집니다.”
+
+이미지 A03. JS·모션이 없으면 두 메시지가 동시에 정적으로 읽혀야 한다.
+
+### 3. 왜 휴미즈인가
+
 H2: **데이터의 신뢰에서, AI의 실행으로.**
 
-Enterprise Data 문구: “기업의 중요한 데이터를 보존하고, 통제하고, 필요한 순간 찾을 수 있도록 설계합니다.”
-보조: **e-Discovery · Internal Control · Exchange Archive**
-링크: **Enterprise Data 알아보기** → `/enterprise-data`
+본문: “필요한 정보를 보존하고, 찾아내고, 올바르게 다루는 일. 휴미즈는 기업 데이터 환경에 대한 이해를 바탕으로 실제 사용되는 AI 서비스와 시스템을 설계합니다.”
 
-Applied AI 문구: “아이디어와 업무 과제를 사용자에게 필요한 AI 서비스로 구체화합니다. 기획부터 구현과 검증까지 연결합니다.”
-보조: **AI 서비스 · 업무 자동화 · 웹 애플리케이션**
-링크: **Applied AI 알아보기** → `/consulting/ai-transformation`
+[내부] '휴미즈 법인이 20년간 운영됐다'고 읽히는 표현은 금지한다.
 
-구현: 한 섹션 안에서 2개의 편집형 영역. A03을 낮은 높이의 공통 연결 비주얼로 사용한다. 데이터와 AI를 별도 풀스크린 인트로로 늘리지 않는다.
+### 4. 기업 데이터 (01)
 
-### 3. Own Product
+H2: **중요한 데이터는, 보관한 뒤에도 관리할 수 있어야 합니다.**
 
-Eyebrow: **BUILT BY HUMEASE**
-H2: **우리는 직접 만들며, 가능성을 검증합니다.**
-프로젝트명: **맘이음**
-상태 배지: **개발 중**
+본문: “무엇을 얼마나 보존하고, 누가 접근하며, 필요한 순간 어떻게 찾아 제출할지. 데이터의 전체 흐름을 고객 환경과 운영 요구에 맞춰 검토합니다.”
 
-주요 문구: **친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI**
+| 항목 | 화면 문구 |
+|---|---|
+| 보존 | 필요한 데이터를 정책에 맞게 남깁니다. |
+| 검색 | 필요한 정보와 관련 기록을 찾는 구조를 설계합니다. |
+| 통제 | 접근과 검토의 기준을 명확히 합니다. |
+| 대응 | 감사·조사·자료 제출에 필요한 절차를 준비합니다. |
 
-본문: “부모님에게는 일상을 함께하는 대화 상대를, 가족에게는 더 자연스럽게 연결되는 계기를. 휴미즈가 준비하고 있는 가족 소통 AI 서비스입니다.”
-CTA: **맘이음 프로젝트 보기** → `/ai-services/mom-ie`
+CTA: **기업 데이터 알아보기** → `/enterprise-data`. 이미지 A04.
 
-이미지: A10. 실제 제품 화면이 확보되면 비식별화한 승인 캡처로 교체 가능. 콘셉트 이미지로 구현 완료를 주장하지 않는다.
+### 5. Arctera 솔루션 연결
 
-### 4. Expertise
+“Arctera 솔루션 — 제품의 기능과 고객 환경에 맞는 적용 범위를 살펴보세요.”
+CTA: **Arctera 솔루션 보기** → `/solutions`
 
-Eyebrow: **EXPERTISE, APPLIED**
+[내부] 홈에 제품 카탈로그를 복제하지 않는다. 허브로 가는 짧은 연결이다.
+
+### 6. AI 서비스 (02)
+
+H2: **아이디어를, 실제로 쓰이는 AI로.**
+
+본문: “해결할 문제와 사용할 사람을 먼저 정하고, 대화 경험·데이터 흐름·업무 연결을 설계합니다. 필요한 기능을 구현한 뒤 실제 사용 과정에서 확인하고 개선합니다.”
+
+항목: AI 서비스 기획 / 대화형 서비스 / 업무 자동화 / 웹 애플리케이션·프로토타입
+CTA: **AI 서비스 알아보기** → `/consulting/ai-transformation`. 이미지 A08.
+
+### 7. 일하는 방식
+
+H2: **문제를 이해하는 데서, 작동을 확인하는 데까지.**
+
+| 단계 | 문구 |
+|---|---|
+| 이해 | 현재 환경, 사용자, 실제 문제를 확인합니다. |
+| 설계 | 데이터·기술·운영의 연결 구조를 설계합니다. |
+| 구현 | 합의한 범위부터 실제 사용할 수 있게 구현합니다. |
+| 검증 | 사용 흐름과 운영 조건을 확인하고 개선합니다. |
+
+[내부] 이 4단계를 다른 장면에서 반복하지 않는다.
+
+### 8. AI 포트폴리오
+
+H2: **우리가 만든 것들이, 우리의 역량을 설명합니다.**
+
+본문: “아이디어에서 출발해 서비스로 이어지는 과정. 휴미즈의 AI 개발 프로젝트와 그 안에서 풀어가는 문제를 소개합니다.”
+
+공개 승인된 `featured` 항목 최대 3개. 이름·한 줄 정의·검증된 단계·상세 링크만 노출한다.
+CTA: **전체 AI 포트폴리오 보기** → `/ai-services`
+
+### 9. 전문성
+
+대형 문구: **20년 이상의 Enterprise IT 경험을, AI 시대의 문제 해결에 연결합니다.**
+
 H2: **기술의 깊이는, 문제를 해결해 온 경험에서 나옵니다.**
 본문: “기업 데이터 환경과 운영 제약을 이해하는 전문성을 바탕으로, 필요한 기술을 선택하고 실행 가능한 구조를 설계합니다.”
+
+키워드(전문가 개인 경력): Microsoft MVP · Symantec · Veritas · Arctera · 기업 데이터 · AI 제품 개발
+고지: “개인이 쌓아 온 경력이며, 회사의 현재 소속·공식 파트너 관계를 뜻하지 않습니다.”
 CTA: **휴미즈 알아보기** → `/about`
 
-증거 행은 검증된 개인 전문경력만 추가한다. 숫자 증명이 없으면 이 카피만으로 완성한다. 대기업 로고 띠, 미확인 20년 기업 업력·고객수는 넣지 않는다.
+### 10. 자주 묻는 질문
 
-### 5. Insights
+- **휴미즈는 어떤 회사인가요?**
+- **AI 서비스와 AI 포트폴리오는 무엇이 다른가요?**
+- **프로젝트 문의 전에 무엇을 준비하면 되나요?**
+
+답변 본문은 화면 구현과 동일하며 정적 HTML 에 존재한다. 질문마다 상담 문구를 반복하지 않는다.
+
+### 11. 인사이트
 
 H2: **현장에서 생각하고, 기술로 답합니다.**
-본문: “Enterprise Data와 Applied AI에 대한 휴미즈의 생각과 기록을 만나보세요.”
-CTA: **인사이트 보기** → `/insights`
+본문: “기업 데이터와 AI 서비스에 대한 휴미즈의 생각과 기록을 만나보세요.”
+실제 글이 없으면 블로그 링크만 둔다. 가짜 글·날짜를 만들지 않는다.
 
-실제 확인된 글이 있을 때 최대 3개. 없으면 소개 문구와 CTA만 노출한다. 가짜 최신 글을 만들지 않는다.
-
-### 6. Contact
+### 12. 문의
 
 H2: **해결하고 싶은 문제가 있다면, 함께 살펴보겠습니다.**
 본문: “데이터 환경의 고민부터 AI 서비스 아이디어까지. 현재 상황과 기대하는 변화를 알려주세요.”
-CTA: **프로젝트 문의** → `/contact`
+CTA: **프로젝트 문의** → `/contact`. 이미지 A13.
 
 ### SEO
 
-Title: **휴미즈 | Enterprise Data & Applied AI**
-Description: **기업 데이터의 보존·검색·통제부터 AI 서비스 설계와 구현까지. 휴미즈의 Enterprise Data, Applied AI, 맘이음 프로젝트를 만나보세요.**
+Title: **휴미즈 | Enterprise Data · Applied AI**
+Description: **기업 데이터의 보존·검색·통제와 AI 서비스 설계·구현을 연결합니다. 휴미즈의 전문 영역, AI 포트폴리오와 Arctera Solutions를 소개합니다.**
 
 ---
 
@@ -107,7 +186,7 @@ Description: **기업 데이터의 보존·검색·통제부터 AI 서비스 설
 
 ### Hero
 
-Eyebrow: **ABOUT HUMEASE**
+Eyebrow: **휴미즈 소개**
 H1: **복잡한 기술을, 사람에게 필요한 가치로.**
 본문: “휴미즈는 기업 데이터의 신뢰를 설계하고, AI를 실제 사용되는 서비스로 연결하는 기술회사입니다.”
 이미지: A11. 실제 사무실 사진으로 설명하지 않는다.
@@ -138,16 +217,16 @@ H2: **경험은 이름이 아니라, 실행의 기준이 됩니다.**
 
 CTA: **함께할 프로젝트 문의** → `/contact`
 
-SEO Title: **회사소개 | 휴미즈**
-Description: **기업 데이터의 신뢰와 AI 서비스의 실행을 연결하는 휴미즈. 문제를 이해하고, 설계하고, 구현하는 접근 방식을 소개합니다.**
+SEO Title: **회사소개 · 데이터와 AI 전문 영역 | 휴미즈**
+Description: **휴미즈의 사업 방향과 전문 영역, 확인된 실무 경험을 소개합니다. 기업 데이터와 AI 서비스를 어떤 관점으로 다루는지 확인하세요.**
 
 ---
 
-## P03. Enterprise Data `/enterprise-data`
+## P03. 기업 데이터 `/enterprise-data`
 
 ### Hero
 
-Eyebrow: **ENTERPRISE DATA**
+Eyebrow: **기업 데이터**
 H1: **중요한 데이터를, 믿고 활용할 수 있도록.**
 본문: “보존과 검색, 통제와 운영까지. 기업의 데이터가 필요한 순간 제 역할을 할 수 있도록 정책과 시스템을 함께 설계합니다.”
 CTA: **데이터 환경 상담** → `/contact?service=enterprise-data`
@@ -157,9 +236,9 @@ CTA: **데이터 환경 상담** → `/contact?service=enterprise-data`
 
 **e-Discovery** — “조사와 감사, 분쟁 대응에 필요한 데이터를 찾고 검토할 수 있는 체계를 설계합니다.” → `/consulting/e-discovery`
 
-**Internal Control** — “민감정보와 커뮤니케이션 리스크를 살펴보고, 점검·조치·기록의 흐름을 정리합니다.” → `/consulting/internal-control`
+**내부 통제** — “민감정보와 커뮤니케이션 리스크를 살펴보고, 점검·조치·기록의 흐름을 정리합니다.” → `/consulting/internal-control`
 
-**Exchange Archive** — “메일 보존 정책과 사용 환경을 함께 고려해, 아카이빙과 검색 구조를 설계합니다.” → `/consulting/exchange-archive`
+**Exchange 아카이빙** — “메일 보존 정책과 사용 환경을 함께 고려해, 아카이빙과 검색 구조를 설계합니다.” → `/consulting/exchange-archive`
 
 ### 접근 방식
 
@@ -172,8 +251,8 @@ H2: **환경에 맞는 구조가, 오래 작동합니다.**
 솔루션 연결 문구: “어떤 제품을 쓸지보다, 어떤 문제를 해결할지가 먼저입니다.”
 링크: **검토 가능한 솔루션 보기** → `/solutions`
 
-SEO Title: **Enterprise Data | 휴미즈**
-Description: **e-Discovery, 내부 통제, Exchange 아카이빙을 위한 정책과 시스템 설계. 휴미즈와 기업 데이터 환경의 과제를 검토하세요.**
+SEO Title: **기업 데이터 | 휴미즈**
+Description: **아카이빙, e-Discovery, 내부통제를 고객의 데이터 환경과 운영 요구에 연결합니다. 보존·검색·접근·자료 제출 시 검토할 항목을 안내합니다.**
 
 ---
 
@@ -181,7 +260,7 @@ Description: **e-Discovery, 내부 통제, Exchange 아카이빙을 위한 정�
 
 ### Hero
 
-Eyebrow: **ENTERPRISE DATA / E-DISCOVERY**
+Eyebrow: **e-Discovery**
 H1: **필요한 증거를, 설명 가능한 과정으로.**
 본문: “조사·감사·분쟁 대응에 필요한 데이터의 보존, 수집, 검색과 검토 흐름을 기업 환경에 맞게 설계합니다.”
 이미지: A05.
@@ -205,16 +284,16 @@ FAQ3: **특정 제품만 사용하나요?** “현재 환경과 요구를 먼저
 
 CTA: **e-Discovery 상담** → `/contact?service=e-discovery`
 연결: **Enterprise Data 전체 보기** → `/enterprise-data`
-SEO Title: **e-Discovery 컨설팅 | 휴미즈**
-Description: **조사·감사·분쟁 대응을 위한 데이터 보존, 검색, 검토 흐름을 기업 환경에 맞게 설계하는 휴미즈 e-Discovery 컨설팅.**
+SEO Title: **e-Discovery 컨설팅 · 조사와 자료 제출 | 휴미즈**
+Description: **조사 범위, 데이터 수집·보존, 검색·검토·내보내기 절차를 검토합니다. eDiscovery Platform 등 관련 제품과 컨설팅의 역할을 구분해 설명합니다.**
 
 ---
 
-## P05. Internal Control `/consulting/internal-control`
+## P05. 내부 통제 `/consulting/internal-control`
 
 ### Hero
 
-Eyebrow: **ENTERPRISE DATA / INTERNAL CONTROL**
+Eyebrow: **내부 통제**
 H1: **리스크를 발견하고, 대응을 기록하는 구조.**
 본문: “민감정보와 업무 커뮤니케이션을 관리하는 기준부터 점검·조치의 흐름까지. 실제 운영을 고려한 통제 체계를 설계합니다.”
 이미지: A06.
@@ -233,16 +312,16 @@ FAQ2: **리스크 탐지 정확도를 보장하나요?** “데이터·정책·�
 FAQ3: **모든 직원 데이터를 수집해야 하나요?** “업무 목적과 허용 범위를 먼저 검토하며, 불필요한 수집을 기본 전제로 삼지 않습니다.”
 
 CTA: **내부 통제 상담** → `/contact?service=internal-control`
-SEO Title: **Internal Control 컨설팅 | 휴미즈**
-Description: **민감정보와 업무 커뮤니케이션의 관리 기준, 점검, 조치와 기록을 연결하는 휴미즈 내부 통제 컨설팅.**
+SEO Title: **데이터 내부통제 · 검토 정책과 운영 절차 | 휴미즈**
+Description: **커뮤니케이션 검토, 접근 현황, 이상 징후 확인과 조치 기록을 연결하는 내부통제 접근 방식을 소개합니다. 실제 적용 범위는 환경별로 검토합니다.**
 
 ---
 
-## P06. Exchange Archive `/consulting/exchange-archive`
+## P06. Exchange 아카이빙 `/consulting/exchange-archive`
 
 ### Hero
 
-Eyebrow: **ENTERPRISE DATA / EXCHANGE ARCHIVE**
+Eyebrow: **Exchange 아카이빙**
 H1: **메일의 가치는 남기고, 운영의 부담은 줄이도록.**
 본문: “메일 보존과 검색, 사용자의 접근 방식과 시스템 운영을 함께 고려해 아카이빙 구조를 설계합니다.”
 이미지: A07.
@@ -261,18 +340,18 @@ FAQ2: **용량 절감률을 미리 알 수 있나요?** “실제 데이터와 �
 FAQ3: **Enterprise Vault를 검토할 수 있나요?** “기존 구성 또는 도입 요구를 기준으로 지원 버전과 기능 범위를 함께 확인합니다.”
 
 CTA: **아카이빙 환경 상담** → `/contact?service=exchange-archive`
-SEO Title: **Exchange 아카이빙 컨설팅 | 휴미즈**
-Description: **메일 보존·검색·사용자 접근·운영을 함께 고려한 Exchange 아카이빙 설계와 도입·이관 검토를 지원합니다.**
+SEO Title: **Exchange 아카이빙 · 보존 정책과 운영 설계 | 휴미즈**
+Description: **Exchange 메일 보존, 검색, 사서함 운영과 아카이브 요구를 함께 검토합니다. Enterprise Vault 적용 시 확인할 구성과 운영 조건을 안내합니다.**
 
 ---
 
-## P07. Applied AI `/consulting/ai-transformation`
+## P07. AI 서비스 `/consulting/ai-transformation`
 
 기존 URL을 유지하되 화면의 사업 명칭은 Applied AI로 바꾼다.
 
 ### Hero
 
-Eyebrow: **APPLIED AI**
+Eyebrow: **AI 서비스**
 H1: **아이디어를, 실제로 쓰이는 AI로.**
 본문: “어떤 AI를 도입할지보다, 누구의 어떤 문제를 해결할지에서 시작합니다. 사용자 흐름과 업무 맥락을 기반으로 서비스를 설계하고 구현합니다.”
 이미지: A08.
@@ -298,16 +377,16 @@ H2: **만드는 경험도, 다음 설계의 기준이 됩니다.**
 
 FAQ: “범위와 일정·비용은 요구사항과 연계 환경을 확인한 뒤 제안합니다. AI가 항상 정확하게 답하거나 모든 업무를 무인으로 처리한다고 보장하지 않습니다.”
 
-SEO Title: **Applied AI · AI 서비스 개발 | 휴미즈**
-Description: **AI 서비스, 업무 자동화, 웹 애플리케이션과 MVP를 사용자 흐름에 맞게 설계하고 구현하는 휴미즈 Applied AI.**
+SEO Title: **AI 서비스 | 휴미즈**
+Description: **해결할 문제와 사용자 경험을 정의하고 데이터 흐름, AI 적용 범위, 검증 기준을 설계합니다. 실제 AI 포트폴리오와 함께 접근 방식을 소개합니다.**
 
 ---
 
-## P08. AI 프로젝트 `/ai-services`
+## P08. AI 포트폴리오 허브 `/ai-services`
 
 ### Hero
 
-Eyebrow: **BUILT BY HUMEASE**
+Eyebrow: **AI 포트폴리오**
 H1: **우리는 직접 만들며, 가능성을 검증합니다.**
 본문: “사람의 일상과 업무에 필요한 AI를 서비스로 구체화합니다. 휴미즈가 준비하고 있는 프로젝트를 소개합니다.”
 이미지: A09.
@@ -326,8 +405,8 @@ CTA: **프로젝트 자세히 보기** → `/ai-services/mom-ie`
 
 하단 문구: “함께 구체화하고 싶은 AI 아이디어가 있으신가요?”
 CTA: **협업 문의** → `/contact?service=applied-ai`
-SEO Title: **AI 프로젝트 | 휴미즈**
-Description: **휴미즈가 직접 준비하는 AI 프로젝트를 소개합니다. 가족 소통 AI 서비스 맘이음의 방향과 개발 이야기를 만나보세요.**
+SEO Title: **AI 포트폴리오 | 휴미즈**
+Description: **휴미즈의 AI 개발 포트폴리오를 소개합니다. 프로젝트별 해결 과제, 구현 범위, 개발 참여와 현재 단계를 확인할 수 있습니다.**
 
 ---
 
@@ -335,7 +414,7 @@ Description: **휴미즈가 직접 준비하는 AI 프로젝트를 소개합니�
 
 ### Hero
 
-Eyebrow: **HUMEASE AI PROJECT**
+Eyebrow: **휴미즈 AI 프로젝트**
 상태: **개발 중**
 H1: **맘이음**
 메인 문구: **친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI**
@@ -367,16 +446,16 @@ CTA: **맘이음 협업 문의** → `/contact?service=momieum`
 
 외부 서비스/랜딩페이지 링크는 정상 공개·브랜드·정책·접근 권한이 검증된 뒤만 추가한다. 현재 기준의 필수 CTA는 내부 문의이므로 외부 링크 확인 실패로 가짜 연결이 생기지 않는다.
 
-SEO Title: **맘이음 — 개발 중인 가족 소통 AI | 휴미즈**
-Description: **친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI. 휴미즈가 개발 중인 맘이음의 서비스 방향을 소개합니다.**
+SEO Title: **맘이음 · 가족 소통 AI 개발 프로젝트 | 휴미즈**
+Description: **친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI 맘이음의 개발 방향을 소개합니다. 현재 개발 중인 프로젝트입니다.**
 
 ---
 
-## P10. 엔터프라이즈 솔루션 `/solutions`
+## P10. Arctera 솔루션 허브 `/solutions`
 
 ### Hero
 
-Eyebrow: **ENTERPRISE SOLUTIONS**
+Eyebrow: **Arctera 솔루션**
 H1: **제품보다 먼저, 환경에 맞는 구조를 봅니다.**
 본문: “데이터 보존과 검색, 수집과 통제의 요구를 확인하고 적합한 구성을 검토합니다.”
 이미지: A12.
@@ -400,8 +479,8 @@ CTA: **솔루션 상담** → `/contact?service=enterprise-data`
 
 구현 규칙: 제품명은 이전 자료의 상담 대상 후보에서 이관했다. 현재 실제 지원·상담 대상인지 G0에서 재확인한다. 상세 지원 버전·커넥터 개수·인증·성능·소유회사·파트너 지위는 공식 자료 재확인 전 추가하지 않는다. 파트너 로고 띠를 기본 삭제하고, 사용권·관계가 확인된 제품 로고만 개별 표기한다. 내용은 클릭하지 않아도 읽히게 하고 큰 모달에 핵심 정보를 숨기지 않는다.
 
-SEO Title: **엔터프라이즈 솔루션 | 휴미즈**
-Description: **Enterprise Vault, Merge1, Data Insight 등 기존 데이터 환경과 요구에 맞는 솔루션 적용과 구성 검토를 지원합니다.**
+SEO Title: **Arctera 솔루션 | 휴미즈**
+Description: **Enterprise Vault Complete, Enterprise Vault Capture (formerly Merge1), Data Insight, eDiscovery Platform의 역할과 적용 검토 항목을 한국어로 안내합니다.**
 
 ---
 
@@ -409,7 +488,7 @@ Description: **Enterprise Vault, Merge1, Data Insight 등 기존 데이터 환�
 
 ### Hero 및 화면
 
-Eyebrow: **LET'S TALK**
+Eyebrow: **문의**
 H1: **어떤 문제를 함께 해결할까요?**
 본문: “현재 상황과 기대하는 변화를 알려주세요. 필요한 접근 방식과 다음 단계를 함께 살펴보겠습니다.”
 
@@ -425,8 +504,8 @@ H1: **어떤 문제를 함께 해결할까요?**
 
 법적 동의·성공·오류 카피와 저장·알림 규칙은 06 문서의 계약을 적용한다. 실제 동의/정책/저장경로 검증 전에는 비활성 폼을 억지로 공개하지 않고 이메일 CTA를 우선 노출한다. 운영자 확인 없이 응답 시간을 약속하지 않는다.
 
-SEO Title: **프로젝트 문의 | 휴미즈**
-Description: **Enterprise Data와 Applied AI 프로젝트를 문의하세요. 현재 환경과 해결하고 싶은 과제를 알려주시면 확인 후 회신드리겠습니다.**
+SEO Title: **프로젝트·솔루션 문의 | 휴미즈**
+Description: **Enterprise Data, Applied AI, Arctera 솔루션 검토와 개발 협업 문의를 받습니다. 현재 환경과 해결하고 싶은 과제를 알려주세요.**
 
 ---
 
@@ -434,7 +513,7 @@ Description: **Enterprise Data와 Applied AI 프로젝트를 문의하세요. �
 
 ### Hero
 
-Eyebrow: **INSIGHTS**
+Eyebrow: **인사이트**
 H1: **기술을 이해하고, 현장에 연결하는 기록.**
 본문: “Enterprise Data와 Applied AI의 실무에서 마주하는 질문과 생각을 나눕니다.”
 
@@ -450,7 +529,7 @@ A14는 데이터 글, A15는 AI 글, A16은 제품 개발 글의 콘셉트 커�
 외부 글은 새 탭 표시와 안전한 rel을 적용한다. 외부 블로그는 이번 개발의 배포/DB/DNS 수정 대상이 아니다.
 
 SEO Title: **인사이트 | 휴미즈**
-Description: **Enterprise Data와 Applied AI를 현장에 연결하는 휴미즈의 생각과 기록. 데이터 컴플라이언스와 AI 서비스 개발 인사이트를 만나보세요.**
+Description: **Enterprise Data와 Applied AI에 관한 휴미즈의 공개 기술 기록을 모았습니다. 작성자, 확인 시점과 근거가 있는 콘텐츠로 연결합니다.**
 
 ---
 
@@ -489,3 +568,21 @@ CTA2: **문의하기** → `/contact`
 `/privacy`와 `/terms`는 승인된 실제 문서가 있을 때 공개한다. `/terms`의 별도 필요성이 확인되지 않으면 메뉴와 sitemap에 넣지 않고 정상 404로 처리한다. 개인정보 수집 기능을 켜면서 `/privacy`를 생략하는 것은 허용하지 않는다. 회사 홈페이지와 맘이음 앱의 정책을 서로 복사해 같은 서비스인 것처럼 표시하지 않는다.
 
 각 페이지의 이미지는 `docs/ASSET_MAP.csv`와 실제 `src/content/assets.ts`를 기준으로 연결한다. 별도의 이미지 생성 프롬프트나 이미지 제작 라운드를 만들지 않는다.
+
+
+---
+
+## 15. v2 개정 요약
+
+| 항목 | v1 | v2 (현행) |
+|---|---|---|
+| 표시 언어 | 영문 섹션명·영문 Hero 제목 | **Korean-first.** 장식용 영문 제거 |
+| Hero 영문 제목 | `Complexity, made intelligent.` | **삭제** |
+| 사업축 표기 | Enterprise Data / Applied AI | **기업 데이터 / AI 서비스** |
+| 솔루션 영역 | 엔터프라이즈 솔루션(제품 3개 한 줄) | **Arctera 솔루션 허브 + 제품 상세 4개** |
+| 포트폴리오 | 맘이음 단일 소개 | **누적형 허브 + 프로젝트 상세 4개** |
+| 공개 페이지 | 12개 | **19개** + 별칭 11개 |
+| SEO title/description | 페이지명 중심 | **검색 의도 중심**(§5.3 기준) |
+
+대체된 개별 문구는 `scripts/copy-supersessions.json` 에 페이지·근거 조항·사유와 함께 기록돼 있다.
+`npm run verify:copy` 가 이 문서를, `npm run verify:request` 가 후속 요청서 지정 카피를 각각 대조한다.
