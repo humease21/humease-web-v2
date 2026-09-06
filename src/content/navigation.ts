@@ -9,20 +9,22 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: 'Enterprise Data', href: '/enterprise-data' },
       { label: 'Applied AI', href: '/consulting/ai-transformation' },
-      { label: '엔터프라이즈 솔루션', href: '/solutions' },
+      { label: 'Arctera Solutions', href: '/solutions' },
     ],
   },
-  { label: 'AI 프로젝트', href: '/ai-services' },
+  { label: 'AI Portfolio', href: '/ai-services' },
   { label: '인사이트', href: '/insights' },
   { label: '회사소개', href: '/about' },
   { label: '문의', href: '/contact' },
 ];
 
-/** docs/03 §14 — 공개 12개 페이지. sitemap 의 단일 출처. */
-export const publicRoutes = [
+/**
+ * 공개 라우트. sitemap 의 단일 출처.
+ * 포트폴리오·제품 상세는 각 데이터에서 생성하므로 여기에 하드코딩하지 않는다.
+ */
+export const staticPublicRoutes = [
   '/', '/about', '/enterprise-data',
   '/consulting/e-discovery', '/consulting/internal-control',
   '/consulting/exchange-archive', '/consulting/ai-transformation',
-  '/ai-services', '/ai-services/mom-ie',
-  '/solutions', '/contact', '/insights',
+  '/ai-services', '/solutions', '/contact', '/insights',
 ] as const;

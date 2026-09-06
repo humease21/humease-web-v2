@@ -1,4 +1,5 @@
 import { Reveal } from '@/components/interactive/Reveal';
+import { A } from '@/components/ui/Link';
 
 /**
  * Experience — 작은 경력 카드 나열 대신 대형 문장 + 키워드 editorial layout.
@@ -46,9 +47,9 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
               </Reveal>
             )}
             <Reveal delay={4}>
-              <a href={aboutCopy ? '/contact' : '/about'} className="cta-ghost mt-11">
+              <A href={aboutCopy ? '/contact' : '/about'} className="cta-ghost mt-11">
                 {aboutCopy ? '함께할 프로젝트 문의' : '휴미즈 알아보기'}<span aria-hidden="true">→</span>
-              </a>
+              </A>
             </Reveal>
           </div>
 

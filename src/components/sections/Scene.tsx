@@ -3,6 +3,7 @@
    모바일에서 desktop 원본까지 받는 문제가 실측 확인됐다(docs/05 §5). */
 import type { Asset } from '@/content/assets';
 import { Reveal } from '@/components/interactive/Reveal';
+import { A } from '@/components/ui/Link';
 
 type Ambient = 'cool' | 'warm' | 'silver' | 'none';
 
@@ -68,7 +69,7 @@ export function NumberedScene({
           <Reveal delay={2}><p className="lead measure mt-8">{lead}</p></Reveal>
           {cta && (
             <Reveal delay={3}>
-              <a href={cta.href} className="cta-ghost mt-10">{cta.label}<span aria-hidden="true">→</span></a>
+              <A href={cta.href} className="cta-ghost mt-10">{cta.label}<span aria-hidden="true">→</span></A>
             </Reveal>
           )}
         </div>
@@ -107,9 +108,9 @@ export function Statement({
       ))}
       {cta && (
         <Reveal delay={4}>
-          <a href={cta.href} className={`${cta.primary ? 'cta-primary' : 'cta-ghost'} mt-11`}>
+          <A href={cta.href} className={`${cta.primary ? 'cta-primary' : 'cta-ghost'} mt-11`}>
             {cta.label}<span aria-hidden="true">→</span>
-          </a>
+          </A>
         </Reveal>
       )}
     </div>

@@ -3,6 +3,7 @@
    모바일에서 desktop 원본까지 받는 문제가 실측 확인됐다(docs/05 §5). */
 import { Reveal } from '@/components/interactive/Reveal';
 import { company } from '@/content/company';
+import { A } from '@/components/ui/Link';
 
 /** 마지막 full-width closing scene. 대형 타이포 + 강한 CTA 하나. */
 export function ClosingContact({ image }: { image?: { src: string; width: number; height: number } }) {
@@ -27,8 +28,8 @@ export function ClosingContact({ image }: { image?: { src: string; width: number
           </Reveal>
           <Reveal delay={3}>
             <div className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-5">
-              <a href="/contact" className="cta-primary">프로젝트 문의<span aria-hidden="true">→</span></a>
-              <a href={`mailto:${company.email}`} className="cta-ghost">{company.email}</a>
+              <A href="/contact" className="cta-primary">프로젝트 문의<span aria-hidden="true">→</span></A>
+              <A href={`mailto:${company.email}`} className="cta-ghost">{company.email}</A>
             </div>
           </Reveal>
         </div>

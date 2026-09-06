@@ -1,5 +1,6 @@
 import { Reveal } from '@/components/interactive/Reveal';
 import { company } from '@/content/company';
+import { A } from '@/components/ui/Link';
 
 export type Article = {
   title: string; date: string; category: string; href: string; summary: string; image?: string;
@@ -28,9 +29,9 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
           </p>
         </Reveal>
         <Reveal delay={4}>
-          <a href={company.blogUrl} target="_blank" rel="noopener noreferrer" className="cta-ghost mt-10">
+          <A href={company.blogUrl} target="_blank" rel="noopener noreferrer" className="cta-ghost mt-10">
             휴미즈 블로그 보기<span aria-hidden="true">↗</span>
-          </a>
+          </A>
         </Reveal>
       </div>
     );
@@ -45,7 +46,7 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
           <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--color-accent)]">
             {lead.category} · {lead.date}
           </p>
-          <a href={lead.href} className="mt-4 block title-ko-sm hover:text-[var(--color-accent)]">{lead.title}</a>
+          <A href={lead.href} className="mt-4 block title-ko-sm hover:text-[var(--color-accent)]">{lead.title}</A>
           <p className="lead measure mt-5">{lead.summary}</p>
         </Reveal>
       </article>
@@ -54,7 +55,7 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
           {rest.map((a, i) => (
             <Reveal as="li" key={a.href} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
               <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--color-muted)]">{a.category} · {a.date}</p>
-              <a href={a.href} className="text-[17px] font-medium hover:text-[var(--color-accent)]">{a.title}</a>
+              <A href={a.href} className="text-[17px] font-medium hover:text-[var(--color-accent)]">{a.title}</A>
             </Reveal>
           ))}
         </ul>

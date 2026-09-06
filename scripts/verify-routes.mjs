@@ -1,7 +1,7 @@
 /** docs/04 §2 — 공개 12개 라우트가 정적 산출물로 실제 존재하는지 검사한다. */
 import { access } from 'node:fs/promises';
 import path from 'node:path';
-import { publicRoutes } from '../src/content/navigation.ts';
+import { staticPublicRoutes as publicRoutes } from '../src/content/navigation.ts';
 
 const OUT = path.join(process.cwd(), 'out');
 const missing = [];

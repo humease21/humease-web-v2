@@ -14,7 +14,12 @@ export default function robots(): MetadataRoute.Robots {
   const isPreview = basePath !== '';
 
   if (isPreview) {
-    return { rules: [{ userAgent: '*', disallow: '/' }] };
+    /*
+     * 검증 환경은 meta robots noindex 로 색인을 막는다.
+     * robots.txt 로 크롤링까지 막으면 크롤러가 noindex 를 읽지 못해
+     * 오히려 색인이 남을 수 있다(요청서 §8.6). 크롤링은 허용하고 사이트맵만 내지 않는다.
+     */
+    return { rules: [{ userAgent: '*', allow: '/' }] };
   }
 
   return {

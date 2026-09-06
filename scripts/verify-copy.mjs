@@ -33,6 +33,10 @@ async function page(route) {
   return { body, title, desc };
 }
 
+// 후속 요청서가 대체한 카피는 검증에서 제외한다. 대체 사실은 파일에 명시적으로 기록한다.
+const sup = JSON.parse(await readFile(path.join(process.cwd(), 'scripts/copy-supersessions.json'), 'utf8'));
+const superseded = new Set(sup.supersessions.map((x) => norm(x.text)));
+
 const spec = await readFile(SPEC, 'utf8');
 // 각 페이지 절은 다음 '## ' 제목 직전까지다. 마지막 절이 §13·§14 까지 삼키지 않게 자른다.
 const sections = spec.split(/\n## (?=P\d\d\.)/).slice(1)
@@ -50,8 +54,8 @@ for (const sec of sections) {
   // SEO 는 메타 태그와 대조
   const seoTitle = sec.match(/SEO Title:\s*\*\*(.+?)\*\*/)?.[1] ?? sec.match(/Title:\s*\*\*(.+?)\*\*/)?.[1];
   const seoDesc = sec.match(/Description:\s*\*\*(.+?)\*\*/)?.[1];
-  if (seoTitle) { checked++; if (norm(p.title) !== norm(seoTitle)) fails.push(`${id} title\n      기대: ${norm(seoTitle)}\n      실제: ${norm(p.title)}`); }
-  if (seoDesc)  { checked++; if (norm(p.desc)  !== norm(seoDesc))  fails.push(`${id} description\n      기대: ${norm(seoDesc).slice(0,70)}…\n      실제: ${norm(p.desc).slice(0,70)}…`); }
+  if (seoTitle && !superseded.has(norm(seoTitle))) { checked++; if (norm(p.title) !== norm(seoTitle)) fails.push(`${id} title\n      기대: ${norm(seoTitle)}\n      실제: ${norm(p.title)}`); }
+  if (seoDesc && !superseded.has(norm(seoDesc)))  { checked++; if (norm(p.desc)  !== norm(seoDesc))  fails.push(`${id} description\n      기대: ${norm(seoDesc).slice(0,70)}…\n      실제: ${norm(p.desc).slice(0,70)}…`); }
 
   // 본문 카피 — 한 줄 안에 닫힌 따옴표만, 내부 지시 줄 제외
   for (const line of sec.split('\n')) {
@@ -59,6 +63,7 @@ for (const sec of sections) {
     if (/^###|^\*\*\d/.test(line.trim())) continue;
     for (const m of line.matchAll(/[“"]([^”"]{15,})[”"]/g)) {
       const c = norm(m[1]);
+      if (superseded.has(c)) continue;
       checked++;
       if (!p.body.includes(c)) fails.push(`${id} ${route} 본문\n      기대: ${c.slice(0, 70)}${c.length > 70 ? '…' : ''}`);
     }
@@ -76,6 +81,6 @@ for (const sec of sections) {
   }
 }
 
-console.log(`  대조 ${checked}건 / 12개 페이지 + 404`);
+console.log(`  대조 ${checked}건 / 12개 페이지 + 404  (요청서 ${sup.requestId} 로 대체된 ${superseded.size}건 제외)`);
 if (fails.length) { console.error(`FAIL  불일치 ${fails.length}건:`); for (const f of fails) console.error('    ' + f); process.exit(1); }
 console.log('PASS  docs/03 공개 카피·SEO 메타가 렌더 결과와 일치');
