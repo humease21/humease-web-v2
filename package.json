@@ -14,7 +14,9 @@
     "verify:exposure": "node scripts/verify-client-exposure.mjs",
     "verify:font": "node scripts/verify-font-subset.mjs",
     "verify:copy": "node scripts/verify-copy.mjs",
-    "verify:assets": "node scripts/verify-assets.mjs"
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "verify:content": "node scripts/verify-content.mjs",
+    "verify:request": "node scripts/verify-request-copy.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

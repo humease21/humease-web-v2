@@ -3,6 +3,7 @@
    모바일에서 desktop 원본까지 받는 문제가 실측 확인됐다(docs/05 §5). */
 import type { Asset } from '@/content/assets';
 import { Reveal } from '@/components/interactive/Reveal';
+import { A } from '@/components/ui/Link';
 
 /**
  * 맘이음 — 일반 서비스 카드가 아니라 독립 Product Reveal 장면.
@@ -53,9 +54,9 @@ export function ProductReveal({ image, body }: { image: Asset; body?: string }) 
           </Reveal>
 
           <Reveal delay={4}>
-            <a href="/ai-services/mom-ie" className="cta-ghost mt-11">
+            <A href="/ai-services/mom-ie" className="cta-ghost mt-11">
               맘이음 프로젝트 보기<span aria-hidden="true">→</span>
-            </a>
+            </A>
           </Reveal>
         </div>
       </div>

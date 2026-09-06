@@ -4,6 +4,7 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { A } from '@/components/ui/Link';
 
 export const metadata = pageMeta({
   title: 'Exchange 아카이빙 컨설팅 | 휴미즈',
@@ -56,7 +57,7 @@ export default function Page() {
         <Reveal as="p" className="eyebrow">FAQ</Reveal>
         <div className="mt-10"><Faq items={FAQ} /></div>
         <Reveal delay={3}>
-          <a href="/contact" className="cta-primary mt-14">아카이빙 환경 상담<span aria-hidden="true">→</span></a>
+          <A href="/contact" className="cta-primary mt-14">아카이빙 환경 상담<span aria-hidden="true">→</span></A>
         </Reveal>
       </Scene>
 

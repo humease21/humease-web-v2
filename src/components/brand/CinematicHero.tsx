@@ -3,6 +3,7 @@
    모바일에서 desktop 원본까지 받는 문제가 실측 확인됐다(docs/05 §5). */
 import type { Asset } from '@/content/assets';
 import { Reveal } from '@/components/interactive/Reveal';
+import { A } from '@/components/ui/Link';
 
 type Cta = { label: string; href: string; primary?: boolean };
 
@@ -74,10 +75,10 @@ export function CinematicHero({
             <Reveal delay={4}>
               <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
                 {ctas.map((c) => (
-                  <a key={c.href} href={c.href} className={c.primary === false ? 'cta-ghost' : 'cta-primary'}>
+                  <A key={c.href} href={c.href} className={c.primary === false ? 'cta-ghost' : 'cta-primary'}>
                     {c.label}
                     <span aria-hidden="true">→</span>
-                  </a>
+                  </A>
                 ))}
               </div>
             </Reveal>

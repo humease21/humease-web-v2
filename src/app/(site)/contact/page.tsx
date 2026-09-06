@@ -5,6 +5,7 @@ import { assets } from '@/content/assets';
 import { company } from '@/content/company';
 import { CONTACT_MODE, contactFields } from '@/content/contact';
 import { pageMeta } from '@/lib/seo';
+import { A } from '@/components/ui/Link';
 
 export const metadata = pageMeta({
   title: '프로젝트 문의 | 휴미즈',
@@ -47,9 +48,9 @@ export default function Page() {
                 </p>
               </Reveal>
               <Reveal delay={4}>
-                <a href={`mailto:${company.email}`} className="cta-primary mt-11">
+                <A href={`mailto:${company.email}`} className="cta-primary mt-11">
                   {company.email}<span aria-hidden="true">→</span>
-                </a>
+                </A>
               </Reveal>
             </div>
 
