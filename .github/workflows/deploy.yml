@@ -57,6 +57,7 @@ jobs:
           node scripts/verify-assets.mjs
           node scripts/verify-client-exposure.mjs
           node scripts/verify-font-subset.mjs
+          node scripts/verify-llms.mjs
 
       - name: preview 산출물 폐기
         # 배포되는 것은 production 산출물이다. preview out 을 복원하지 않는다.
@@ -88,6 +89,14 @@ jobs:
           node scripts/verify-client-exposure.mjs
           node scripts/verify-font-subset.mjs
           node scripts/verify-entities.mjs
+          node scripts/verify-llms.mjs
+
+      - name: IndexNow dry-run (외부 전송 없음)
+        # INDEXNOW_ENABLED 를 주지 않으므로 후보 목록만 출력하고 종료한다.
+        # 실전송은 대표님 승인 후 별도 수동 실행이다. (요청서 §13)
+        env:
+          NEXT_PUBLIC_SITE_DEPLOY_TARGET: production
+        run: node scripts/indexnow.mjs
 
       - name: Disable Jekyll
         # Custom Domain 은 저장소 Pages 설정(API)에서 관리한다. custom workflow
