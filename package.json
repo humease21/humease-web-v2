@@ -9,7 +9,12 @@
     "lint": "eslint",
     "optimize:assets": "node scripts/optimize-assets.mjs",
     "optimize:logo": "node scripts/optimize-logo.mjs",
-    "subset:font": "node scripts/subset-font.mjs"
+    "subset:font": "node scripts/subset-font.mjs",
+    "verify:routes": "node scripts/verify-routes.mjs",
+    "verify:exposure": "node scripts/verify-client-exposure.mjs",
+    "verify:font": "node scripts/verify-font-subset.mjs",
+    "verify:copy": "node scripts/verify-copy.mjs",
+    "verify:assets": "node scripts/verify-assets.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

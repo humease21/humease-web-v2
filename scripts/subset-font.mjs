@@ -48,4 +48,6 @@ const buf = await subsetFont(await readFile(SRC), text, {
 });
 await writeFile(path.join(OUT, 'noto-sans-kr-subset.woff2'), buf);
 console.log(`  noto-sans-kr-subset.woff2  ${(buf.length / 1024).toFixed(1)}KB (wght 400-500 가변)`);
-console.log(`  포함 글자 ${keep.length}자`);
+await writeFile(path.join(OUT, 'subset-manifest.json'),
+  JSON.stringify({ generatedAt: new Date().toISOString(), count: keep.length, chars: keep }, null, 0));
+console.log(`  포함 글자 ${keep.length}자 → subset-manifest.json 기록`);

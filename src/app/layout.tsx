@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Source_Serif_4 } from 'next/font/google';
 import { company } from '@/content/company';
+import { basePath } from '@/lib/asset-path';
 import './globals.css';
 
 const sourceSerif = Source_Serif_4({
@@ -23,6 +24,10 @@ const notoSansKr = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(company.siteUrl),
+  // Preview(프로젝트 Pages 하위 경로)는 색인하지 않는다. 운영 도메인 전환 시 자동 해제된다.
+  ...(basePath !== '' ? { robots: { index: false, follow: false } } : {}),
+  // 기존 운영 사이트의 네이버 사이트 인증을 승계한다(공개 토큰).
+  verification: { other: { 'naver-site-verification': '62dfd1cc3f11d99cb7e0e258f9c59a97b0666e76' } },
   title: { default: '휴미즈 | Enterprise Data & Applied AI', template: '%s' },
   description:
     '기업 데이터의 보존·검색·통제부터 AI 서비스 설계와 구현까지. 휴미즈의 Enterprise Data, Applied AI, 맘이음 프로젝트를 만나보세요.',
