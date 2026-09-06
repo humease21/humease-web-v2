@@ -62,13 +62,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         webPageNode({ path, name: p.name, description: p.summary }),
         breadcrumbNode(path, [
           { name: '홈', path: '/' },
-          { name: 'AI Portfolio', path: '/ai-services' },
+          { name: 'AI 포트폴리오', path: '/ai-services' },
           { name: p.name, path },
         ]),
         creativeWorkNode({ name: p.name, description: p.summary, path }),
       ]} />
       <CinematicHero
-        eyebrow="HUMEASE AI PROJECT"
+        eyebrow="휴미즈 AI 프로젝트"
         badge={p.stage ?? undefined}
         titleKo={p.name}
         lead={p.summary}
@@ -112,7 +112,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       )}
 
       <Scene mask="none">
-        <Reveal as="p" className="eyebrow">PROJECT DETAIL</Reveal>
+        <Reveal as="p" className="eyebrow">프로젝트 이야기</Reveal>
         <div className="mt-10">
           <Block title="어떤 문제에서 시작했나요?">
             {p.problem.map((t) => <p key={t} className="lead">{t}</p>)}
@@ -178,7 +178,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 서비스 방문<span aria-hidden="true">↗</span><span className="sr-only">(새 탭에서 열림)</span>
               </A>
             )}
-            <A href="/ai-services" className="cta-ghost">AI 프로젝트 목록</A>
+            <A href="/ai-services" className="cta-ghost">AI 포트폴리오</A>
           </div>
         </Reveal>
       </Scene>

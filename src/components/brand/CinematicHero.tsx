@@ -13,7 +13,7 @@ type Cta = { label: string; href: string; primary?: boolean };
  * rounded 프레임·border wrapper 를 쓰지 않는다.
  */
 export function CinematicHero({
-  eyebrow, titleEn, titleKo, lead, ctas, badge, image, imageMobile, ambient = 'silver', align = 'bottom',
+  eyebrow, titleEn, titleKo, lead, ctas, badge, image, imageMobile, ambient = 'silver', align = 'bottom', heroScale,
 }: {
   eyebrow: string;
   titleEn?: string;
@@ -24,10 +24,14 @@ export function CinematicHero({
   image: Asset;
   imageMobile?: Asset;
   ambient?: 'silver' | 'cool' | 'warm' | 'none';
+  /** 홈처럼 영문 제목 없이 한국어가 첫 화면을 감당할 때 */
+  heroScale?: boolean;
   align?: 'bottom' | 'center';
 }) {
   // Source Serif 4 는 한글 글리프가 없다. 한글이 섞이면 산세리프 대형 제목을 쓴다.
-  const heroTitleClass = /[가-힣]/.test(titleKo) ? 'display-ko' : 'display-en';
+  const heroTitleClass = /[가-힣]/.test(titleKo)
+    ? (heroScale ? 'display-hero-ko' : 'display-ko')
+    : 'display-en';
 
   const ambientClass =
     ambient === 'cool' ? 'ambient-cool' : ambient === 'warm' ? 'ambient-warm'

@@ -18,7 +18,7 @@ export default function Page() {
   return (
     <>
       <CinematicHero
-        eyebrow="ENTERPRISE DATA"
+        eyebrow="기업 데이터"
         titleKo="중요한 데이터를, 믿고 활용할 수 있도록."
         lead="보존과 검색, 통제와 운영까지. 기업의 데이터가 필요한 순간 제 역할을 할 수 있도록 정책과 시스템을 함께 설계합니다."
         ctas={[{ label: '데이터 환경 상담', href: '/contact' }]}
@@ -28,13 +28,13 @@ export default function Page() {
 
       <NumberedScene
         ordinal="01"
-        eyebrow="CAPABILITIES"
+        eyebrow="전문 영역"
         titleKo="세 가지 영역에서, 같은 원칙으로."
         lead="어떤 제품을 쓸지보다, 어떤 문제를 해결할지가 먼저입니다."
         capabilities={[
           { title: 'e-Discovery', body: '조사와 감사, 분쟁 대응에 필요한 데이터를 찾고 검토할 수 있는 체계를 설계합니다.' },
-          { title: 'Internal Control', body: '민감정보와 커뮤니케이션 리스크를 살펴보고, 점검·조치·기록의 흐름을 정리합니다.' },
-          { title: 'Exchange Archive', body: '메일 보존 정책과 사용 환경을 함께 고려해, 아카이빙과 검색 구조를 설계합니다.' },
+          { title: '내부 통제', body: '민감정보와 커뮤니케이션 리스크를 살펴보고, 점검·조치·기록의 흐름을 정리합니다.' },
+          { title: 'Exchange 아카이빙', body: '메일 보존 정책과 사용 환경을 함께 고려해, 아카이빙과 검색 구조를 설계합니다.' },
         ]}
         cta={{ label: '검토 가능한 솔루션 보기', href: '/solutions' }}
         image={assets.A05}
@@ -42,7 +42,7 @@ export default function Page() {
       />
 
       <Scene mask="none">
-        <Statement eyebrow="APPROACH" titleKo="환경에 맞는 구조가, 오래 작동합니다." />
+        <Statement eyebrow="접근 방식" titleKo="환경에 맞는 구조가, 오래 작동합니다." />
         <ul className="mt-12">
           {STEPS.map((s, i) => (
             <Reveal as="li" key={s.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">

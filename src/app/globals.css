@@ -116,6 +116,18 @@
     font-size: clamp(32px, 5.6vw, 76px);
   }
 
+  /*
+   * 홈 Hero 의 한국어 제목. 영문 Display 를 걷어냈으므로 한글이 첫 화면의 무게를 감당한다.
+   * 한글은 같은 px 에서 라틴보다 크게 보이므로 상한을 88px 로 둔다.
+   */
+  .display-hero-ko {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    line-height: 1.22;
+    letter-spacing: -0.03em;
+    font-size: clamp(34px, 6.4vw, 88px);
+  }
+
   /* 한글 섹션 제목 — 40~72px */
   .title-ko {
     font-weight: 500;

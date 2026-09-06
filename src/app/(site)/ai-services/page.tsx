@@ -19,11 +19,11 @@ export default function Page() {
         organizationNode(),
         websiteNode(),
         webPageNode({ path: '/ai-services', name: meta.title, description: meta.description, type: 'CollectionPage' }),
-        breadcrumbNode('/ai-services', [{ name: '홈', path: '/' }, { name: 'AI Portfolio', path: '/ai-services' }]),
+        breadcrumbNode('/ai-services', [{ name: '홈', path: '/' }, { name: 'AI 포트폴리오', path: '/ai-services' }]),
         itemListNode('/ai-services', items.map((p) => ({ name: p.name, path: `/ai-services/${p.slug}` }))),
       ]} />
       <CinematicHero
-        eyebrow="BUILT BY HUMEASE"
+        eyebrow="AI 포트폴리오"
         titleKo="직접 만든 서비스로, AI의 가능성을 보여줍니다."
         lead="아이디어를 어떻게 서비스로 구체화했는지, 어떤 문제를 풀고 무엇을 구현했는지. 휴미즈의 AI 개발 포트폴리오를 소개합니다."
         image={assets.A09}

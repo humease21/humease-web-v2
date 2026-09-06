@@ -17,7 +17,7 @@ export function ClosingContact({ image }: { image?: { src: string; width: number
       )}
       <div className="shell layer w-full">
         <div className="max-w-[min(100%,1000px)]">
-          <Reveal as="p" className="eyebrow">LET&rsquo;S TALK</Reveal>
+          <Reveal as="p" className="eyebrow">문의</Reveal>
           <Reveal delay={1} slow>
             <h2 className="title-ko mt-7">해결하고 싶은 문제가 있다면, 함께 살펴보겠습니다.</h2>
           </Reveal>

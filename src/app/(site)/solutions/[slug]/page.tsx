@@ -59,13 +59,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         }),
         breadcrumbNode(path, [
           { name: '홈', path: '/' },
-          { name: 'Arctera Solutions', path: '/solutions' },
+          { name: 'Arctera 솔루션', path: '/solutions' },
           { name: p.name, path },
         ]),
         swNode,
       ]} />
       <CinematicHero
-        eyebrow="ARCTERA SOLUTIONS"
+        eyebrow="Arctera 솔루션"
         titleKo={p.name}
         lead={p.subtitleKo}
         image={COVER[p.slug as keyof typeof COVER] ?? assets.A12}

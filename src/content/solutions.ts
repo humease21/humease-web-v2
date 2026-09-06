@@ -153,7 +153,7 @@ export const products: Product[] = [
     ],
     related: [
       { label: 'Enterprise Vault Complete', href: '/solutions/enterprise-vault' },
-      { label: 'Internal Control 컨설팅', href: '/consulting/internal-control' },
+      { label: '내부 통제 컨설팅', href: '/consulting/internal-control' },
       { label: 'e-Discovery 컨설팅', href: '/consulting/e-discovery' },
     ],
     ctaLabel: 'Capture / Merge1 적용 상담',
@@ -201,7 +201,7 @@ export const products: Product[] = [
     ],
     related: [
       { label: 'Enterprise Data', href: '/enterprise-data' },
-      { label: 'Internal Control 컨설팅', href: '/consulting/internal-control' },
+      { label: '내부 통제 컨설팅', href: '/consulting/internal-control' },
       { label: 'Enterprise Vault Complete', href: '/solutions/enterprise-vault' },
     ],
     ctaLabel: 'Data Insight 적용 상담',

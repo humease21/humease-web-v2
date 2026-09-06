@@ -24,7 +24,7 @@ export default function Page() {
   return (
     <>
       <CinematicHero
-        eyebrow="ENTERPRISE DATA / E-DISCOVERY"
+        eyebrow="e-Discovery"
         titleKo="필요한 증거를, 설명 가능한 과정으로."
         lead="조사·감사·분쟁 대응에 필요한 데이터의 보존, 수집, 검색과 검토 흐름을 기업 환경에 맞게 설계합니다."
         image={assets.A05}
@@ -38,7 +38,7 @@ export default function Page() {
 
       <Scene image={assets.A05} mask="scene" ambient="silver">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-24">
-          <Reveal as="p" className="eyebrow lg:pt-3">SCOPE</Reveal>
+          <Reveal as="p" className="eyebrow lg:pt-3">검토 범위</Reveal>
           <ul>
             {SCOPE.map((s, i) => (
               <Reveal as="li" key={s.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
@@ -51,7 +51,7 @@ export default function Page() {
       </Scene>
 
       <Scene mask="none">
-        <Reveal as="p" className="eyebrow">FAQ</Reveal>
+        <Reveal as="p" className="eyebrow">자주 묻는 질문</Reveal>
         <div className="mt-10"><Faq items={FAQ} /></div>
         <Reveal delay={3}>
           <A href="/contact" className="cta-primary mt-14">e-Discovery 상담<span aria-hidden="true">→</span></A>

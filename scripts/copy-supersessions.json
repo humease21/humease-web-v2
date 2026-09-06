@@ -199,7 +199,55 @@
       "supersededBy": "SEO 요청서 §5.3",
       "reason": "페이지가 실제 답하는 범위로 설명 교체",
       "text": "Enterprise Data와 Applied AI를 현장에 연결하는 휴미즈의 생각과 기록. 데이터 컴플라이언스와 AI 서비스 개발 인사이트를 만나보세요."
+    },
+    {
+      "page": "P01",
+      "supersededBy": "Korean-first 요청서 §5",
+      "reason": "영문 Hero 제목 삭제. 고급스러움을 영어가 아니라 타이포·여백·이미지로 만든다",
+      "text": "Complexity, made intelligent."
+    },
+    {
+      "page": "P01",
+      "supersededBy": "Korean-first 요청서 §5",
+      "reason": "Hero eyebrow 를 브랜드명만 남김",
+      "text": "HUMEASE · ENTERPRISE DATA & APPLIED AI"
+    },
+    {
+      "page": "P01",
+      "supersededBy": "Korean-first 요청서 §5",
+      "reason": "Data Transition 영문 제거",
+      "text": "FROM DATA"
+    },
+    {
+      "page": "P01",
+      "supersededBy": "Korean-first 요청서 §5",
+      "reason": "Data Transition 영문 제거",
+      "text": "TO INTELLIGENCE"
+    },
+    {
+      "page": "P01",
+      "supersededBy": "Korean-first 요청서 §4",
+      "reason": "메뉴·섹션명 한국어화",
+      "text": "Arctera Solutions — 제품의 기능과 고객 환경에 맞는 적용 범위를 살펴보세요."
+    },
+    {
+      "page": "P12",
+      "supersededBy": "Korean-first 요청서 §3",
+      "reason": "장식 영문 제거",
+      "text": "Enterprise Data와 Applied AI의 실무에서 마주하는 질문과 생각을 나눕니다."
+    },
+    {
+      "page": "P01",
+      "supersededBy": "Korean-first 요청서 §3",
+      "reason": "장식 영문 제거",
+      "text": "Enterprise Data와 Applied AI에 대한 휴미즈의 생각과 기록을 만나보세요."
+    },
+    {
+      "page": "P02",
+      "supersededBy": "Korean-first 요청서 §6",
+      "reason": "사업영역 개념을 첫 언급만 병기하고 이후 한국어",
+      "text": "Enterprise Data와 Applied AI는 서로 다른 서비스를 나열한 것이 아닙니다. 데이터를 다뤄 온 경험을 바탕으로 신뢰할 수 있는 기술을 만들고, 그 기술이 실제로 쓰이게 한다는 같은 원칙을 공유합니다."
     }
   ],
-  "supersededByAlso": "HUMEASE-SEO-AEO-GEO-20260906"
+  "supersededByAlso": "HUMEASE-KOREAN-FIRST-PREMIUM-20260906"
 }

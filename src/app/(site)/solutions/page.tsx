@@ -22,11 +22,11 @@ export default function Page() {
         organizationNode(),
         websiteNode(),
         webPageNode({ path: '/solutions', name: meta.title, description: meta.description, type: 'CollectionPage' }),
-        breadcrumbNode('/solutions', [{ name: '홈', path: '/' }, { name: 'Arctera Solutions', path: '/solutions' }]),
+        breadcrumbNode('/solutions', [{ name: '홈', path: '/' }, { name: 'Arctera 솔루션', path: '/solutions' }]),
         itemListNode('/solutions', products.map((p) => ({ name: p.name, path: `/solutions/${p.slug}` }))),
       ]} />
       <CinematicHero
-        eyebrow="ARCTERA SOLUTIONS"
+        eyebrow="Arctera 솔루션"
         titleKo="기업 데이터의 보존부터, 컴플라이언스와 eDiscovery까지."
         lead="기업의 커뮤니케이션과 정보를 수집하고, 보존하고, 필요한 순간 찾을 수 있도록. 주요 Arctera 솔루션의 역할과 적용 시 검토할 사항을 한국어로 안내합니다."
         ctas={[
@@ -39,26 +39,24 @@ export default function Page() {
 
       <Scene mask="none">
         <AnswerBlock
-          term="Arctera Solutions 란?"
+          term="Arctera 솔루션이란?"
           definition="Arctera Solutions는 기업 데이터의 수집, 보존, 검토와 조사에 활용되는 제품 정보를 한국어로 소개하는 영역입니다. 제품의 역할과 휴미즈가 함께 검토할 적용 항목을 구분해 안내합니다."
         />
         <div className="mt-14">
           <Statement
-            eyebrow="OUR ROLE"
+            eyebrow="휴미즈의 역할"
             titleKo="휴미즈는 고객의 데이터 환경과 운영 요구를 바탕으로 제품의 적용 범위와 연계 구성을 함께 검토합니다."
           />
         </div>
       </Scene>
 
       <Scene image={assets.A04} mask="scene">
-        <Reveal as="p" className="eyebrow">해결할 수 있는 6가지 업무 과제</Reveal>
+        <Reveal as="p" className="eyebrow">해결할 수 있는 여섯 가지 과제</Reveal>
         <ul className="mt-10">
           {challenges.map((c, i) => (
             <Reveal as="li" key={c.en} delay={((i % 4) + 1) as 1 | 2 | 3 | 4} className="cap-row">
-              <div>
-                <h2 className="text-[15px] font-semibold text-[var(--color-text)]">{c.ko}</h2>
-                <p className="mt-1 text-[12px] uppercase tracking-[0.14em] text-[var(--color-muted)]">{c.en}</p>
-              </div>
+              {/* 화면에는 한국어만 노출한다. solutions.ts 의 공식 영문 분류값은 SEO 정합성을 위해 유지한다. */}
+              <h2 className="text-[15px] font-semibold text-[var(--color-text)]">{c.ko}</h2>
               <p className="text-[15px] leading-[1.75] text-[var(--color-muted)]">{c.body}</p>
             </Reveal>
           ))}
@@ -96,14 +94,14 @@ export default function Page() {
 
       <Scene mask="none">
         <Statement
-          eyebrow="REVIEW TOGETHER"
+          eyebrow="함께 검토할 항목"
           titleKo="고객 환경에서 함께 검토할 항목"
           paragraphs={['현재 시스템과 데이터 소스, 보존 및 검색 요구, 사용자와 운영자 흐름, 연계 조건, 도입·이관 범위.']}
         />
         <Reveal delay={3}>
           <ul className="mt-12 flex flex-wrap gap-x-10 gap-y-3 text-[14px] text-[var(--color-muted)]">
             <li><A className="transition-colors hover:text-[var(--color-accent)]" href="/consulting/e-discovery">e-Discovery 컨설팅</A></li>
-            <li><A className="transition-colors hover:text-[var(--color-accent)]" href="/consulting/internal-control">Internal Control 컨설팅</A></li>
+            <li><A className="transition-colors hover:text-[var(--color-accent)]" href="/consulting/internal-control">내부 통제 컨설팅</A></li>
             <li><A className="transition-colors hover:text-[var(--color-accent)]" href="/consulting/exchange-archive">Exchange Archive 컨설팅</A></li>
           </ul>
         </Reveal>

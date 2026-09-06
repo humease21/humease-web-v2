@@ -24,7 +24,7 @@ export default function Page() {
   return (
     <>
       <CinematicHero
-        eyebrow="ENTERPRISE DATA / EXCHANGE ARCHIVE"
+        eyebrow="Exchange 아카이빙"
         titleKo="메일의 가치는 남기고, 운영의 부담은 줄이도록."
         lead="메일 보존과 검색, 사용자의 접근 방식과 시스템 운영을 함께 고려해 아카이빙 구조를 설계합니다."
         image={assets.A07}
@@ -38,7 +38,7 @@ export default function Page() {
 
       <Scene image={assets.A07} mask="scene" ambient="silver">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-24">
-          <Reveal as="p" className="eyebrow lg:pt-3">SCOPE</Reveal>
+          <Reveal as="p" className="eyebrow lg:pt-3">검토 범위</Reveal>
           <ul>
             {SCOPE.map((s, i) => (
               <Reveal as="li" key={s.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
@@ -51,7 +51,7 @@ export default function Page() {
       </Scene>
 
       <Scene mask="none">
-        <Reveal as="p" className="eyebrow">FAQ</Reveal>
+        <Reveal as="p" className="eyebrow">자주 묻는 질문</Reveal>
         <div className="mt-10"><Faq items={FAQ} /></div>
         <Reveal delay={3}>
           <A href="/contact" className="cta-primary mt-14">아카이빙 환경 상담<span aria-hidden="true">→</span></A>

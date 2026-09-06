@@ -12,8 +12,7 @@ export default function Page() {
   return (
     <>
       <CinematicHero
-        eyebrow="APPLIED AI"
-        titleEn="Ideas, put to work."
+        eyebrow="AI 서비스"
         titleKo="아이디어를, 실제로 쓰이는 AI로."
         lead="어떤 AI를 도입할지보다, 누구의 어떤 문제를 해결할지에서 시작합니다. 사용자 흐름과 업무 맥락을 기반으로 서비스를 설계하고 구현합니다."
         ctas={[{ label: 'AI 프로젝트 상담', href: '/contact' }]}
@@ -23,7 +22,7 @@ export default function Page() {
 
       <NumberedScene
         ordinal="01"
-        eyebrow="SCOPE"
+        eyebrow="제공 영역"
         titleKo="세 가지 방식으로 실행합니다."
         lead="작게 검증하고, 필요한 만큼 확장합니다."
         capabilities={[
@@ -37,7 +36,7 @@ export default function Page() {
 
       <Scene mask="none">
         <Statement
-          eyebrow="PROCESS"
+          eyebrow="진행 방식"
           titleKo="작게 검증하고, 필요한 만큼 확장합니다."
           paragraphs={['문제와 성공 기준을 정리합니다. 핵심 사용자 흐름을 설계합니다. 우선순위에 맞춰 구현합니다. 사용성과 비용, 개인정보와 운영 조건을 점검합니다.']}
         />
@@ -45,7 +44,7 @@ export default function Page() {
 
       <Scene image={assets.A10} mask="scene" ambient="warm">
         <Statement
-          eyebrow="BUILT BY HUMEASE"
+          eyebrow="AI 포트폴리오"
           titleKo="만드는 경험도, 다음 설계의 기준이 됩니다."
           paragraphs={['휴미즈는 가족 소통 AI 서비스 맘이음을 준비하고 있습니다. 직접 제품을 설계하며 얻는 질문과 검증 과정을 서비스 개발 역량으로 연결합니다.']}
           cta={{ label: '맘이음 프로젝트 보기', href: '/ai-services/mom-ie' }}

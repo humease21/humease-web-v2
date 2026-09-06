@@ -27,9 +27,9 @@ export function ProductReveal({ image, body }: { image: Asset; body?: string }) 
 
       <div className="shell layer w-full">
         <div className="max-w-[min(100%,880px)]">
-          <Reveal as="p" className="eyebrow">BUILT BY HUMEASE</Reveal>
+          <Reveal as="p" className="eyebrow">직접 만들고 검증합니다</Reveal>
           <Reveal delay={1} slow>
-            <h2 className="display-en mt-6 text-[var(--color-warm)]">We don&rsquo;t just advise.<br />We build.</h2>
+            <h2 className="display-ko mt-6 text-[var(--color-warm)]">조언에서 그치지 않고,<br />직접 만듭니다.</h2>
           </Reveal>
 
           <Reveal delay={2}>

@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <>
       <CinematicHero
-        eyebrow="LET'S TALK"
+        eyebrow="문의"
         titleKo="어떤 문제를 함께 해결할까요?"
         lead="현재 상황과 기대하는 변화를 알려주세요. 필요한 접근 방식과 다음 단계를 함께 살펴보겠습니다."
         ctas={[{ label: company.email, href: `mailto:${company.email}` }]}
@@ -30,7 +30,7 @@ export default function Page() {
         {CONTACT_MODE === 'disabled' && (
           <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,5fr)] lg:gap-24">
             <div>
-              <Reveal as="p" className="eyebrow">HOW TO REACH US</Reveal>
+              <Reveal as="p" className="eyebrow">연락 방법</Reveal>
               <Reveal delay={1} slow>
                 <h2 className="title-ko-sm mt-6">온라인 문의 폼은 준비 중입니다.</h2>
               </Reveal>

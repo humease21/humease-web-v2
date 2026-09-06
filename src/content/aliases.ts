@@ -14,7 +14,7 @@ export type Alias = { from: string; to: string; label: string };
 /** /jtbd/[slug] 와 /services/[slug] 가 공유하는 슬러그 → 최종 경로 */
 export const legacySlugMap: Record<string, { to: string; label: string }> = {
   'e-discovery': { to: '/consulting/e-discovery', label: 'e-Discovery 컨설팅' },
-  'internal-control': { to: '/consulting/internal-control', label: 'Internal Control 컨설팅' },
+  'internal-control': { to: '/consulting/internal-control', label: '내부 통제 컨설팅' },
   'exchange-archive': { to: '/consulting/exchange-archive', label: 'Exchange 아카이빙 컨설팅' },
   'ai-transformation': { to: '/consulting/ai-transformation', label: 'Applied AI' },
   'ai-consulting': { to: '/consulting/ai-transformation', label: 'Applied AI' },

@@ -15,9 +15,9 @@ export default function Page() {
   return (
     <>
       <CinematicHero
-        eyebrow="INSIGHTS"
+        eyebrow="인사이트"
         titleKo="기술을 이해하고, 현장에 연결하는 기록."
-        lead="Enterprise Data와 Applied AI의 실무에서 마주하는 질문과 생각을 나눕니다."
+        lead="기업 데이터와 AI 서비스의 실무에서 마주하는 질문과 생각을 나눕니다."
         image={assets.A03}
         ambient="silver"
         align="center"

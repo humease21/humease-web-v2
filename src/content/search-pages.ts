@@ -50,7 +50,7 @@ export const searchPages: SearchPage[] = [
   },
   {
     id: 'enterprise-data', path: '/enterprise-data', kind: 'service', publication: 'published', indexable: true,
-    title: '기업 데이터 보존·검색·통제 컨설팅 | 휴미즈',
+    title: '기업 데이터 | 휴미즈',
     description: '아카이빙, e-Discovery, 내부통제를 고객의 데이터 환경과 운영 요구에 연결합니다. 보존·검색·접근·자료 제출 시 검토할 항목을 안내합니다.',
     primaryIntent: '기업 데이터 문제 해결 범위 확인',
     sourceIds: [], contentUpdatedAt: '2026-09-06',
@@ -58,7 +58,7 @@ export const searchPages: SearchPage[] = [
   },
   {
     id: 'applied-ai', path: '/consulting/ai-transformation', kind: 'service', publication: 'published', indexable: true,
-    title: 'Applied AI · AI 서비스 기획 및 구현 | 휴미즈',
+    title: 'AI 서비스 | 휴미즈',
     description: '해결할 문제와 사용자 경험을 정의하고 데이터 흐름, AI 적용 범위, 검증 기준을 설계합니다. 실제 AI 포트폴리오와 함께 접근 방식을 소개합니다.',
     primaryIntent: 'AI 서비스 개발 역량 확인',
     sourceIds: [], contentUpdatedAt: '2026-09-06',
@@ -90,7 +90,7 @@ export const searchPages: SearchPage[] = [
   },
   {
     id: 'portfolio-hub', path: '/ai-services', kind: 'portfolio-hub', publication: 'published', indexable: true,
-    title: 'AI Portfolio · 개발 프로젝트 | 휴미즈',
+    title: 'AI 포트폴리오 | 휴미즈',
     description: '휴미즈의 AI 개발 포트폴리오를 소개합니다. 프로젝트별 해결 과제, 구현 범위, 개발 참여와 현재 단계를 확인할 수 있습니다.',
     primaryIntent: '실제 만든 AI 프로젝트 확인',
     sourceIds: ['humease-legacy-portfolio'], contentUpdatedAt: '2026-09-06', sourcesCheckedAt: '2026-09-06',
@@ -98,7 +98,7 @@ export const searchPages: SearchPage[] = [
   },
   {
     id: 'solution-hub', path: '/solutions', kind: 'solution-hub', publication: 'published', indexable: true,
-    title: 'Arctera Solutions · 제품과 적용 영역 | 휴미즈',
+    title: 'Arctera 솔루션 | 휴미즈',
     description: 'Enterprise Vault Complete, Enterprise Vault Capture (formerly Merge1), Data Insight, eDiscovery Platform의 역할과 적용 검토 항목을 한국어로 안내합니다.',
     primaryIntent: 'Arctera 제품의 역할과 적용 범위 확인',
     sourceIds: ['arctera-official'], contentUpdatedAt: '2026-09-06', sourcesCheckedAt: '2026-09-06',
@@ -106,7 +106,7 @@ export const searchPages: SearchPage[] = [
   },
   {
     id: 'insights', path: '/insights', kind: 'insight-hub', publication: 'published', indexable: true,
-    title: 'Insights · 데이터와 AI 기술 기록 | 휴미즈',
+    title: '인사이트 | 휴미즈',
     description: 'Enterprise Data와 Applied AI에 관한 휴미즈의 공개 기술 기록을 모았습니다. 작성자, 확인 시점과 근거가 있는 콘텐츠로 연결합니다.',
     primaryIntent: '기술 관점과 설명 방식 확인',
     sourceIds: [], contentUpdatedAt: '2026-09-06',

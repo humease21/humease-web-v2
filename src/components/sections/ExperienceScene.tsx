@@ -13,8 +13,8 @@ const KEYWORDS = [
   'Symantec',
   'Veritas',
   'Arctera',
-  'Enterprise Data',
-  'AI Product Development',
+  '기업 데이터',
+  'AI 제품 개발',
 ];
 
 export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
@@ -23,11 +23,11 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
       <div className="shell w-full">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,6fr)_minmax(0,4fr)] lg:gap-24">
           <div>
-            <Reveal as="p" className="eyebrow">EXPERTISE, APPLIED</Reveal>
+            <Reveal as="p" className="eyebrow">{aboutCopy ? '전문성' : '전문성'}</Reveal>
             <Reveal delay={1} slow>
-              <p className="display-en mt-7">
-                20+ years of<br />Enterprise IT experience.<br />
-                <span className="text-[var(--color-accent)]">Now applied to AI.</span>
+              <p className="display-ko mt-7">
+                20년 이상의 Enterprise IT 경험을,<br />
+                <span className="text-[var(--color-accent)]">AI 시대의 문제 해결에 연결합니다.</span>
               </p>
             </Reveal>
             <Reveal delay={2}>

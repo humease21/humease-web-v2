@@ -14,13 +14,13 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
   if (articles.length === 0) {
     return (
       <div className={compact ? '' : 'max-w-[820px]'}>
-        <Reveal as="p" className="eyebrow">INSIGHTS</Reveal>
+        <Reveal as="p" className="eyebrow">인사이트</Reveal>
         <Reveal delay={1} slow>
           <h2 className="title-ko mt-6">현장에서 생각하고, 기술로 답합니다.</h2>
         </Reveal>
         <Reveal delay={2}>
           <p className="lead measure mt-8">
-            Enterprise Data와 Applied AI에 대한 휴미즈의 생각과 기록을 만나보세요.
+            기업 데이터와 AI 서비스에 대한 휴미즈의 생각과 기록을 만나보세요.
           </p>
         </Reveal>
         <Reveal delay={3}>
@@ -40,7 +40,7 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
   const [lead, ...rest] = articles;
   return (
     <div>
-      <Reveal as="p" className="eyebrow">INSIGHTS</Reveal>
+      <Reveal as="p" className="eyebrow">인사이트</Reveal>
       <article className="mt-10 border-t border-[color-mix(in_srgb,var(--color-line)_55%,transparent)] pt-10">
         <Reveal>
           <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--color-accent)]">

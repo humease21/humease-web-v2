@@ -68,11 +68,8 @@ export function DataTransition({ image }: { image: Asset }) {
               className="absolute inset-x-0 top-0"
               style={{ opacity: fromOpacity, transform: `translateY(${-settle * 14}px)` }}
             >
-              <p className="eyebrow">FROM DATA</p>
-              <p className="display-en mt-5">Scattered.</p>
-              <p className="lead measure mt-5">
-                흩어진 기록, 서로 다른 시스템, 찾을 수 없는 순간.
-              </p>
+              <p className="eyebrow">흩어진 데이터</p>
+              <p className="display-ko mt-5">흩어진 기록, 서로 다른 시스템, 찾기 어려운 정보.</p>
             </div>
 
             <div
@@ -83,11 +80,8 @@ export function DataTransition({ image }: { image: Asset }) {
                 pointerEvents: toOpacity > 0.5 ? 'auto' : 'none',
               }}
             >
-              <p className="eyebrow">TO INTELLIGENCE</p>
-              <p className="display-en mt-5">Understood.</p>
-              <p className="lead measure mt-5">
-                정돈된 데이터가 사람에게 쓸모 있는 판단으로 이어집니다.
-              </p>
+              <p className="eyebrow">이해할 수 있는 정보로</p>
+              <p className="display-ko mt-5">정돈된 데이터가 사람에게 쓸모 있는 판단으로 이어집니다.</p>
             </div>
           </div>
 
