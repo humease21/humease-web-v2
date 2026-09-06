@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { company } from '@/content/company';
 import { primaryNav } from '@/content/navigation';
@@ -15,7 +16,13 @@ export function SiteFooter() {
       <div className="shell py-12 md:py-16">
         <div className="flex flex-col gap-10 md:flex-row md:justify-between">
           <div>
-            <p className="font-[family-name:var(--font-display)] text-xl">HUMEASE</p>
+            <Image
+              src="/brand/logo-horizontal-en.webp"
+              alt="휴미즈"
+              width={337}
+              height={56}
+              className="h-6 w-auto"
+            />
             <p className="mt-3 text-sm text-[var(--color-muted)]">{company.nameKo}</p>
             <a
               href={`mailto:${company.email}`}

@@ -9,3 +9,6 @@ out/
 *.log
 next-env.d.ts
 docs/reports/evidence/lh-*.json
+
+# Lighthouse 가 WSL 에서 남기는 Windows 경로 형태 잔재
+C:*
