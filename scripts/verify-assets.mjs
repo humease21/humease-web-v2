@@ -70,31 +70,33 @@ await writeFile(path.join(process.cwd(), 'docs/ASSET_MAP.csv'),
   + rows.join('\n')
   + '\n' + Object.entries(UNUSED).map(([id, [b, why]]) => `${id},${b},,,${''},,,,미사용 — ${why}`).join('\n') + '\n');
 
-// 인벤토리 — 내부용
-const lines = [
-  '# 자산 인벤토리', '',
-  `- 생성: ${new Date().toISOString().slice(0, 10)} / \`npm run verify:assets\` 자동 생성`,
-  '- 원본 보관 위치: `/mnt/e/VibeCoding/Humease-homepage-v2/Images/` (배포 디렉터리 밖, 무변경)',
-  '- 웹 출력본: `public/images/` — 포맷 변환·리사이즈·압축만 수행. 재색상·합성·생성형 업스케일 없음',
-  '- **내부 문서.** 브라우저로 전달하는 `src/content/assets.ts` 에는 이 정보를 넣지 않는다.', '',
-  '## 매핑·해시', '',
-  '| ID | 원본 파일 | 원본 md5 | 원본 크기 | 웹 출력본 | 웹 md5 | 웹 크기 | 감축 |',
-  '|---|---|---|---|---|---|---|---|',
-];
-for (const r of inv) {
-  lines.push(`| ${r.id} | \`${r.origName.slice(0, 46)}\` | \`${r.om.slice(0, 10)}\` | ${r.ow}×${r.oh} ${(r.os_ / 1048576).toFixed(1)}MB `
-    + `| \`${r.webBase}.webp\` | \`${r.wm.slice(0, 10)}\` | ${r.ww}×${r.wh} ${(r.ws / 1024).toFixed(0)}KB `
-    + `| ${(100 - r.ws / r.os_ * 100).toFixed(1)}% |`);
-}
-const totO = inv.reduce((a, r) => a + r.os_, 0), totW = inv.reduce((a, r) => a + r.ws, 0);
-lines.push('', `합계 원본 ${(totO / 1048576).toFixed(1)}MB → 웹 ${(totW / 1024).toFixed(0)}KB (${(100 - totW / totO * 100).toFixed(1)}% 감축)`, '');
-lines.push('## 미사용 자산과 사유', '', '| ID | basename | 사유 |', '|---|---|---|');
-for (const [id, [b, why]] of Object.entries(UNUSED)) lines.push(`| ${id} | ${b} | ${why} |`);
-lines.push('', '## 확인 상태', '',
-  '`verification_status: optimized` — 원본을 찾아 연결하고 웹 최적화까지 마쳤다.',
-  '파일명(생성 프롬프트)에 근거한 매핑이며 **시각 확인은 대표님 승인 대상이다.**',
-  '승인 후 `verified` 로 올린다. 시각 확인 전에는 최종 시각 PASS 로 보고하지 않는다.', '');
+// 인벤토리 — 내부용. 원본에 접근 가능할 때만 생성한다.
+const totO = inv.reduce((a, r) => a + r.os_, 0);
+const totW = inv.reduce((a, r) => a + r.ws, 0);
+
 if (hasOriginals) {
+  const lines = [
+    '# 자산 인벤토리', '',
+    `- 생성: ${new Date().toISOString().slice(0, 10)} / \`npm run verify:assets\` 자동 생성`,
+    '- 원본 보관 위치: `/mnt/e/VibeCoding/Humease-homepage-v2/Images/` (배포 디렉터리 밖, 무변경)',
+    '- 웹 출력본: `public/images/` — 포맷 변환·리사이즈·압축만 수행. 재색상·합성·생성형 업스케일 없음',
+    '- **내부 문서.** 브라우저로 전달하는 `src/content/assets.ts` 에는 이 정보를 넣지 않는다.', '',
+    '## 매핑·해시', '',
+    '| ID | 원본 파일 | 원본 md5 | 원본 크기 | 웹 출력본 | 웹 md5 | 웹 크기 | 감축 |',
+    '|---|---|---|---|---|---|---|---|',
+  ];
+  for (const r of inv) {
+    lines.push(`| ${r.id} | \`${r.origName.slice(0, 46)}\` | \`${r.om.slice(0, 10)}\` | ${r.ow}×${r.oh} ${(r.os_ / 1048576).toFixed(1)}MB `
+      + `| \`${r.webBase}.webp\` | \`${r.wm.slice(0, 10)}\` | ${r.ww}×${r.wh} ${(r.ws / 1024).toFixed(0)}KB `
+      + `| ${(100 - r.ws / r.os_ * 100).toFixed(1)}% |`);
+  }
+  lines.push('', `합계 원본 ${(totO / 1048576).toFixed(1)}MB → 웹 ${(totW / 1024).toFixed(0)}KB (${(100 - totW / totO * 100).toFixed(1)}% 감축)`, '');
+  lines.push('## 미사용 자산과 사유', '', '| ID | basename | 사유 |', '|---|---|---|');
+  for (const [id, [b, why]] of Object.entries(UNUSED)) lines.push(`| ${id} | ${b} | ${why} |`);
+  lines.push('', '## 확인 상태', '',
+    '`verification_status: optimized` — 원본을 찾아 연결하고 웹 최적화까지 마쳤다.',
+    '파일명(생성 프롬프트)에 근거한 매핑이며 **시각 확인은 대표님 승인 대상이다.**',
+    '승인 후 `verified` 로 올린다. 시각 확인 전에는 최종 시각 PASS 로 보고하지 않는다.', '');
   await writeFile(path.join(REPORTS, 'ASSET_INVENTORY.md'), lines.join('\n'));
 } else {
   console.log('  원본 미접근 — ASSET_INVENTORY.md 는 갱신하지 않는다(기존 기록 보존)');
