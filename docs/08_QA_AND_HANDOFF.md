@@ -33,7 +33,6 @@
 | G4 독립 점검 | **NOT RUN** | — |
 | G5 운영 전환 | **BLOCKED** | `docs/07` §5 |
 
-아래 v1 기준은 계속 유효하다. 서버 기능 관련 항목만 정적 Export 상 **미해당**이다.
 
 
 ## 1. 결과 판정
@@ -72,14 +71,7 @@
 | S02 | sitemap | 공개 canonical만, 관리자·별칭·Preview·미승인 정책 제외 |
 | S03 | 검색 환경 | staging/Preview/vercel.app noindex, live www만 공개 정책 |
 | S04 | 기존 검색 자산 | 인증파일·favicon·중요 URL 처리 계획/결과 확인 |
-| F01 | 입력 검증 | 필수/길이/enum/동의/크기/형식의 클라이언트·서버 검사 |
-| F02 | 문의 접수 | 비운영 어댑터 저장 성공·실패·오류 응답 각각 검증 |
-| F03 | 중복·타임아웃 | 중복 클릭 차단, uncertain에서 자동 재전송 없음 |
-| F04 | 알림 실패 | 저장 성공은 성공 유지, 무단 background retry 없음 |
-| F05 | 환경 차단 | Preview에 운영 키 없음, live host gate 우회 불가 |
-| F06 | 남용 방지 | Origin·rate limit·body limit·honeypot이 서버 경계에서 동작 |
-| O01 | 관리자 | 미인증·무권한·만료 세션·직접 API 거부 |
-| O02 | 관리자 데이터 | 필요한 업무는 보존, 정적 HTML/OG/캐시/로그 노출 없음 |
+| F01 | 문의 비활성 | 폼을 공개하지 않고 이메일 CTA 를 노출. 운영 저장·메일 전송 0 |
 | P01 | 비밀 노출 | 브라우저 JS·HTML·응답·source map에 서버 비밀 0 |
 | P02 | 개인정보 | 승인 정책·실제 수집·동의 기록·분석 범위 일치 |
 | A01 | 대비·키보드 | 문서 기준 대비·가시 focus·접근 순서·skip link 정상 |
@@ -131,20 +123,43 @@ DB/RLS/역할·권한/비밀키/도메인/법적 내용/서비스 소유·상태
 
 ## 7. Claude Code 전달 지침
 
-아래 지침은 새 프로젝트에서 실행한다. 기존 프로젝트의 설정 파일을 수정해 적용하지 않는다.
-
 ```text
-HUMEASE v3.0의 SPEC.md와 docs를 유일한 구현 기준으로 사용하고 구버전 Vite 유지 지침은 폐기하라; 기존 홈페이지 저장소·폴더·Pages·DB·DNS는 READ-ONLY로 보존한 채 별도 신규 저장소와 폴더 humease-web-v2에 Next.js 16 안정 패치+App Router+TypeScript strict+Tailwind CSS 4+Node.js 24+npm을 구성하라; 기존 Vite 코드를 이관하거나 기존 사이트를 호스팅에 먼저 복제하지 말고 신규 Next.js 사이트 자체를 새 호스팅 프로젝트에서 검증하라; 12개 공개 페이지의 최종 카피·경로·CTA를 구현하고 이미 생성된 A01–A17 이미지 중 실제 사용 자산을 찾아 연결·최적화하되 신규 생성·재생성·프롬프트 작성은 하지 마라; Server Components 중심 구조와 필요한 Client Components, Metadata API, next/image, next/font, 서버 문의 Route Handler 및 검증된 최소 관리자 기능을 구현하고 운영 연결 전에는 mock/disabled 모드로 테스트하라; 기존 URL·회사정보·정책·관리자 업무·검색 인증을 확인 없이 누락시키지 말고 Preview의 운영 DB·메일·분석 쓰기를 차단하라; 먼저 G0 경계·현황·미확인 목록을 보고한 뒤 가능한 신규 구현을 진행하며 대표님의 명시적 승인 전에는 운영 도메인 연결·DNS 변경·운영 쓰기·기존 저장소 변경·DB/RLS 변경·비용 발생 작업을 실행하지 마라; QA는 PASS/FAIL/BLOCKED/NOT RUN과 증거로 보고하라.
+HUMEASE `SPEC.md` v3.1 과 `docs/` 를 유일한 구현 기준으로 사용하고 구버전 Vite·Vercel·서버 API 지침은 폐기하라;
+기존 홈페이지 저장소·폴더·Pages·DB·DNS 는 READ-ONLY 로 보존하고 `humease21/humease-web-v2` 에서만 작업하라;
+Next.js 16 App Router + TypeScript strict + Tailwind CSS 4 + Node.js 24 + npm 과
+`output: 'export'` 정적 빌드, GitHub Actions → GitHub Pages 배포 구조를 유지하라;
+Route Handler·Server Actions·Middleware·ISR·서버 redirects 를 새로 도입하지 마라;
+공개 19개 페이지와 별칭 11개를 유지하고 URL 을 변경하지 마라;
+표시 언어는 Korean-first 로 하되 공식 제품명과 `Enterprise Vault Capture (formerly Merge1)` 표기는 그대로 두어라;
+이미 생성된 A01–A17 중 사용 자산만 연결·최적화하고 신규 생성·재생성·프롬프트 작성은 하지 마라;
+문의는 mock/disabled 를 유지하고 운영 DB·메일·로그에 쓰지 마라;
+검색 색인은 배포 대상과 승인 두 값이 모두 있을 때만 열고, 검증 환경은 meta noindex 로만 제외하라;
+`npm run verify:*` 전체와 `tests/` 감사 스크립트를 통과시킨 뒤 커밋하라;
+대표님의 명시적 승인 전에는 운영 도메인 연결·DNS 변경·구 저장소 변경·검색 등록·IndexNow 제출·
+비용 발생 작업을 실행하지 마라;
+검수는 PASS/FAIL/BLOCKED/NOT RUN 과 증거로 보고하고 BLOCKED·NOT RUN 을 PASS 로 합산하지 마라.
 ```
 
 ## 8. Antigravity 전달 지침
 
 ```text
-HUMEASE v3.0의 SPEC.md와 docs/08_QA_AND_HANDOFF.md를 기준으로 신규 Next.js 후보를 독립 점검한다.
-기존·신규 소스, 설정, Git 이력, DB, RLS, 배포, DNS를 변경하지 않는다. 보고서는 응답 또는 허용된 별도 검수 위치에만 남긴다.
-신규 저장소와 Next.js App Router 사용, 기존 프로젝트 변경 없음, 구버전 Vite 실행 지침 잔류 여부를 확인한다.
-이미 생성된 이미지의 실제 연결·모바일 구도·중복 다운로드·원본 보존을 확인하며 이미지를 생성하거나 수정하지 않는다.
-12개 공개 페이지의 카피·경로·CTA·metadata, 맘이음 개발 중 표기, 실제 404, 접근성·성능을 검수한다.
-문의 상태·관리자 서버 권한·비밀 노출·환경 분리·noindex·도메인 전환 조건을 확인한다. 운영 문의 실전송·메일·로그 생성은 수행하지 않는다.
-실행한 항목만 PASS/FAIL로 판정하고 나머지는 BLOCKED/NOT RUN, 재현 절차와 증거 및 심각도를 보고한다.
+HUMEASE `SPEC.md` v3.1 과 `docs/08_QA_AND_HANDOFF.md` 를 기준으로 독립 점검한다.
+소스·설정·Git 이력·DB·배포·DNS 를 변경하지 않는다. 보고서는 응답 또는 허용된 위치에만 남긴다.
+
+확인 항목:
+- 정적 Export 구조 유지, Route Handler·Server Actions·Middleware 부재
+- 공개 19개 페이지와 별칭 11개의 직접 접근·새로고침, 없는 경로의 실제 404
+- 별칭이 HTTP 301 이 아니라 200 정적 이동임을 보고서가 정확히 기술하는지
+- Korean-first 적용 상태와 공식 제품명 보존,
+  `Enterprise Vault Capture (formerly Merge1)` 의 H1·title·본문·FAQ 유지
+- 검증 환경의 meta noindex, canonical·sitemap·JSON-LD 미출력
+- 운영 dry-run 산출물이 검증 Pages 에 업로드되지 않았는지
+- Arctera 비공식 파트너 관계 고지, 미확인 실적·파트너 주장 부재
+- 포트폴리오의 공개 단계·참여 범위 표기가 확인된 사실만 담는지
+- 이미지 원본 보존, 모바일에서 desktop 원본 중복 다운로드 부재
+- 접근성·반응형·성능, 빌드 산출물의 비밀 노출
+
+운영 문의 실전송·메일·로그 생성은 수행하지 않는다.
+실행한 항목만 PASS/FAIL 로 판정하고 나머지는 BLOCKED/NOT RUN 으로,
+재현 절차와 증거 및 심각도를 함께 보고한다.
 ```

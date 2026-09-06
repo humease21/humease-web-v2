@@ -39,29 +39,9 @@
 - 원문: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots
 - 사용 범위: robots.ts 규칙; sitemap 공식 문서도 아래 병기
 
-### [S08] Next.js Route Handlers — **폐기(v2)**
-- 원문: https://nextjs.org/docs/app/api-reference/file-conventions/route
-- 사용 범위: route.ts·HTTP method·Request/Response
-
-### [S09] Vercel GitHub Deployments — **폐기(v2)**
-- 원문: https://vercel.com/docs/git/vercel-for-github
-- 사용 범위: 신규 저장소 연결·브랜치 배포
-
-### [S10] Vercel Supported Node.js Versions — **폐기(v2)**
-- 원문: https://vercel.com/docs/functions/runtimes/node-js/node-js-versions
-- 사용 범위: Node.js 24.x 지원·메이저 설정·패치 운영
-
 ### [S11] Motion for React — Accessibility
 - 원문: https://motion.dev/docs/react-accessibility
 - 사용 범위: 감소된 움직임 지원
-
-### [S12] Vercel Add a Domain — **폐기(v2)**
-- 원문: https://vercel.com/docs/domains/working-with-domains/add-a-domain
-- 사용 범위: 프로젝트별 도메인·DNS 설정
-
-### [S13] Next.js redirects — **폐기(v2)**
-- 원문: https://nextjs.org/docs/app/api-reference/config/next-config-js/redirects
-- 사용 범위: 명시적 redirect·영구 308
 
 ### [S14] WCAG 2.2
 - 원문: https://www.w3.org/TR/WCAG22/
@@ -70,20 +50,6 @@
 ### [S15] web.dev Web Vitals
 - 원문: https://web.dev/articles/vitals
 - 사용 범위: LCP·INP·CLS와 현장 측정 기준
-
-### [S16] Vercel Deployment Protection — **폐기(v2)**
-- 원문: https://vercel.com/docs/deployment-protection
-- 사용 범위: 배포 URL 보호와 범위·요금제 확인
-
-### [S17] Vercel Hobby Plan — **폐기(v2)**
-- 원문: https://vercel.com/docs/plans/hobby
-- 사용 범위: 비상업적 개인 용도 정책·기업 운영 플랜 확인
-
-### [S18] Next.js proxy.js — **폐기(v2)**
-- 원문: https://nextjs.org/docs/app/api-reference/file-conventions/proxy
-- 사용 범위: 요청/응답 경계·proxy 파일 규칙
-
-S07 보조 원문: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
 
 ## 3. 제공 자료와 현재 확인의 한계
 
@@ -99,7 +65,7 @@ S07 보조 원문: https://nextjs.org/docs/app/api-reference/file-conventions/me
 | 저장소 | 기존 저장소 branch가 아니라 새 humease-web-v2 저장소 |
 | 초기 이전 | 기존 Vercel 복제 단계 제거, 신규 Next.js Preview 기반선으로 대체 |
 | 렌더링 | SPA·별도 브라우저 프리렌더 제거, Server Components/정적 렌더 중심 |
-| 기술 도구 | next/image·next/font·Metadata API·Route Handlers·Next.js 프리셋 |
+| 기술 도구 | next/image·next/font·Metadata API·`sitemap.ts`·`robots.ts` (정적 Export 범위) |
 | 문의 | 브라우저 직접 저장/발송 이관 금지, 서버 검증·어댑터 경계 |
 | 관리자 | 무단 삭제 없이 실제 업무·권한 계약만 새 구조에서 보존 |
 | 이미지 | 생성·재생성·프롬프트 제외, A01–A17 연결표만 유지 |
@@ -124,10 +90,10 @@ S07 보조 원문: https://nextjs.org/docs/app/api-reference/file-conventions/me
 | 표시 언어 | 영문 섹션명·영문 Hero | **Korean-first** |
 | 공개 페이지 | 12개 | **19개** + 별칭 11개 |
 
-### 폐기된 출처
+### 삭제한 출처
 
 Vercel 전용 문서(S09·S10·S12·S16·S17)와 서버 기능 문서(S08 Route Handlers·S13 redirects·
-S18 proxy.js)는 현재 구조에서 적용되지 않는다. 이력 보존용으로만 남긴다.
+S18 proxy.js)는 현재 구조에서 적용되지 않아 **목록에서 삭제했다.**
 
 ### 추가 확인 출처
 
