@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "optimize:assets": "node scripts/optimize-assets.mjs",
-    "optimize:logo": "node scripts/optimize-logo.mjs"
+    "optimize:logo": "node scripts/optimize-logo.mjs",
+    "subset:font": "node scripts/subset-font.mjs"
   },
   "dependencies": {
     "next": "16.3.4",
@@ -26,6 +27,7 @@
     "eslint-config-next": "16.3.4",
     "lighthouse": "^13.4.1",
     "sharp": "^0.35.4",
+    "subset-font": "^2.7.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
