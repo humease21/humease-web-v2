@@ -56,7 +56,7 @@ checkout → setup-node(.nvmrc) → npm ci → tsc --noEmit → eslint
 | 게이트 | 내용 | 현재 |
 |---|---|---|
 | G0 | 구·신 저장소 경계, 배포 커밋, DNS·Pages 현황 확인 | **완료** — `docs/reports/G0_BASELINE.md` |
-| G1 | Next.js 기반 구축, 12개 공개 페이지, 정적 Export | **완료** — `G1_QA_RESULTS.md` |
+| G1 | Next.js 기반 구축, 정적 Export (당시 공개 12개 → 현재 19개) | **완료** — `G1_QA_RESULTS.md` |
 | G2 | 시각 레이어 재설계, 콘텐츠·포트폴리오·Arctera 확장 | **완료** — `G2_REDESIGN_QA.md` |
 | G3 | 검색·색인 정책, 구조화 데이터, 표시 언어 정리 | **완료** — `G3_SEO_AEO_GEO.md` |
 | G4 | 독립 점검(Antigravity), 대표님 검토 | **NOT RUN** |
