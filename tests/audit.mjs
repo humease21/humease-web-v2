@@ -21,7 +21,10 @@ await mkdir(EV, { recursive: true });
 // ---------- S01 메타데이터 / U02 첫 화면 / I04 이미지 ----------
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 const page = await ctx.newPage();
-const metaIssues = [], imgIssues = [], linkIssues = [];
+const metaIssues = [], imgIssues = [], linkIssues = [], badResponses = [];
+page.on('response', (r) => {
+  if (r.status() >= 400) badResponses.push(`${r.status()} ${r.url()}`);
+});
 const titles = new Set(), canonicals = new Set();
 
 for (const route of ROUTES) {
@@ -38,6 +41,8 @@ for (const route of ROUTES) {
     imgs: [...document.querySelectorAll('img')].map((i) => ({
       src: i.getAttribute('src'), alt: i.getAttribute('alt'),
       w: i.getAttribute('width'), h: i.getAttribute('height'),
+      // src 문자열만 보면 404 를 통과시킨다. 실제 디코딩 여부로 판정한다.
+      loaded: i.naturalWidth > 0 && i.naturalHeight > 0,
     })),
     links: [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')),
   }));
@@ -53,6 +58,7 @@ for (const route of ROUTES) {
   for (const i of d.imgs) {
     if (i.alt === null) imgIssues.push(`${route} alt 속성 없음 ${i.src}`);
     if (!i.w || !i.h) imgIssues.push(`${route} 크기 미지정 ${i.src}`);
+    if (!i.loaded) imgIssues.push(`${route} 로드 실패 ${i.src}`);
   }
   for (const h of d.links) {
     if (h === '#' || h === '') linkIssues.push(`${route} 빈 링크`);
@@ -65,8 +71,12 @@ add('S01', 'HTML/메타 (H1 1개·title·description·canonical·OG·lang)',
 add('S01b', 'title·canonical 페이지별 고유',
   titles.size === ROUTES.length && canonicals.size === ROUTES.length ? 'PASS' : 'FAIL',
   `title ${titles.size}종 / canonical ${canonicals.size}종 (기대 ${ROUTES.length})`);
-add('I04', '이미지 dimensions·alt',
-  imgIssues.length ? 'FAIL' : 'PASS', imgIssues.join('; ') || '전 이미지 width/height/alt 지정');
+add('I04', '이미지 dimensions·alt·실제 로드',
+  imgIssues.length ? 'FAIL' : 'PASS',
+  imgIssues.slice(0, 6).join('; ') || '전 이미지 width/height/alt 지정 + naturalWidth>0');
+add('N01', '4xx/5xx 응답 없음 (이미지·자산 포함)',
+  badResponses.length ? 'FAIL' : 'PASS',
+  badResponses.slice(0, 6).join('; ') || `${ROUTES.length}개 페이지 전 요청 정상`);
 add('R04', '빈 # CTA·unsafe scheme',
   linkIssues.length ? 'FAIL' : 'PASS', linkIssues.join('; ') || '없음');
 
@@ -105,13 +115,14 @@ add('U04', '모바일 메뉴 (button·aria-expanded·Escape·focus 복귀)',
 const reqs = [];
 const m2Ctx = await browser.newContext({ ...devices['Pixel 7'] });
 const m2 = await m2Ctx.newPage();
-m2.on('request', (r) => { if (r.resourceType() === 'image') reqs.push(r.url()); });
+m2.on('response', (r) => { if (r.request().resourceType() === 'image') reqs.push({ url: r.url(), status: r.status() }); });
 await m2.goto(BASE + '/', { waitUntil: 'networkidle' });
-const gotDesktop = reqs.some((u) => u.includes('a01-home-hero-desktop'));
-const gotMobile = reqs.some((u) => u.includes('a02-home-hero-mobile'));
-add('I03', '모바일 Hero 중복 요청',
-  gotMobile && !gotDesktop ? 'PASS' : 'FAIL',
-  `mobile=${gotMobile} desktop=${gotDesktop} (요청 이미지 ${reqs.length}건)`);
+const okMobile = reqs.some((r) => r.url.includes('a02-home-hero-mobile') && r.status === 200);
+const anyDesktop = reqs.some((r) => r.url.includes('a01-home-hero-desktop'));
+const anyBad = reqs.filter((r) => r.status >= 400);
+add('I03', '모바일 Hero — mobile 200 수신 · desktop 미요청',
+  okMobile && !anyDesktop && !anyBad.length ? 'PASS' : 'FAIL',
+  `mobile200=${okMobile} desktop요청=${anyDesktop} 실패응답=${anyBad.length} (이미지 ${reqs.length}건)`);
 
 // ---------- A01/A03 접근성 (axe) ----------
 const a11y = [];

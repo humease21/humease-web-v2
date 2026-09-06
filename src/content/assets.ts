@@ -3,6 +3,8 @@
  * src 는 존재가 확인된 배포 파일만 기재한다. 없으면 만들어 넣지 않는다.
  * 원본 경로·해시는 docs/reports/ 에 별도 기록한다(브라우저로 보내지 않음).
  */
+import { asset } from '@/lib/asset-path';
+
 export type AssetRole = 'decorative' | 'content' | 'product-capture';
 export type SourceStatus = 'located' | 'mapped' | 'optimized' | 'verified';
 
@@ -19,7 +21,7 @@ export type Asset = {
 const A = (
   id: string, file: string, width: number, height: number,
   role: AssetRole = 'decorative', alt = '',
-): Asset => ({ id, src: `/images/${file}`, width, height, role, alt, sourceStatus: 'optimized' });
+): Asset => ({ id, src: asset(`/images/${file}`), width, height, role, alt, sourceStatus: 'optimized' });
 
 export const assets = {
   A01: A('A01', 'a01-home-hero-desktop.webp', 1376, 768),

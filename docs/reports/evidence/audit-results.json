@@ -13,9 +13,15 @@
   },
   {
     "id": "I04",
-    "name": "이미지 dimensions·alt",
-    "status": "PASS",
-    "detail": "전 이미지 width/height/alt 지정"
+    "name": "이미지 dimensions·alt·실제 로드",
+    "status": "FAIL",
+    "detail": "/ 로드 실패 /brand/logo-horizontal-en.webp; / 로드 실패 /images/a01-home-hero-desktop.webp; / 로드 실패 /images/a03-data-to-intelligence.webp; / 로드 실패 /images/a10-momieum-connection.webp; / 로드 실패 /brand/logo-horizontal-en.webp; /about/ 로드 실패 /brand/logo-horizontal-en.webp"
+  },
+  {
+    "id": "N01",
+    "name": "4xx/5xx 응답 없음 (이미지·자산 포함)",
+    "status": "FAIL",
+    "detail": "404 https://humease21.github.io/brand/logo-horizontal-en.webp; 404 https://humease21.github.io/images/a01-home-hero-desktop.webp; 404 https://humease21.github.io/images/a03-data-to-intelligence.webp; 404 https://humease21.github.io/images/a10-momieum-connection.webp; 404 https://humease21.github.io/brand/logo-horizontal-en.webp; 404 https://humease21.github.io/brand/logo-horizontal-en.webp"
   },
   {
     "id": "R04",
@@ -37,9 +43,9 @@
   },
   {
     "id": "I03",
-    "name": "모바일 Hero 중복 요청",
-    "status": "PASS",
-    "detail": "mobile=true desktop=false (요청 이미지 3건)"
+    "name": "모바일 Hero — mobile 200 수신 · desktop 미요청",
+    "status": "FAIL",
+    "detail": "mobile200=false desktop요청=false 실패응답=4 (이미지 4건)"
   },
   {
     "id": "A01",
@@ -63,7 +69,7 @@
     "id": "P01",
     "name": "클라이언트 번들 비밀 노출",
     "status": "PASS",
-    "detail": "JS 8개 + HTML 검사, 노출 0"
+    "detail": "JS 7개 + HTML 검사, 노출 0"
   },
   {
     "id": "B02",

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { asset } from '@/lib/asset-path';
 import { primaryNav } from '@/content/navigation';
 import { MobileNav } from '@/components/interactive/MobileNav';
 
@@ -10,7 +11,7 @@ export function SiteHeader() {
       <div className="shell flex h-16 items-center justify-between md:h-[76px]">
         <Link href="/" className="inline-flex items-center" aria-label="휴미즈 홈">
           <Image
-            src="/brand/logo-horizontal-en.webp"
+            src={asset('/brand/logo-horizontal-en.webp')}
             alt="휴미즈"
             width={337}
             height={56}

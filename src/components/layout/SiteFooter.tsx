@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { asset } from '@/lib/asset-path';
 import { company } from '@/content/company';
 import { primaryNav } from '@/content/navigation';
 
@@ -17,7 +18,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-10 md:flex-row md:justify-between">
           <div>
             <Image
-              src="/brand/logo-horizontal-en.webp"
+              src={asset('/brand/logo-horizontal-en.webp')}
               alt="휴미즈"
               width={337}
               height={56}
