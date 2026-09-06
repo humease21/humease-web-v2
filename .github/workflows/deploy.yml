@@ -89,8 +89,12 @@ jobs:
           node scripts/verify-font-subset.mjs
           node scripts/verify-entities.mjs
 
-      - name: Disable Jekyll
-        run: touch out/.nojekyll
+      - name: Jekyll 비활성화 + CNAME 고정
+        # CNAME 은 Actions 기반 Pages 에서 자동 생성되지 않는다. 파일이 없으면
+        # 재배포 때 Custom Domain 설정이 풀릴 수 있어 산출물에 직접 넣는다.
+        run: |
+          touch out/.nojekyll
+          echo 'www.humease.com' > out/CNAME
 
       - uses: actions/upload-pages-artifact@v3
         with:
