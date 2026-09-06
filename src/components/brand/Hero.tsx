@@ -19,6 +19,17 @@ type Props = {
 export function Hero({ eyebrow, titleEn, titleKo, lead, ctas, badge, image, imageMobile, priority }: Props) {
   return (
     <section className="border-b border-[var(--color-line)]/40">
+      {/* LCP 후보 1장만 우선 로딩(docs/02 §8). React 19 가 head 로 호이스팅한다. */}
+      {priority && image && (
+        imageMobile ? (
+          <>
+            <link rel="preload" as="image" href={imageMobile.src} media="(max-width: 767px)" fetchPriority="high" />
+            <link rel="preload" as="image" href={image.src} media="(min-width: 768px)" fetchPriority="high" />
+          </>
+        ) : (
+          <link rel="preload" as="image" href={image.src} fetchPriority="high" />
+        )
+      )}
       <div className="shell grid items-center gap-10 py-16 md:min-h-[640px] md:grid-cols-[55fr_45fr] md:gap-14 md:py-24">
         <div>
           <p className="eyebrow">{eyebrow}</p>

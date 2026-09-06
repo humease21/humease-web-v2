@@ -4,10 +4,10 @@ import { company } from '@/content/company';
 import './globals.css';
 
 const sourceSerif = Source_Serif_4({
-  subsets: ['latin'], display: 'swap', variable: '--font-source-serif', weight: ['400', '600'],
+  subsets: ['latin'], display: 'swap', variable: '--font-source-serif', weight: ['400'],
 });
 const notoSansKr = Noto_Sans_KR({
-  subsets: ['latin'], display: 'swap', variable: '--font-noto-sans-kr', weight: ['400', '500', '700'],
+  subsets: ['latin'], display: 'swap', variable: '--font-noto-sans-kr', weight: ['400', '500'],
 });
 
 export const metadata: Metadata = {
