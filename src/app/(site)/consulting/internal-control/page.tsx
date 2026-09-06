@@ -4,13 +4,10 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 import { A } from '@/components/ui/Link';
 
-export const metadata = pageMeta({
-  title: 'Internal Control 컨설팅 | 휴미즈',
-  description: '민감정보와 업무 커뮤니케이션의 관리 기준, 점검, 조치와 기록을 연결하는 휴미즈 내부 통제 컨설팅.',
-  path: '/consulting/internal-control',
-});
+export const metadata = pageMeta({ ...metaForPath('/consulting/internal-control'), path: '/consulting/internal-control' });
 
 const SCOPE = [
   { k: '관리 범위', v: '데이터 유형과 대상 시스템, 확인할 리스크를 정리합니다.' },

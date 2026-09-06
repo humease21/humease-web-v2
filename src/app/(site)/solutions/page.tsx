@@ -5,17 +5,23 @@ import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { challenges, products, RELATIONSHIP_NOTICE, PRODUCT_INFO_VERIFIED_AT } from '@/content/solutions';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath, pageByPath } from '@/content/search-pages';
+import { JsonLd, organizationNode, websiteNode, webPageNode, breadcrumbNode, itemListNode } from '@/lib/structured-data';
 import { A } from '@/components/ui/Link';
 
-export const metadata = pageMeta({
-  title: 'Arctera Solutions | 휴미즈',
-  description: '기업 데이터의 보존부터 컴플라이언스와 eDiscovery까지. Enterprise Vault, Capture (formerly Merge1), Data Insight, eDiscovery Platform의 역할과 적용 검토 항목을 한국어로 안내합니다.',
-  path: '/solutions',
-});
+export const metadata = pageMeta({ ...metaForPath('/solutions'), path: '/solutions' });
 
 export default function Page() {
+  const meta = pageByPath('/solutions')!;
   return (
     <>
+      <JsonLd graph={[
+        organizationNode(),
+        websiteNode(),
+        webPageNode({ path: '/solutions', name: meta.title, description: meta.description, type: 'CollectionPage' }),
+        breadcrumbNode('/solutions', [{ name: '홈', path: '/' }, { name: 'Arctera Solutions', path: '/solutions' }]),
+        itemListNode('/solutions', products.map((p) => ({ name: p.name, path: `/solutions/${p.slug}` }))),
+      ]} />
       <CinematicHero
         eyebrow="ARCTERA SOLUTIONS"
         titleKo="기업 데이터의 보존부터, 컴플라이언스와 eDiscovery까지."

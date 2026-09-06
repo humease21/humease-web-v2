@@ -4,12 +4,9 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 
-export const metadata = pageMeta({
-  title: 'Enterprise Data | 휴미즈',
-  description: 'e-Discovery, 내부 통제, Exchange 아카이빙을 위한 정책과 시스템 설계. 휴미즈와 기업 데이터 환경의 과제를 검토하세요.',
-  path: '/enterprise-data',
-});
+export const metadata = pageMeta({ ...metaForPath('/enterprise-data'), path: '/enterprise-data' });
 
 const STEPS = [
   { k: '진단', v: '데이터 소스, 보존 정책, 검색 요구, 시스템 제약을 확인합니다.' },

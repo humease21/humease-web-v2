@@ -7,6 +7,9 @@ import {
   products, productBySlug, RELATIONSHIP_NOTICE, SUPPORT_SCOPE_NOTICE, PRODUCT_INFO_VERIFIED_AT,
 } from '@/content/solutions';
 import { pageMeta } from '@/lib/seo';
+import {
+  JsonLd, organizationNode, websiteNode, webPageNode, breadcrumbNode, softwareApplicationNode,
+} from '@/lib/structured-data';
 import { A } from '@/components/ui/Link';
 
 export function generateStaticParams() {
@@ -18,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = productBySlug(slug);
   if (!p) return {};
-  return pageMeta({ title: `${p.name} | 휴미즈`, description: p.metaDescription, path: `/solutions/${p.slug}` });
+  return pageMeta({ title: p.seoTitle, description: p.metaDescription, path: `/solutions/${p.slug}` });
 }
 
 const COVER = {
@@ -33,8 +36,31 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const p = productBySlug(slug);
   if (!p) notFound();
 
+  const path = `/solutions/${p.slug}`;
+  const swNode = softwareApplicationNode({
+    name: p.officialName ?? p.name.replace(/\s*\(formerly [^)]+\)/, ''),
+    alternateName: p.alternateName,
+    url: p.officialSource.url,
+  });
+
   return (
     <>
+      <JsonLd graph={[
+        organizationNode(),
+        websiteNode(),
+        webPageNode({
+          path, name: p.seoTitle, description: p.metaDescription,
+          // 휴미즈는 이 설명 페이지의 게시자이며, 제품의 게시자가 아니다.
+          about: { '@id': swNode['@id'] as string },
+          citation: p.officialSource.url,
+        }),
+        breadcrumbNode(path, [
+          { name: '홈', path: '/' },
+          { name: 'Arctera Solutions', path: '/solutions' },
+          { name: p.name, path },
+        ]),
+        swNode,
+      ]} />
       <CinematicHero
         eyebrow="ARCTERA SOLUTIONS"
         titleKo={p.name}

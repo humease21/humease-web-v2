@@ -37,19 +37,22 @@ jobs:
       - name: Lint
         run: npx next lint --max-warnings=0 || npx eslint .
 
-      - name: Build (static export)
-        # 프로젝트 Pages 는 /humease-web-v2 하위 경로로 서빙된다.
-        # 커스텀 도메인 연결 시 이 값을 빈 문자열로 바꾼다(ADR-001 §5).
+      - name: Build (static export · preview)
+        # 검증 배포. 색인 승인이 없으므로 sitemap URL·canonical·JSON-LD 를 내지 않는다.
         run: npm run build
         env:
+          NEXT_PUBLIC_SITE_DEPLOY_TARGET: preview
+          NEXT_PUBLIC_SITE_ORIGIN: https://humease21.github.io
           NEXT_PUBLIC_BASE_PATH: /humease-web-v2
 
       - name: 검증 (docs/04 §2)
         # basePath 이탈·이중 적용 검사는 빌드와 같은 환경값이 있어야 동작한다.
         env:
+          NEXT_PUBLIC_SITE_DEPLOY_TARGET: preview
           NEXT_PUBLIC_BASE_PATH: /humease-web-v2
         run: |
           node scripts/verify-routes.mjs
+          node scripts/verify-indexing-policy.mjs
           node scripts/verify-copy.mjs
           node scripts/verify-request-copy.mjs
           node scripts/verify-content.mjs
@@ -57,6 +60,23 @@ jobs:
           node scripts/verify-assets.mjs
           node scripts/verify-client-exposure.mjs
           node scripts/verify-font-subset.mjs
+
+      - name: 운영 dry-run 검사
+        # 운영 산출물의 canonical·sitemap·JSON-LD 계약을 검사한다.
+        # ⚠ 이 산출물은 업로드하지 않는다. 검증 Pages 에 게시하면 색인 가능한 복제본이 생긴다.
+        run: |
+          cp -r out /tmp/out-preview
+          rm -rf .next out
+          npm run build
+          node scripts/verify-indexing-policy.mjs
+          node scripts/verify-entities.mjs
+          rm -rf .next out
+          mv /tmp/out-preview out
+        env:
+          NEXT_PUBLIC_SITE_DEPLOY_TARGET: production
+          NEXT_PUBLIC_SITE_ORIGIN: https://www.humease.com
+          NEXT_PUBLIC_BASE_PATH: ''
+          NEXT_PUBLIC_SEARCH_INDEXING_ENABLED: 'true'
 
       - name: Disable Jekyll
         run: touch out/.nojekyll

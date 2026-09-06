@@ -5,12 +5,9 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 
-export const metadata = pageMeta({
-  title: '회사소개 | 휴미즈',
-  description: '기업 데이터의 신뢰와 AI 서비스의 실행을 연결하는 휴미즈. 문제를 이해하고, 설계하고, 구현하는 접근 방식을 소개합니다.',
-  path: '/about',
-});
+export const metadata = pageMeta({ ...metaForPath('/about'), path: '/about' });
 
 const WAYS = [
   { k: '먼저 이해합니다.', v: '현재 환경, 해결할 문제, 기대하는 결과를 구체화합니다.' },

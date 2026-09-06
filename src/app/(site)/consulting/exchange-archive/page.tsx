@@ -4,13 +4,10 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 import { A } from '@/components/ui/Link';
 
-export const metadata = pageMeta({
-  title: 'Exchange 아카이빙 컨설팅 | 휴미즈',
-  description: '메일 보존·검색·사용자 접근·운영을 함께 고려한 Exchange 아카이빙 설계와 도입·이관 검토를 지원합니다.',
-  path: '/consulting/exchange-archive',
-});
+export const metadata = pageMeta({ ...metaForPath('/consulting/exchange-archive'), path: '/consulting/exchange-archive' });
 
 const SCOPE = [
   { k: '환경 진단', v: '메일 구성, 사용자 수, 데이터 규모와 증가 추이, 현재 보존 방식을 확인합니다.' },

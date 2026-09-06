@@ -9,14 +9,11 @@ import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { featuredProjects } from '@/content/portfolio';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath, pageByPath } from '@/content/search-pages';
+import { JsonLd, organizationNode, websiteNode, webPageNode } from '@/lib/structured-data';
 import { A } from '@/components/ui/Link';
 
-export const metadata = pageMeta({
-  title: '휴미즈 | Enterprise Data & Applied AI',
-  description:
-    '기업 데이터의 보존·검색·통제부터 AI 서비스 설계와 구현까지. 휴미즈의 Enterprise Data, Applied AI, 맘이음 프로젝트를 만나보세요.',
-  path: '/',
-});
+export const metadata = pageMeta({ ...metaForPath('/'), path: '/' });
 
 const HOW_WE_WORK = [
   { k: 'Understand', v: '현재 환경, 사용자, 실제 문제를 확인합니다.' },
@@ -26,8 +23,15 @@ const HOW_WE_WORK = [
 ];
 
 export default function HomePage() {
+  const meta = pageByPath('/')!;
+
   return (
     <>
+      <JsonLd graph={[
+        organizationNode(),
+        websiteNode(),
+        webPageNode({ path: '/', name: meta.title, description: meta.description }),
+      ]} />
       <CinematicHero
         eyebrow="HUMEASE · ENTERPRISE DATA & APPLIED AI"
         titleEn="Complexity, made intelligent."

@@ -4,13 +4,10 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 import { A } from '@/components/ui/Link';
 
-export const metadata = pageMeta({
-  title: 'e-Discovery 컨설팅 | 휴미즈',
-  description: '조사·감사·분쟁 대응을 위한 데이터 보존, 검색, 검토 흐름을 기업 환경에 맞게 설계하는 휴미즈 e-Discovery 컨설팅.',
-  path: '/consulting/e-discovery',
-});
+export const metadata = pageMeta({ ...metaForPath('/consulting/e-discovery'), path: '/consulting/e-discovery' });
 
 const SCOPE = [
   { k: '대상과 범위 정리', v: '요청 목적, 기간, 관련 데이터와 보존 요건을 함께 확인합니다.' },

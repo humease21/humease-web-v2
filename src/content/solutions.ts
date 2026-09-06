@@ -33,8 +33,10 @@ export const challenges = [
 
 export type Product = {
   slug: string;
-  /** 공개 표시명. 목록·H1·title 이 모두 이 값을 쓴다. */
+  /** 공개 표시명. 목록·H1 이 이 값을 쓴다. */
   name: string;
+  /** 검색 결과용 제목(요청서 §5.3 지정값) */
+  seoTitle: string;
   /** 공식 자료상의 전체 명칭. 본문 첫 문장에서 함께 안내한다. */
   officialName?: string;
   alternateName?: string;
@@ -57,6 +59,7 @@ export const products: Product[] = [
   {
     slug: 'enterprise-vault',
     name: 'Enterprise Vault Complete',
+    seoTitle: 'Enterprise Vault Complete · 아카이빙과 거버넌스 | 휴미즈',
     anchor: 'ev',
     role: '기업 정보를 보존하고 정책에 따라 관리하는 아카이빙·거버넌스',
     subtitleKo: '중요한 정보를 오래 보존하고, 필요한 순간 활용할 수 있도록.',
@@ -89,6 +92,7 @@ export const products: Product[] = [
   {
     slug: 'enterprise-vault-capture',
     name: 'Enterprise Vault Capture (formerly Merge1)',
+    seoTitle: 'Enterprise Vault Capture (formerly Merge1) | HUMEASE',
     alternateName: 'Merge1',
     anchor: 'merge1',
     role: '여러 커뮤니케이션 채널의 데이터를 수집해 보존·검토 환경으로 연결',
@@ -125,6 +129,7 @@ export const products: Product[] = [
   {
     slug: 'data-insight',
     name: 'Data Insight',
+    seoTitle: 'Data Insight · 비정형 데이터 현황과 위험 분석 | 휴미즈',
     officialName: 'Enterprise Vault Data Insight',
     anchor: 'datainsight',
     role: '데이터 현황·사용·접근 패턴을 분석해 관리 판단 지원',
@@ -157,6 +162,7 @@ export const products: Product[] = [
   {
     slug: 'ediscovery-platform',
     name: 'eDiscovery Platform',
+    seoTitle: 'eDiscovery Platform · 보존·수집·검토·제출 | 휴미즈',
     officialName: 'Enterprise Vault eDiscovery Platform',
     anchor: 'ediscovery',
     role: '조사 자료의 검색·보존·수집·검토·제출 과정 지원',

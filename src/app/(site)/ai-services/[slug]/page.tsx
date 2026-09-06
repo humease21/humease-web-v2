@@ -5,6 +5,9 @@ import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { publishedProjects, projectBySlug } from '@/content/portfolio';
 import { pageMeta } from '@/lib/seo';
+import {
+  JsonLd, organizationNode, websiteNode, webPageNode, breadcrumbNode, creativeWorkNode,
+} from '@/lib/structured-data';
 import { A } from '@/components/ui/Link';
 
 /** 공개 승인된 slug 만 정적 생성한다. draft 는 HTML 도 만들지 않는다. */
@@ -20,9 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!p) return {};
   const isMomIe = p.slug === 'mom-ie';
   return pageMeta({
-    title: isMomIe ? '맘이음 — 개발 중인 가족 소통 AI | 휴미즈' : `${p.name} | 휴미즈 AI 포트폴리오`,
+    // §5.3 — 미확인 상태를 '정식 출시'·'고객 운영 중'·'휴미즈 소유 제품'으로 추정하지 않는다.
+    title: isMomIe
+      ? '맘이음 · 가족 소통 AI 개발 프로젝트 | 휴미즈'
+      : `${p.name} · ${p.category} | 휴미즈 포트폴리오`,
     description: isMomIe
-      ? '친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI. 휴미즈가 개발 중인 맘이음의 서비스 방향을 소개합니다.'
+      ? '친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI 맘이음의 개발 방향을 소개합니다. 현재 개발 중인 프로젝트입니다.'
       : `${p.summary} 휴미즈 AI 포트폴리오에서 프로젝트의 배경과 현재 단계를 확인하세요.`,
     path: `/ai-services/${p.slug}`,
   });
@@ -45,8 +51,22 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const cover = p.coverAssetId ? assets[p.coverAssetId] : assets.A09;
   const isMomIe = p.slug === 'mom-ie';
 
+  const path = `/ai-services/${p.slug}`;
+
   return (
     <>
+      {/* 개발 중 프로젝트에 가짜 다운로드·가격·별점을 넣지 않는다. CreativeWork 로만 표현한다. */}
+      <JsonLd graph={[
+        organizationNode(),
+        websiteNode(),
+        webPageNode({ path, name: p.name, description: p.summary }),
+        breadcrumbNode(path, [
+          { name: '홈', path: '/' },
+          { name: 'AI Portfolio', path: '/ai-services' },
+          { name: p.name, path },
+        ]),
+        creativeWorkNode({ name: p.name, description: p.summary, path }),
+      ]} />
       <CinematicHero
         eyebrow="HUMEASE AI PROJECT"
         badge={p.stage ?? undefined}

@@ -5,17 +5,23 @@ import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { publishedProjects } from '@/content/portfolio';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath, pageByPath } from '@/content/search-pages';
+import { JsonLd, organizationNode, websiteNode, webPageNode, breadcrumbNode, itemListNode } from '@/lib/structured-data';
 
-export const metadata = pageMeta({
-  title: 'AI 포트폴리오 | 휴미즈',
-  description: '휴미즈가 직접 만든 AI 프로젝트를 소개합니다. 아이디어를 어떻게 서비스로 구체화했는지, 어떤 문제를 풀고 무엇을 구현했는지 확인하세요.',
-  path: '/ai-services',
-});
+export const metadata = pageMeta({ ...metaForPath('/ai-services'), path: '/ai-services' });
 
 export default function Page() {
   const items = publishedProjects();
+  const meta = pageByPath('/ai-services')!;
   return (
     <>
+      <JsonLd graph={[
+        organizationNode(),
+        websiteNode(),
+        webPageNode({ path: '/ai-services', name: meta.title, description: meta.description, type: 'CollectionPage' }),
+        breadcrumbNode('/ai-services', [{ name: '홈', path: '/' }, { name: 'AI Portfolio', path: '/ai-services' }]),
+        itemListNode('/ai-services', items.map((p) => ({ name: p.name, path: `/ai-services/${p.slug}` }))),
+      ]} />
       <CinematicHero
         eyebrow="BUILT BY HUMEASE"
         titleKo="직접 만든 서비스로, AI의 가능성을 보여줍니다."

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Source_Serif_4 } from 'next/font/google';
 import { company } from '@/content/company';
-import { basePath } from '@/lib/asset-path';
+import { searchIndexingEnabled } from '@/lib/search-config';
 import './globals.css';
 
 const sourceSerif = Source_Serif_4({
@@ -24,8 +24,12 @@ const notoSansKr = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(company.siteUrl),
-  // Preview(프로젝트 Pages 하위 경로)는 색인하지 않는다. 운영 도메인 전환 시 자동 해제된다.
-  ...(basePath !== '' ? { robots: { index: false, follow: false } } : {}),
+  /*
+   * 기본은 색인하지 않는다. basePath 가 비었다는 이유만으로 공개되지 않는다.
+   * 배포 대상이 production 이고 색인 승인이 명시된 경우에만 열린다(요청서 §4.1).
+   * 크롤링은 막지 않는다 — noindex 를 읽을 수 있어야 하기 때문이다.
+   */
+  robots: searchIndexingEnabled ? { index: true, follow: true } : { index: false, follow: true },
   // 기존 운영 사이트의 네이버 사이트 인증을 승계한다(공개 토큰).
   verification: { other: { 'naver-site-verification': '62dfd1cc3f11d99cb7e0e258f9c59a97b0666e76' } },
   title: { default: '휴미즈 | Enterprise Data & Applied AI', template: '%s' },

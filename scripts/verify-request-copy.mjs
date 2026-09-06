@@ -80,7 +80,12 @@ const CHECKS = [
 ];
 
 const TITLES = [
-  ['/solutions/enterprise-vault-capture', 'Enterprise Vault Capture (formerly Merge1) | 휴미즈'],
+  /*
+   * 콘텐츠 요청서 §8.2 는 `| 휴미즈`, SEO 요청서 §5.3 은 `| HUMEASE` 를 지정한다.
+   * SEO 요청서 §0.2 가 "메타데이터 충돌은 이 요청을 우선한다"고 명시하므로 후자를 따른다.
+   * 제품명 본체(Enterprise Vault Capture (formerly Merge1))는 두 문서가 동일하다.
+   */
+  ['/solutions/enterprise-vault-capture', 'Enterprise Vault Capture (formerly Merge1) | HUMEASE'],
 ];
 
 const fails = [];

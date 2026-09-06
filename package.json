@@ -18,7 +18,9 @@
     "verify:content": "node scripts/verify-content.mjs",
     "verify:request": "node scripts/verify-request-copy.mjs",
     "verify:aliases": "node scripts/verify-aliases.mjs",
-    "verify:font-family": "node tests/font-check.mjs"
+    "verify:font-family": "node tests/font-check.mjs",
+    "verify:indexing": "node scripts/verify-indexing-policy.mjs",
+    "verify:entities": "node scripts/verify-entities.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

@@ -4,12 +4,9 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 
-export const metadata = pageMeta({
-  title: 'Applied AI · AI 서비스 개발 | 휴미즈',
-  description: 'AI 서비스, 업무 자동화, 웹 애플리케이션과 MVP를 사용자 흐름에 맞게 설계하고 구현하는 휴미즈 Applied AI.',
-  path: '/consulting/ai-transformation',
-});
+export const metadata = pageMeta({ ...metaForPath('/consulting/ai-transformation'), path: '/consulting/ai-transformation' });
 
 export default function Page() {
   return (

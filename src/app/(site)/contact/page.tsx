@@ -5,13 +5,10 @@ import { assets } from '@/content/assets';
 import { company } from '@/content/company';
 import { CONTACT_MODE, contactFields } from '@/content/contact';
 import { pageMeta } from '@/lib/seo';
+import { metaForPath } from '@/content/search-pages';
 import { A } from '@/components/ui/Link';
 
-export const metadata = pageMeta({
-  title: '프로젝트 문의 | 휴미즈',
-  description: 'Enterprise Data와 Applied AI 프로젝트를 문의하세요. 현재 환경과 해결하고 싶은 과제를 알려주시면 확인 후 회신드리겠습니다.',
-  path: '/contact',
-});
+export const metadata = pageMeta({ ...metaForPath('/contact'), path: '/contact' });
 
 export default function Page() {
   return (
