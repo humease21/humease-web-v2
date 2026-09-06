@@ -2,9 +2,14 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { primaryNav } from '@/content/navigation';
 
-/** docs/02 §7 — 실제 button, Escape 닫기, 포커스 복귀, 열렸을 때만 배경 스크롤 잠금 */
+/**
+ * 패널을 body 로 portal 한다 — 헤더의 backdrop-filter 가 position:fixed 의
+ * containing block 을 만들어 패널 높이가 0 이 되는 문제를 원천 차단한다.
+ * 실제 button, Escape 닫기, 포커스 복귀, 열렸을 때만 배경 스크롤 잠금.
+ */
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -23,6 +28,32 @@ export function MobileNav() {
     };
   }, [open]);
 
+  const panel = (
+    <div id="mobile-menu" className="fixed inset-0 z-[60] overflow-y-auto bg-[var(--color-bg)] md:hidden">
+      <div className="shell flex min-h-16 items-center justify-end">
+        <button
+          type="button"
+          onClick={() => { setOpen(false); triggerRef.current?.focus(); }}
+          className="grid h-11 w-11 place-items-center text-2xl"
+        >
+          <span className="sr-only">메뉴 닫기</span>
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+      <nav aria-label="모바일 메뉴" className="shell pb-16 pt-6">
+        <ul>
+          {primaryNav.map((item) => (
+            <li key={item.href} className="border-t border-[color-mix(in_srgb,var(--color-line)_50%,transparent)]">
+              <Link href={item.href} onClick={() => setOpen(false)} className="flex min-h-[68px] items-center text-2xl font-medium">
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+
   return (
     <div className="md:hidden">
       <button
@@ -30,32 +61,13 @@ export function MobileNav() {
         type="button"
         aria-expanded={open}
         aria-controls="mobile-menu"
-        onClick={() => setOpen((v) => !v)}
-        className="grid h-11 w-11 place-items-center rounded-lg border border-[var(--color-line)] text-sm font-medium"
+        onClick={() => setOpen(true)}
+        className="grid h-11 w-11 place-items-center text-xl"
       >
-        <span className="sr-only">메뉴 {open ? '닫기' : '열기'}</span>
-        <span aria-hidden>{open ? '✕' : '☰'}</span>
+        <span className="sr-only">메뉴 열기</span>
+        <span aria-hidden="true">☰</span>
       </button>
-
-      {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-[var(--color-bg)]">
-          <nav aria-label="모바일 메뉴" className="shell py-6">
-            <ul className="flex flex-col">
-              {primaryNav.map((item) => (
-                <li key={item.href} className="border-b border-[var(--color-line)]/50">
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="flex min-h-[56px] items-center text-lg font-medium"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
+      {open && createPortal(panel, document.body)}
     </div>
   );
 }

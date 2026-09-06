@@ -1,7 +1,8 @@
-import { Hero } from '@/components/brand/Hero';
-import { Section } from '@/components/sections/Section';
-import { ButtonLink } from '@/components/ui/Button';
-import { company } from '@/content/company';
+import { CinematicHero } from '@/components/brand/CinematicHero';
+import { Scene } from '@/components/sections/Scene';
+import { InsightsEditorial, type Article } from '@/components/sections/InsightsEditorial';
+import { ClosingContact } from '@/components/sections/ClosingContact';
+import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata = pageMeta({
@@ -11,29 +12,23 @@ export const metadata = pageMeta({
 });
 
 /** docs/03 P12 — 확인한 실제 글만 노출. 없으면 빈 카드·빈 필터를 만들지 않는다. */
-const articles: { title: string; date: string; category: string; href: string; summary: string }[] = [];
+const articles: Article[] = [];
 
 export default function Page() {
   return (
     <>
-      <Hero
+      <CinematicHero
         eyebrow="INSIGHTS"
         titleKo="기술을 이해하고, 현장에 연결하는 기록."
         lead="Enterprise Data와 Applied AI의 실무에서 마주하는 질문과 생각을 나눕니다."
-        priority
+        image={assets.A03}
+        ambient="silver"
+        align="center"
       />
-      <Section>
-        {articles.length === 0 ? (
-          <div className="max-w-2xl">
-            <p className="body-lg">
-              휴미즈 블로그에서 기술과 프로젝트에 대한 기록을 확인하실 수 있습니다.
-            </p>
-            <div className="mt-8">
-              <ButtonLink href={company.blogUrl}>휴미즈 블로그 보기</ButtonLink>
-            </div>
-          </div>
-        ) : null}
-      </Section>
+      <Scene mask="none">
+        <InsightsEditorial articles={articles} />
+      </Scene>
+      <ClosingContact />
     </>
   );
 }

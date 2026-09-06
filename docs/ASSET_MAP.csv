@@ -1,17 +1,17 @@
 asset_id,reference_basename,page_paths,placement,actual_file_path,web_file_path,width,height,verification_status
-A01,home-hero-desktop,/,Hero/섹션,Images/null,public/images/a01-home-hero-desktop.webp,1376,768,optimized
-A02,home-hero-mobile,/,Hero/섹션,Images/null,public/images/a02-home-hero-mobile.webp,912,1136,optimized
-A03,data-to-intelligence,/,Hero/섹션,Images/null,public/images/a03-data-to-intelligence.webp,1600,900,optimized
-A04,enterprise-data,/enterprise-data,Hero/섹션,Images/null,public/images/a04-enterprise-data.webp,1600,900,optimized
-A05,ediscovery,/consulting/e-discovery,Hero/섹션,Images/null,public/images/a05-ediscovery.webp,1600,900,optimized
-A06,internal-control,/consulting/internal-control,Hero/섹션,Images/null,public/images/a06-internal-control.webp,1600,900,optimized
-A07,exchange-archive,/consulting/exchange-archive,Hero/섹션,Images/null,public/images/a07-exchange-archive.webp,1600,900,optimized
-A08,applied-ai,/consulting/ai-transformation,Hero/섹션,Images/null,public/images/a08-applied-ai.webp,1376,768,optimized
-A09,ai-projects,/ai-services,Hero/섹션,Images/null,public/images/a09-ai-projects.webp,1376,768,optimized
-A10,momieum-connection,/;/ai-services;/ai-services/mom-ie,Hero/섹션,Images/null,public/images/a10-momieum-connection.webp,1376,768,optimized
-A11,about-craft,/about,Hero/섹션,Images/null,public/images/a11-about-craft.webp,1200,896,optimized
-A12,enterprise-solutions,/solutions,Hero/섹션,Images/null,public/images/a12-enterprise-solutions.webp,1376,768,optimized
-A13,contact-connection,/contact,Hero/섹션,Images/null,public/images/a13-contact-connection.webp,1400,788,optimized
+A01,home-hero-desktop,/,Hero/섹션,Images/Create_a_169_horizontal_premium_enterprise_websit-1788673277991.png,public/images/a01-home-hero-desktop.webp,1376,768,optimized
+A02,home-hero-mobile,/,Hero/섹션,Images/A_premium_45_vertical_background_image_for_a_mobi-1788673543989.png,public/images/a02-home-hero-mobile.webp,912,1136,optimized
+A03,data-to-intelligence,/,Hero/섹션,Images/A_premium_169_horizontal_abstract_brand_image_On-1788673553340.png,public/images/a03-data-to-intelligence.webp,1600,900,optimized
+A04,enterprise-data,/enterprise-data,Hero/섹션,Images/A_premium_169_horizontal_image_for_an_Enterprise_-1788673559932.png,public/images/a04-enterprise-data.webp,1600,900,optimized
+A05,ediscovery,/consulting/e-discovery,Hero/섹션,Images/A_premium_169_horizontal_precise_abstract_image_-1788673547301.png,public/images/a05-ediscovery.webp,1600,900,optimized
+A06,internal-control,/consulting/internal-control,Hero/섹션,Images/A_premium_169_horizontal_abstract_image_for_an_in-1788673556626.png,public/images/a06-internal-control.webp,1600,900,optimized
+A07,exchange-archive,/consulting/exchange-archive,Hero/섹션,Images/A_premium_169_horizontal_abstract_image_for_a_mai-1788673550335.png,public/images/a07-exchange-archive.webp,1600,900,optimized
+A08,applied-ai,/consulting/ai-transformation,Hero/섹션,Images/Create_a_169_hero_image_for_an_Applied_AI_page_O-1788673228276.png,public/images/a08-applied-ai.webp,1376,768,optimized
+A09,ai-projects,/ai-services,Hero/섹션,Images/Create_a_169_abstract_image_for_an_AI_projects_in-1788673210841.png,public/images/a09-ai-projects.webp,1376,768,optimized
+A10,momieum-connection,/;/ai-services;/ai-services/mom-ie,Hero/섹션,Images/Create_a_169_brand_concept_image_for_a_family_com-1788673217090.png,public/images/a10-momieum-connection.webp,1376,768,optimized
+A11,about-craft,/about,Hero/섹션,Images/Create_a_43_abstract_material_image_for_an_about_-1788673235074.png,public/images/a11-about-craft.webp,1200,896,optimized
+A12,enterprise-solutions,/solutions,Hero/섹션,Images/Create_a_169_abstract_image_for_an_enterprise_sol-1788673204392.png,public/images/a12-enterprise-solutions.webp,1376,768,optimized
+A13,contact-connection,/contact,Hero/섹션,Images/A_premium_169_horizontal_background_image_for_a_c-1788673563508.png,public/images/a13-contact-connection.webp,1400,788,optimized
 A14,insight-enterprise-data,,,,,,,미사용 — 실제 Enterprise Data 글 미확인 — 화면 미사용
 A15,insight-applied-ai,,,,,,,미사용 — 실제 Applied AI 글 미확인 — 화면 미사용
 A16,insight-product-notes,,,,,,,미사용 — 실제 제품 개발 글 미확인 — 화면 미사용

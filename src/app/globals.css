@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* docs/02 §2 고정 색상 토큰 */
+/* docs/02 §2 고정 색상 토큰 — 값은 유지하고 시각 레이어만 재설계한다 */
 @theme {
   --color-bg: #090B0E;
   --color-surface: #11151B;
@@ -17,49 +17,266 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body {
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
-  /* docs/02 §3 한글 줄바꿈 */
-  h1, h2, h3, p, li { word-break: keep-all; overflow-wrap: anywhere; }
+  h1, h2, h3, p, li, dt, dd { word-break: keep-all; overflow-wrap: anywhere; }
   :focus-visible {
     outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
+    outline-offset: 4px;
     border-radius: 2px;
+  }
+  ::selection { background: var(--color-accent); color: #12100C; }
+
+  /* 모션 감소 — 모든 장면이 애니메이션 없이 완전한 상태로 보여야 한다 */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+    [data-parallax] { transform: none !important; }
   }
 }
 
 @layer components {
-  .shell { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 20px; }
-  @media (min-width: 768px) { .shell { padding-inline: 32px; } }
-  @media (min-width: 1024px) { .shell { padding-inline: 64px; } }
-
-  .section { padding-block: 64px; }
-  @media (min-width: 768px) { .section { padding-block: 104px; } }
-  @media (min-width: 1280px) { .section { padding-block: 128px; } }
-
-  .eyebrow {
-    font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--color-accent); font-weight: 600;
+  /* ---------- 레이아웃 ---------- */
+  /* 최대 1440px. 좌우 여백 desktop 48~96px */
+  .shell {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: 20px;
   }
-  .prose-measure { max-width: 68ch; }
+  @media (min-width: 768px)  { .shell { padding-inline: 48px; } }
+  @media (min-width: 1280px) { .shell { padding-inline: 72px; } }
+  @media (min-width: 1600px) { .shell { padding-inline: 96px; } }
 
-  /* docs/02 §3 타이포 스케일 */
-  .display-en { font-family: var(--font-display); font-weight: 400; line-height: 1.02; letter-spacing: -0.01em; font-size: clamp(40px, 6.5vw, 104px); }
-  .display-ko { font-weight: 500; line-height: 1.25; font-size: clamp(28px, 4.2vw, 60px); }
-  .h2-ko { font-weight: 500; line-height: 1.3; font-size: clamp(26px, 3.2vw, 48px); }
-  .body-lg { font-size: 16px; line-height: 1.75; color: var(--color-muted); }
-  @media (min-width: 768px) { .body-lg { font-size: 18px; } }
+  /* 본문 읽기 폭 — 52~65ch */
+  .measure    { max-width: 62ch; }
+  .measure-sm { max-width: 52ch; }
+
+  /* 하나의 장면. 카드 묶음이 아니라 한 화면에 하나의 메시지 */
+  .scene {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 70svh;
+    padding-block: 96px;
+  }
+  @media (min-width: 768px)  { .scene { padding-block: 140px; min-height: 82svh; } }
+  @media (min-width: 1280px) { .scene { padding-block: 176px; } }
+
+  .scene-tall { min-height: 88svh; }
+  @media (min-width: 768px) { .scene-tall { min-height: 94svh; } }
+
+  /* ---------- 타이포 ---------- */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+  @media (min-width: 768px) { .eyebrow { font-size: 12px; } }
+
+  /* Hero 영문 Display — 64~120px */
+  .display-hero {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.96;
+    letter-spacing: -0.022em;
+    font-size: clamp(44px, 8.2vw, 120px);
+  }
+  /* 섹션 영문 Display */
+  .display-en {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.018em;
+    font-size: clamp(36px, 5.2vw, 76px);
+  }
+  /* 한글 섹션 제목 — 40~72px */
+  .title-ko {
+    font-weight: 500;
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+    font-size: clamp(26px, 4.4vw, 72px);
+  }
+  .title-ko-sm {
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    font-size: clamp(22px, 3vw, 40px);
+  }
+  .lead {
+    font-size: 16px;
+    line-height: 1.78;
+    color: var(--color-muted);
+  }
+  @media (min-width: 768px) { .lead { font-size: 19px; } }
+
+  /* 대형 숫자 01/02 */
+  .ordinal {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1;
+    font-size: clamp(64px, 11vw, 168px);
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-line) 88%, transparent);
+    user-select: none;
+  }
+
+  /* ---------- Full-bleed 비주얼 ---------- */
+  /* 이미지는 카드가 아니다. 화면에 녹아든 장면이어야 한다. */
+  .bleed {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .bleed img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* 텍스트 가독성용 gradient mask — 이미지 파일은 수정하지 않는다 */
+  .mask-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 82%, transparent) 34%, transparent 68%),
+      linear-gradient(to top, var(--color-bg) 2%, color-mix(in srgb, var(--color-bg) 55%, transparent) 32%, transparent 62%);
+  }
+  .mask-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, var(--color-bg) 4%, color-mix(in srgb, var(--color-bg) 70%, transparent) 46%, color-mix(in srgb, var(--color-bg) 24%, transparent) 100%);
+  }
+  .mask-soft::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 22%, transparent 74%, var(--color-bg) 100%);
+  }
+
+  /* ambient light — 팔레트 안에서 아주 제한적으로 */
+  .ambient-cool::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset-inline-end: -12%;
+    inset-block-start: 8%;
+    width: min(62vw, 760px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-cool) 15%, transparent) 0%, transparent 66%);
+    pointer-events: none;
+  }
+  .ambient-warm::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset-inline-start: -8%;
+    inset-block-end: -14%;
+    width: min(58vw, 700px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-warm) 13%, transparent) 0%, transparent 64%);
+    pointer-events: none;
+  }
+  .ambient-silver::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset-inline-end: 4%;
+    inset-block-start: -10%;
+    width: min(54vw, 660px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, #ffffff 7%, transparent) 0%, transparent 62%);
+    pointer-events: none;
+  }
+
+  .layer { position: relative; z-index: 2; }
+
+  /* ---------- 등장 모션 ---------- */
+  /* 450~900ms, 이동 8~20px, 1회. bounce·shake 없음 */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 760ms cubic-bezier(0.16, 0.84, 0.3, 1),
+      transform 760ms cubic-bezier(0.16, 0.84, 0.3, 1);
+  }
+  [data-reveal][data-shown="true"] { opacity: 1; transform: none; }
+  [data-reveal="slow"] { transition-duration: 900ms; }
+  [data-delay="1"] { transition-delay: 90ms; }
+  [data-delay="2"] { transition-delay: 180ms; }
+  [data-delay="3"] { transition-delay: 270ms; }
+  [data-delay="4"] { transition-delay: 360ms; }
+
+  /* 배경 깊이 — 아주 약한 스케일 변화만 */
+  [data-parallax] {
+    transition: transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+  }
+
+  /* ---------- 요소 ---------- */
+  .rule {
+    height: 1px;
+    background: linear-gradient(to right, color-mix(in srgb, var(--color-line) 90%, transparent), transparent);
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding-inline: 30px;
+    background: var(--color-accent);
+    color: #12100C;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    transition: background-color 220ms ease, transform 220ms ease;
+  }
+  .cta-primary:hover { background: #d8cdb6; transform: translateY(-1px); }
+
+  .cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 54px;
+    padding-inline: 26px;
+    color: var(--color-text);
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-line) 100%, transparent);
+    transition: border-color 220ms ease, color 220ms ease;
+  }
+  .cta-ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+  /* 능력 항목 — 카드가 아니라 편집형 행 */
+  .cap-row {
+    display: grid;
+    gap: 6px;
+    padding-block: 22px;
+    border-top: 1px solid color-mix(in srgb, var(--color-line) 55%, transparent);
+  }
+  @media (min-width: 900px) {
+    .cap-row { grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 40px; padding-block: 26px; }
+  }
 }

@@ -1,6 +1,7 @@
-import { Hero } from '@/components/brand/Hero';
-import { Section, CapabilityRows, FaqList } from '@/components/sections/Section';
-import { ButtonLink } from '@/components/ui/Button';
+import { CinematicHero } from '@/components/brand/CinematicHero';
+import { Scene, Statement, Faq } from '@/components/sections/Scene';
+import { ClosingContact } from '@/components/sections/ClosingContact';
+import { Reveal } from '@/components/interactive/Reveal';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
 
@@ -10,43 +11,56 @@ export const metadata = pageMeta({
   path: '/consulting/e-discovery',
 });
 
+const SCOPE = [
+  { k: '대상과 범위 정리', v: '요청 목적, 기간, 관련 데이터와 보존 요건을 함께 확인합니다.' },
+  { k: '검색·검토 구조', v: '검색 조건과 검토 역할, 처리 흐름을 설계합니다.' },
+  { k: '운영과 증적', v: '접근 권한과 수행 기록 등 운영에 필요한 점검 항목을 정리합니다.' },
+];
+const FAQ = [
+  { q: '기존 아카이브와 연계할 수 있나요?', a: '데이터 소스와 제품 버전, 연결 방식, 사용 권한을 확인한 뒤 적용 범위를 검토합니다.' },
+  { q: '법률 판단도 제공하나요?', a: '휴미즈는 기술과 운영 체계의 설계를 지원합니다. 법률 판단과 제출 의무의 해석은 고객의 법무 담당자 또는 법률 전문가와 함께 확인해야 합니다.' },
+  { q: '특정 제품만 사용하나요?', a: '현재 환경과 요구를 먼저 확인하고 적합한 구성을 검토합니다.' },
+];
+
 export default function Page() {
   return (
     <>
-      <Hero
+      <CinematicHero
         eyebrow="ENTERPRISE DATA / E-DISCOVERY"
         titleKo="필요한 증거를, 설명 가능한 과정으로."
         lead="조사·감사·분쟁 대응에 필요한 데이터의 보존, 수집, 검색과 검토 흐름을 기업 환경에 맞게 설계합니다."
         image={assets.A05}
-        priority
+        ambient="silver"
+        align="bottom"
       />
-      <Section
-        title="자료를 찾는 일보다, 대응 체계를 만드는 일."
-        lead="데이터가 여러 시스템에 흩어져 있거나, 요청할 때마다 담당자가 수작업으로 대응하고 있다면 범위·권한·절차부터 정리해야 합니다."
-      />
-      <Section eyebrow="SCOPE" title="지원 범위">
-        <CapabilityRows
-          items={[
-            { title: '대상과 범위 정리', body: '요청 목적, 기간, 관련 데이터와 보존 요건을 함께 확인합니다.' },
-            { title: '검색·검토 구조', body: '검색 조건과 검토 역할, 처리 흐름을 설계합니다.' },
-            { title: '운영과 증적', body: '접근 권한과 수행 기록 등 운영에 필요한 점검 항목을 정리합니다.' },
-          ]}
-        />
-        <p className="body-lg mt-10">프로젝트 범위에 따라 요구사항 정리, 데이터 흐름·아키텍처, 적용 계획과 검증 항목을 제공합니다.</p>
-      </Section>
-      <Section eyebrow="FAQ" title="자주 묻는 질문">
-        <FaqList
-          items={[
-            { q: '기존 아카이브와 연계할 수 있나요?', a: '데이터 소스와 제품 버전, 연결 방식, 사용 권한을 확인한 뒤 적용 범위를 검토합니다.' },
-            { q: '법률 판단도 제공하나요?', a: '휴미즈는 기술과 운영 체계의 설계를 지원합니다. 법률 판단과 제출 의무의 해석은 고객의 법무 담당자 또는 법률 전문가와 함께 확인해야 합니다.' },
-            { q: '특정 제품만 사용하나요?', a: '현재 환경과 요구를 먼저 확인하고 적합한 구성을 검토합니다.' },
-          ]}
-        />
-        <div className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href="/contact">e-Discovery 상담</ButtonLink>
-          <ButtonLink href="/enterprise-data" variant="ghost">Enterprise Data 전체 보기</ButtonLink>
+
+      <Scene mask="none">
+        <Statement titleKo="자료를 찾는 일보다, 대응 체계를 만드는 일." paragraphs={['데이터가 여러 시스템에 흩어져 있거나, 요청할 때마다 담당자가 수작업으로 대응하고 있다면 범위·권한·절차부터 정리해야 합니다.']} />
+      </Scene>
+
+      <Scene image={assets.A05} mask="scene" ambient="silver">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-24">
+          <Reveal as="p" className="eyebrow lg:pt-3">SCOPE</Reveal>
+          <ul>
+            {SCOPE.map((s, i) => (
+              <Reveal as="li" key={s.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
+                <h3 className="title-ko-sm">{s.k}</h3>
+                <p className="lead">{s.v}</p>
+              </Reveal>
+            ))}
+          </ul>
         </div>
-      </Section>
+      </Scene>
+
+      <Scene mask="none">
+        <Reveal as="p" className="eyebrow">FAQ</Reveal>
+        <div className="mt-10"><Faq items={FAQ} /></div>
+        <Reveal delay={3}>
+          <a href="/contact" className="cta-primary mt-14">e-Discovery 상담<span aria-hidden="true">→</span></a>
+        </Reveal>
+      </Scene>
+
+      <ClosingContact />
     </>
   );
 }
