@@ -9,12 +9,12 @@
  *  3. client → https://formsubmit.co/ajax/contact@humease.com (메일 알림)
  *     secret 은 없으나 개인정보를 제3자에게 직접 전송한다. → 개인정보 처리위탁 검토 전 재사용 보류
  *
- * 현재 상태: 대표 지시에 따라 mock/disabled.
- * 운영 자격정보·동의·개인정보처리방침 승인 전까지 어떤 전송도 하지 않는다.
- * secret 은 client bundle 에 넣지 않는다. Supabase anon key 는 공개 전제이나
- * RLS 확인 전까지는 연결 자체를 하지 않는다.
+ * 현재 상태: 개인정보처리방침 승인 완료(2026-09-18), live 전환.
+ * 실 경로: client → submit-inquiry Edge Function(anon key) → humease_inquiries insert(RLS 보호)
+ *          → Discord 알림(HUMEASE_DISCORD_WEBHOOK_URL, 실패해도 DB 저장은 보존).
+ * secret 은 client bundle 에 넣지 않는다. Supabase anon key 는 공개 전제이며 RLS 가 보호막이다.
  */
-export const CONTACT_MODE: 'disabled' | 'live' = 'disabled';
+export const CONTACT_MODE: 'disabled' | 'live' = 'live';
 
 export const contactFields = [
   { name: 'company_name', label: '회사명', required: true },
