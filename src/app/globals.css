@@ -237,6 +237,20 @@
 
   .layer { position: relative; z-index: 2; }
 
+  /*
+   * 관리자 콘솔 전용 서체.
+   *
+   * 공개 사이트의 본문 폰트는 **공개 카피만** 담은 Noto Sans KR 서브셋이다
+   * (scripts/subset-font.mjs). 내부 도구인 관리자 화면의 어휘까지 그 서브셋에 넣으면
+   * 모든 방문자가 쓰지 않을 글리프를 내려받게 된다. 그래서 관리자 화면은 서브셋을 쓰지 않고
+   * 시스템 UI 서체로 렌더한다 — 일부 글자만 폴백되는 혼용을 막기 위해 서브셋을 아예 벗긴다.
+   * subset-font.mjs 와 verify-font-subset.mjs 도 out/admin 을 집계에서 제외한다.
+   */
+  .admin-ui {
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Malgun Gothic',
+      'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  }
+
   /* ---------- 등장 모션 ---------- */
   /* 450~900ms, 이동 8~20px, 1회. bounce·shake 없음 */
   [data-reveal] {

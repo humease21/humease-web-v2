@@ -16,6 +16,22 @@ import {
  *
  * basePath 변경만으로 공개 여부가 바뀌지 않는다. 대상과 승인 두 값이 모두 필요하다.
  */
+/**
+ * 관리자 콘솔 페이지 메타데이터.
+ *
+ * `/admin/**` 은 어떤 배포 대상에서도 색인 대상이 아니다. `pageMeta` 와 달리
+ * `searchIndexingEnabled` 를 보지 않는다 — 운영 승인 여부와 무관하게 항상 noindex 다.
+ * canonical·OG 도 내지 않는다. 검색 결과에 관리자 URL 의 존재 자체를 남기지 않는다.
+ * 이 경로들은 `src/content/navigation.ts` 의 `staticPublicRoutes` 와
+ * `src/content/search-pages.ts` 어디에도 등록하지 않으므로 sitemap·llms.txt 에도 나오지 않는다.
+ */
+export function adminMeta(title: string): Metadata {
+  return {
+    title: `${title} | 휴미즈 관리자`,
+    robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
+  };
+}
+
 export function pageMeta(opts: {
   title: string;
   description: string;

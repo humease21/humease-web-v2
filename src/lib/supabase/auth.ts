@@ -21,7 +21,7 @@ export async function getCurrentAdmin(): Promise<HumeaseAdminUser | null> {
   return data as HumeaseAdminUser;
 }
 
-/** 관리자가 아니면 세션을 정리한다. `/admin/**` 진입 시 서버·클라이언트 양쪽에서 호출한다. */
+/** 관리자가 아니면 세션을 정리한다. `output:'export'` 라 서버 호출 지점은 없다 — `/admin/**` 진입 시 클라이언트에서만 호출한다. */
 export async function requireAdminOrSignOut(): Promise<HumeaseAdminUser | null> {
   const admin = await getCurrentAdmin();
   if (!admin) {

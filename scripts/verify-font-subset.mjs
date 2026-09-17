@@ -13,8 +13,9 @@ async function htmlChars(dir) {
   const walk = async (d) => {
     for (const e of await readdir(d, { withFileTypes: true })) {
       const p = path.join(d, e.name);
-      if (e.isDirectory()) await walk(p);
-      else if (e.name.endsWith('.html')) {
+      // 관리자 콘솔은 공개 폰트 서브셋 대상이 아니다(.admin-ui 가 시스템 서체를 쓴다).
+      if (e.isDirectory()) { if (path.relative(OUT, p) !== 'admin') await walk(p); continue; }
+      if (e.name.endsWith('.html')) {
         let t = await readFile(p, 'utf8');
         t = t.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ');
         for (const c of t) if (c >= '가' && c <= '힣') chars.add(c);

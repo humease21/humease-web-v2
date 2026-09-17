@@ -54,9 +54,11 @@ if (!indexing) {
   }
   if (!/Sitemap:\s*https:\/\/www\.humease\.com\/sitemap\.xml/.test(robots)) fails.push('운영 robots 에 사이트맵 없음');
   // 색인 대상 HTML 은 canonical 정확히 1개 + index
-  // 별칭·404·not-found 는 색인 대상이 아니다.
+  // 별칭·404·not-found·관리자 콘솔은 색인 대상이 아니다.
+  // 관리자 경로는 아래 공통 구간에서 noindex 여야 한다는 **반대 계약**을 따로 검사한다.
   const skip = (rel) => rel.startsWith('jtbd') || rel.startsWith('services')
-    || rel.includes('ai-consulting') || rel.startsWith('404') || rel.includes('_not-found');
+    || rel.includes('ai-consulting') || rel.startsWith('404') || rel.includes('_not-found')
+    || rel.startsWith('admin');
   for (const f of htmlFiles) {
     const rel = path.relative(OUT, f);
     if (skip(rel)) continue;
@@ -66,6 +68,20 @@ if (!indexing) {
     else if (c[0].includes('humease-web-v2') || /[?#]/.test(c[0])) fails.push(`${rel} canonical 오염: ${c[0]}`);
     if (!/name="robots"[^>]*content="index/.test(h)) fails.push(`${rel} index 아님`);
   }
+}
+
+// 공통: 관리자 콘솔은 배포 대상·색인 승인과 무관하게 항상 검색에서 제외돼야 한다.
+// preview/production 어느 쪽에서도 noindex·canonical 없음·sitemap 미등재를 만족해야 한다.
+const adminFiles = htmlFiles.filter((f) => path.relative(OUT, f).startsWith('admin'));
+if (!adminFiles.length) fails.push('관리자 콘솔 HTML 이 산출물에 없음 — 라우트 누락');
+for (const f of adminFiles) {
+  const rel = path.relative(OUT, f);
+  const h = await readFile(f, 'utf8');
+  if (!/name="robots"[^>]*content="[^"]*noindex/.test(h)) fails.push(`${rel} 관리자 페이지에 noindex 없음`);
+  if (/rel="canonical"/.test(h)) fails.push(`${rel} 관리자 페이지에 canonical 출력됨`);
+}
+for (const u of locs) {
+  if (/\/admin(\/|$)/.test(u)) fails.push(`사이트맵에 관리자 경로 포함: ${u}`);
 }
 
 // 공통: 봇 정책 회귀 검사 (요청서 §10.2)
