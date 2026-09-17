@@ -1,9 +1,11 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
+import { PageViewTracker } from '@/components/analytics/PageViewTracker';
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
+      <PageViewTracker />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-5 focus:top-5 focus:z-[70] focus:bg-[var(--color-accent)] focus:px-5 focus:py-3 focus:text-[#12100C]"
