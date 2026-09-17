@@ -5,7 +5,7 @@ import { asset } from '@/lib/asset-path';
 
 /**
  * docs/03 §13 — 대표자·사업자등록번호·주소는 승인값 확인 전 표시하지 않는다.
- * /privacy 는 승인 본문이 없어 링크하지 않는다.
+ * 개인정보처리방침/이용약관 V1.0 승인(2026-09-18)으로 /privacy, /terms 를 링크한다.
  */
 export function SiteFooter() {
   const details = [company.representative, company.businessNumber, company.address].filter(Boolean);
@@ -40,9 +40,14 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <p className="mt-16 text-[12px] tracking-[0.04em] text-[var(--color-muted)]">
-          Copyright © {new Date().getFullYear()} HUMEASE.
-        </p>
+        <div className="mt-16 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px] tracking-[0.04em] text-[var(--color-muted)]">
+          <p>Copyright © {new Date().getFullYear()} HUMEASE.</p>
+          <nav aria-label="법률 정보" className="flex items-center gap-2">
+            <Link href="/privacy" className="transition-colors hover:text-[var(--color-text)]">개인정보처리방침</Link>
+            <span aria-hidden="true">|</span>
+            <Link href="/terms" className="transition-colors hover:text-[var(--color-text)]">이용약관</Link>
+          </nav>
+        </div>
       </div>
     </footer>
   );

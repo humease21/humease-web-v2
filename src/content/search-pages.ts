@@ -120,6 +120,22 @@ export const searchPages: SearchPage[] = [
     sourceIds: [], contentUpdatedAt: '2026-09-17',
     relatedPaths: [],
   },
+  {
+    id: 'privacy', path: '/privacy', kind: 'legal', publication: 'published', indexable: true,
+    title: '개인정보처리방침 | 휴미즈',
+    description: '주식회사 휴미즈가 처리하는 개인정보의 항목, 목적, 보유기간과 정보주체의 권리를 안내합니다.',
+    primaryIntent: '개인정보 처리 근거와 정보주체 권리 확인',
+    sourceIds: [], contentUpdatedAt: '2026-09-18',
+    relatedPaths: ['/terms', '/contact'],
+  },
+  {
+    id: 'terms', path: '/terms', kind: 'legal', publication: 'published', indexable: true,
+    title: '홈페이지 이용약관 | 휴미즈',
+    description: '주식회사 휴미즈 홈페이지의 이용조건과 회사·이용자의 권리·의무를 안내합니다.',
+    primaryIntent: '홈페이지 이용조건 확인',
+    sourceIds: [], contentUpdatedAt: '2026-09-18',
+    relatedPaths: ['/privacy', '/contact'],
+  },
 ];
 
 export const pageByPath = (path: string) =>

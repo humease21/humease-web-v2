@@ -48,7 +48,14 @@ export function PageViewTracker() {
 
     fetch(`${url}/functions/v1/log-page-view`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', apikey: anonKey, authorization: `Bearer ${anonKey}` },
+      // x-region: Supabase 공식 Edge Function 리전 지정 헤더. Tokyo(ap-northeast-1)를
+      // 명시해 개인정보처리방침 제6조 국외이전 고지와 실제 처리 리전을 일치시킨다.
+      headers: {
+        'content-type': 'application/json',
+        apikey: anonKey,
+        authorization: `Bearer ${anonKey}`,
+        'x-region': 'ap-northeast-1',
+      },
       body: JSON.stringify({
         session_id: getSessionId(),
         path: pathname,

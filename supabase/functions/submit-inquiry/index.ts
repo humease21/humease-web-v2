@@ -1,7 +1,10 @@
 // Supabase Edge Function: submit-inquiry
 // 흐름: 입력 검증 → DB INSERT(먼저) → Discord Webhook 시도 → 실패해도 사용자에게는 success
-// 배포는 이 저장소 CLI 계정에 프로젝트(cgydvjqhsllpeuxbephb) 접근 권한이 없어 현재 불가.
-// 배포 명령(권한 확보 후): supabase functions deploy submit-inquiry --project-ref cgydvjqhsllpeuxbephb
+// 2026-09-18: Discord 알림 payload 를 비식별화(개인정보처리방침 제4조). 이 변경은 로컬에만
+// 있고 아직 재배포되지 않았다 — 이 세션의 Supabase CLI 토큰이 이 프로젝트(cgydvjqhsllpeuxbephb)
+// 소속 조직이 아닌 다른 조직 계정으로 인증돼 있어 `supabase functions deploy`/Management API가
+// 전부 403 이다. 재배포 명령(올바른 계정으로 `supabase login` 후):
+//   supabase functions deploy submit-inquiry --project-ref cgydvjqhsllpeuxbephb
 // 필요 Secret: HUMEASE_DISCORD_WEBHOOK_URL, PRIVACY_POLICY_VERSION (없으면 기본값 'v1' 사용)
 // SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY 는 Supabase가 Edge Function 런타임에 자동 주입한다.
 
@@ -109,18 +112,15 @@ function validate(body: unknown, origin: string | null): { ok: true; data: Inqui
   };
 }
 
-async function notifyDiscord(webhookUrl: string, inquiry: { id: string; company_name: string; contact_name: string; interest_area?: string; message: string; created_at: string }) {
-  const summary = inquiry.message.length > 100 ? `${inquiry.message.slice(0, 100)}…` : inquiry.message;
-  const content = [
-    '[HUMEASE 새 문의]',
-    '',
-    `회사명: ${inquiry.company_name}`,
-    `담당자: ${inquiry.contact_name}`,
-    `관심 분야: ${inquiry.interest_area ?? '미선택'}`,
-    `문의 요약: ${summary}`,
-    `문의 ID: ${inquiry.id}`,
-    `접수 시각: ${inquiry.created_at}`,
-  ].join('\n');
+/**
+ * Discord 는 알림 채널일 뿐이다 — Source of Truth 는 DB.
+ * 개인정보처리방침 제4조: "신규 문의 알림을 위해 사용하는 외부 메신저에는 담당자명, 이메일,
+ * 전화번호, 회사명, 문의 내용 또는 문의 식별번호 등 문의자를 식별할 수 있는 정보를
+ * 전송하지 않는다." 문의 레코드와 연결 가능한 값은 어떤 것도 payload 에 넣지 않는다.
+ * 상세는 관리자 페이지(RLS + Google OAuth 인증 뒤)에서만 확인한다.
+ */
+async function notifyDiscord(webhookUrl: string) {
+  const content = 'HUMEASE 새 문의가 접수되었습니다. 관리자 페이지에서 확인하세요.';
 
   const res = await fetch(webhookUrl, {
     method: 'POST',
@@ -166,7 +166,7 @@ Deno.serve(async (req) => {
       privacy_consent_at: nowIso,
       privacy_policy_version: privacyPolicyVersion,
     })
-    .select('id, created_at, company_name, contact_name, interest_area, message')
+    .select('id')
     .single();
 
   // DB 실패 — Discord 는 시도하지 않는다. 사용자에게는 error.
@@ -182,7 +182,7 @@ Deno.serve(async (req) => {
   let discordStatus: 'sent' | 'failed' | 'pending' = 'pending';
   if (discordWebhookUrl) {
     try {
-      await notifyDiscord(discordWebhookUrl, inserted);
+      await notifyDiscord(discordWebhookUrl);
       discordStatus = 'sent';
     } catch (err) {
       console.error('discord notify failed', err);

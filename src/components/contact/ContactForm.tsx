@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { FunctionRegion } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 
 /**
@@ -8,8 +9,12 @@ import { createClient } from '@/lib/supabase/client';
  * DB INSERT 가 Source of Truth 이며, Discord 알림 실패는 사용자에게 노출하지 않는다.
  *
  * 이 컴포넌트는 CONTACT_MODE === 'live' 일 때만 렌더한다(src/content/contact.ts).
- * 'disabled' 인 동안은 이 파일을 import 하지 않는다 — 개인정보처리방침 승인 전까지는
- * 코드가 준비돼 있어도 화면에 노출하지 않는다(기존 방침 유지).
+ * 'disabled' 인 동안은 이 파일을 import 하지 않는다.
+ *
+ * Edge Function 은 `region: FunctionRegion.ApNortheast1` 로 Tokyo 리전을 명시 호출한다
+ * (개인정보처리방침 제6조 국외이전 고지와 일치시킨다 — Supabase 기본 라우팅에 맡기지 않는다).
+ *
+ * 동의문은 「프로젝트 문의 개인정보 수집·이용 동의문 V1.0」(2026-09-18 승인)을 그대로 옮긴다.
  */
 
 const INTEREST_AREAS = [
@@ -22,6 +27,7 @@ type FormStatus = 'idle' | 'validating' | 'submitting' | 'success' | 'error';
 export function ContactForm({ sourcePage }: { sourcePage: string }) {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [consented, setConsented] = useState(false);
   const renderedAt = useRef<number | null>(null);
   const submitLock = useRef(false);
   useEffect(() => { renderedAt.current = Date.now(); }, []);
@@ -54,6 +60,7 @@ export function ContactForm({ sourcePage }: { sourcePage: string }) {
     try {
       const supabase = createClient();
       const { data: result, error } = await supabase.functions.invoke('submit-inquiry', {
+        region: FunctionRegion.ApNortheast1,
         body: {
           company_name: companyName,
           contact_name: contactName,
@@ -133,16 +140,62 @@ export function ContactForm({ sourcePage }: { sourcePage: string }) {
         <textarea name="message" required maxLength={4000} rows={6}
           className="border border-[var(--color-line)] bg-transparent px-3 py-2.5" />
       </label>
+      <div className="border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-4 text-[13px] leading-relaxed text-[var(--color-muted)]">
+        <p className="text-[var(--color-text)]">개인정보 수집·이용 동의</p>
+        <p className="mt-3">주식회사 휴미즈는 프로젝트 문의 접수와 상담을 위해 아래와 같이 개인정보를 수집·이용합니다.</p>
+
+        <p className="mt-4 text-[var(--color-text)]">수집·이용 목적</p>
+        <ul className="mt-1.5 list-disc space-y-1 pl-5">
+          <li>프로젝트 및 사업 문의 접수</li>
+          <li>문의자 확인</li>
+          <li>문의 내용 검토 및 답변</li>
+          <li>후속 상담</li>
+          <li>상담 이력 관리 및 분쟁 발생 시 사실관계 확인</li>
+          <li>스팸 및 비정상적인 문의 방지</li>
+        </ul>
+
+        <p className="mt-4 text-[var(--color-text)]">수집 항목</p>
+        <p className="mt-1.5">필수: 회사명, 담당자명, 이메일 주소, 문의 내용</p>
+        <p className="mt-1">선택: 연락처, 관심 분야</p>
+        <p className="mt-1">
+          문의 제출 시 자동 처리될 수 있는 정보: 문의 유입 페이지, UTM Source, UTM Medium, UTM Campaign, 폼 진입 시각, 개인정보 수집·이용 동의 일시
+        </p>
+
+        <p className="mt-4 text-[var(--color-text)]">보유 및 이용기간</p>
+        <p className="mt-1.5">문의 접수일로부터 3년간 보관한 후 파기합니다.</p>
+        <p className="mt-1">다만 정보주체가 그 전에 삭제를 요청하고 관계 법령상 별도의 보존 의무가 없는 경우 지체 없이 삭제합니다.</p>
+
+        <p className="mt-4 text-[var(--color-text)]">동의 거부권 및 불이익</p>
+        <p className="mt-1.5">귀하는 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다.</p>
+        <p className="mt-1">필수 개인정보의 수집·이용에 동의하지 않는 경우 홈페이지를 통한 프로젝트 문의 접수가 불가능합니다.</p>
+        <p className="mt-1">연락처와 관심 분야 등 선택 항목은 입력하지 않아도 문의를 접수할 수 있으며, 선택 항목 미제공에 따른 불이익은 없습니다.</p>
+
+        <p className="mt-4">
+          문의 처리 시스템 운영을 위해 문의정보는 일본 도쿄 지역의 Supabase 인프라를 통해 처리·보관될 수 있습니다. 자세한 내용은{' '}
+          <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] underline underline-offset-2">
+            개인정보처리방침
+          </a>
+          의 「개인정보의 국외 이전」 항목에서 확인할 수 있습니다.
+        </p>
+      </div>
+
       <label className="flex items-start gap-2 text-[13px] text-[var(--color-muted)]">
-        <input type="checkbox" name="privacy_consent" required className="mt-0.5" />
-        개인정보 수집·이용에 동의합니다
+        <input
+          type="checkbox"
+          name="privacy_consent"
+          required
+          checked={consented}
+          onChange={(e) => setConsented(e.target.checked)}
+          className="mt-0.5"
+        />
+        개인정보 수집·이용에 동의합니다.
       </label>
 
       {status === 'error' && errorMessage && (
         <p role="alert" className="text-[13px] text-[var(--color-accent)]">{errorMessage}</p>
       )}
 
-      <button type="submit" disabled={status === 'submitting' || status === 'validating'}
+      <button type="submit" disabled={!consented || status === 'submitting' || status === 'validating'}
         className="cta-primary mt-2 disabled:opacity-50">
         {status === 'submitting' ? '접수 중…' : '문의 보내기'}
       </button>

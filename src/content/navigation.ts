@@ -21,4 +21,5 @@ export const staticPublicRoutes = [
   '/consulting/e-discovery', '/consulting/internal-control',
   '/consulting/exchange-archive', '/consulting/ai-transformation',
   '/ai-services', '/solutions', '/contact', '/insights',
+  '/privacy', '/terms',
 ] as const;
