@@ -71,6 +71,10 @@ jobs:
           NEXT_PUBLIC_SITE_ORIGIN: https://www.humease.com
           NEXT_PUBLIC_BASE_PATH: ''
           NEXT_PUBLIC_SEARCH_INDEXING_ENABLED: 'true'
+          # anon key 는 공개 전제이며 RLS 로 보호된다(문의/관리자/분석 테이블 전부 anon 차단 검증됨).
+          # service_role key 는 여기 절대 넣지 않는다 — Edge Function secret 으로만 존재한다.
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: 검증 — production 산출물
         env:
