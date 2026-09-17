@@ -36,8 +36,8 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
             <Reveal delay={3}>
               <p className="lead measure mt-7">
                 {aboutCopy
-                  ? <>Enterprise IT와 데이터 컴플라이언스 현장에서 축적한 경험을 바탕으로<br />복잡한 기업 환경을 실행 가능한 구조로 전환합니다</>
-                  : <>수많은 기업 IT 환경에서 문제를 해결해 온 경험을 바탕으로<br />필요한 기술을 선택하고 실행 가능한 구조로 연결합니다</>}
+                  ? <>Enterprise IT와 데이터 컴플라이언스<br className="sm:hidden" /> 현장에서 축적한 경험을 바탕으로<br />복잡한 기업 환경을<br className="sm:hidden" /> 실행 가능한 구조로 전환합니다</>
+                  : <>수많은 기업 IT 환경에서<br className="sm:hidden" /> 문제를 해결해 온 경험을 바탕으로<br />필요한 기술을 선택하고<br className="sm:hidden" /> 실행 가능한 구조로 연결합니다</>}
               </p>
             </Reveal>
             <Reveal delay={4}>
