@@ -15,8 +15,14 @@ const html = async (r) => readFile(path.join(OUT, r === '/' ? 'index.html' : `${
 const slugs = projects.map((p) => p.slug);
 if (new Set(slugs).size !== slugs.length) fails.push('프로젝트 slug 중복');
 for (const p of publishedProjects()) {
-  for (const f of ['name', 'summary', 'currentStageNote', 'reviewedAt']) {
+  // 요청서 003 §3-4: 미확정 placeholder 는 렌더하지 않는다. currentStageNote 는
+  // 값이 있으면 노출하되(mom-ie), 없으면 null 로 두고 섹션 자체를 렌더하지 않는 것이
+  // 정책이므로 더 이상 필수 항목이 아니다.
+  for (const f of ['name', 'summary', 'reviewedAt']) {
     if (!p[f]) fails.push(`${p.slug} 필수 항목 누락: ${f}`);
+  }
+  if (p.currentStageNote !== null && !p.currentStageNote) {
+    fails.push(`${p.slug} currentStageNote 는 명시적 null 이거나 실제 문구여야 함(빈 문자열 금지)`);
   }
   if (!p.sourceRefs.length) fails.push(`${p.slug} sourceRefs 없음`);
   if (p.stage && !p.stageVerifiedAt) fails.push(`${p.slug} stage 는 있는데 확인일 없음`);

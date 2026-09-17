@@ -9,19 +9,13 @@ import { metaForPath } from '@/content/search-pages';
 
 export const metadata = pageMeta({ ...metaForPath('/about'), path: '/about' });
 
-const WAYS = [
-  { k: '먼저 이해합니다.', v: '현재 환경, 해결할 문제, 기대하는 결과를 구체화합니다.' },
-  { k: '필요한 만큼 설계합니다.', v: '과한 기능보다 실제 운영할 수 있는 구조와 우선순위를 정합니다.' },
-  { k: '구현하고 검증합니다.', v: '작동 여부뿐 아니라 사용성과 운영 조건까지 함께 살펴봅니다.' },
-];
-
 export default function AboutPage() {
   return (
     <>
       <CinematicHero
         eyebrow="휴미즈 소개"
-        titleKo="복잡한 기술을, 사람에게 필요한 가치로."
-        lead="휴미즈는 기업 데이터의 신뢰를 설계하고, AI를 실제 사용되는 서비스로 연결하는 기술회사입니다."
+        titleKo={<>Enterprise IT에서,<br />AX까지</>}
+        lead={<>20년 이상의 기업 IT 경험을 바탕으로<br />데이터 거버넌스와 AI를 실제 비즈니스 환경에 연결합니다</>}
         image={assets.A11}
         ambient="silver"
         align="center"
@@ -29,26 +23,29 @@ export default function AboutPage() {
 
       <Scene mask="none">
         <Statement
-          titleKo="기술을 더하는 것보다, 문제를 제대로 이해하는 일."
+          titleKo={<>기술보다 먼저,<br />문제의 본질</>}
           paragraphs={[
-            '기업의 시스템에는 데이터만 있는 것이 아닙니다. 운영 방식과 사람의 역할, 보안 기준과 업무의 제약이 함께 있습니다. 휴미즈는 이러한 맥락을 먼저 이해하고, 필요한 기술과 실행 순서를 설계합니다.',
-            '기업 데이터(Enterprise Data)와 AI 서비스(Applied AI)는 서로 다른 서비스를 나열한 것이 아닙니다. 데이터를 다뤄 온 경험을 바탕으로 신뢰할 수 있는 기술을 만들고, 그 기술이 실제로 쓰이게 한다는 같은 원칙을 공유합니다.',
+            <>기업의 IT 환경에는 데이터뿐 아니라<br />업무 방식, 보안 정책, 기존 시스템과 운영 제약이 함께 존재합니다</>,
+            <>휴미즈는 현재 환경을 먼저 이해한 뒤<br />필요한 기술과 실행 순서를 설계합니다</>,
           ]}
         />
       </Scene>
 
       <Scene mask="none">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:gap-24">
-          <Reveal as="p" className="eyebrow lg:pt-3">우리가 일하는 방식</Reveal>
-          <ul>
-            {WAYS.map((w, i) => (
-              <Reveal as="li" key={w.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
-                <h2 className="title-ko-sm">{w.k}</h2>
-                <p className="lead">{w.v}</p>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
+        <Statement
+          titleKo={<>데이터 기반에서,<br />AI 활용으로</>}
+          paragraphs={[
+            '기업 데이터와 AI는 분리된 영역이 아닙니다',
+            <>신뢰할 수 있는 데이터 기반 위에서<br />AI가 실제 업무와 서비스에 활용될 수 있도록 연결합니다</>,
+          ]}
+        />
+      </Scene>
+
+      <Scene mask="none">
+        <Reveal as="p" className="eyebrow">우리가 일하는 방식</Reveal>
+        <Reveal delay={1} slow>
+          <p className="title-ko mt-6">이해 · 설계 · 구현 · 검증</p>
+        </Reveal>
       </Scene>
 
       <ExperienceScene aboutCopy />

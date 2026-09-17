@@ -43,9 +43,6 @@ export function PortfolioList({ items }: { items: Project[] }) {
                 {p.contribution && (
                   <p className="mt-4 text-[14px] text-[var(--color-muted)]">휴미즈의 참여: {p.contribution}</p>
                 )}
-                {!p.stage && (
-                  <p className="mt-4 text-[14px] text-[var(--color-muted)]">현재 단계는 확인 후 표기합니다.</p>
-                )}
                 <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
                   <A href={`/ai-services/${p.slug}`} className="cta-ghost">
                     프로젝트 자세히 보기<span aria-hidden="true">→</span>

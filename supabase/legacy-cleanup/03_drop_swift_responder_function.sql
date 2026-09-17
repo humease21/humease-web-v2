@@ -1,0 +1,11 @@
+-- 3단계: swift-responder Edge Function 삭제.
+-- 이건 SQL 로 지울 수 없다(Edge Function 은 DB 객체가 아니라 별도 배포 아티팩트).
+-- 01, 02 실행 후(참조하던 테이블이 사라진 뒤) 아래 중 하나로 삭제한다:
+--
+--   supabase functions delete swift-responder --project-ref cgydvjqhsllpeuxbephb
+--
+-- 또는 Supabase Dashboard > Edge Functions > swift-responder > Delete.
+--
+-- 실행 전: swift-responder 가 public.inquiries/public.view_logs 외의 다른 곳에서도
+-- 호출되고 있지 않은지 반드시 재확인한다(코드베이스 전수 grep 등). 다른 참조가 있다면
+-- 이 단계는 보류하고 사람 판단을 기다린다.

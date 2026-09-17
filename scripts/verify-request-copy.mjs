@@ -23,39 +23,40 @@ async function title(route) {
 }
 
 const CHECKS = [
-  // §4.3 WHY HUMEASE
-  ['/', '데이터를 이해하고, AX 전환 설계'],
-  ['/', '20년 이상의 Enterprise IT 경험으로, 데이터 거버넌스부터 AI 활용까지 기업의 AX 전환 지원합니다.'],
-  // §4.4 Enterprise Data
-  ['/', '중요한 데이터는 보관보다 관리가 중요합니다'],
-  ['/', '필요한 데이터를 정책에 맞게 남깁니다.'],
-  ['/', '감사·조사·자료 제출에 필요한 절차를 준비합니다.'],
+  // 요청서 003 §3-3 1) 홈 — 왜 휴미즈인가
+  ['/', 'Enterprise IT 경험, AX의 기반'],
+  ['/', '기업의 복잡한 IT 환경과 운영 제약을 이해하고 데이터 거버넌스부터 AI 활용까지 실행 가능한 구조로 설계합니다'],
+  // 요청서 003 §3-3 1) 홈 — Enterprise Data
+  ['/', '보관을 넘어, 데이터 거버넌스로'],
+  ['/', '정책에 따라 필요한 데이터를 보존'],
+  ['/', '감사·조사·eDiscovery 대응 체계'],
   // Korean-first 요청서 §4 로 'Arctera Solutions' → 'Arctera 솔루션'
   ['/', '제품의 기능과 고객 환경에 맞는 해결방안을 살펴보세요'],
-  // §4.5 Applied AI
-  ['/', '단순 아이디어를 AI를 활용한 서비스로'],
-  // §4.6 HOW WE WORK
-  ['/', '문제를 이해하고, 해결하는 서비스로 전환까지'],
-  ['/', '데이터·기술·운영의 연결 구조를 설계합니다.'],
-  // §4.7 AI Portfolio
-  ['/', '우리가 만든 서비스가, 새로운 일상을 만듭니다'],
+  // 요청서 003 §3-3 1) 홈 — AI Service
+  ['/', 'AI 도입에서, 업무 혁신으로'],
+  // 요청서 003 §3-3 1) 홈 — Work Process
+  ['/', '문제에서, 작동하는 서비스까지'],
+  ['/', '데이터·업무·기술 연결'],
+  // 요청서 003 §3-3 1) 홈 — AI Portfolio
+  ['/', '아이디어에서, 실제 서비스로'],
   ['/', '전체 AI 포트폴리오 보기'],
-  // §5.1 허브
-  ['/ai-services', '직접 만든 서비스로, AI의 가능성을 보여줍니다.'],
-  ['/ai-services', 'AI 아이디어를 함께 구체화하고 싶으신가요?'],
+  // 요청서 003 §3-3 8) AI 포트폴리오 허브
+  ['/ai-services', '아이디어에서, 실제 AI 서비스로'],
+  ['/ai-services', '아이디어에서, 첫 번째 사용자까지'],
   // §5.2 이관 데이터
   ['/ai-services', 'AnyBuild'],
   ['/ai-services', 'HairAI'],
   ['/ai-services', '내친구 케이'],
   ['/ai-services', '맘이음'],
-  ['/ai-services/anybuild', '단순 아이디어도 구체화된 사업화 전환으로 연결하는 AI 서비스'],
-  ['/ai-services/hairai', '미용실 가기 전, 사진 한 장으로 나에게 어울리는 헤어스타일을 찾아주는 AI 서비스'],
-  ['/ai-services/k-bestie', '아이와 대화하는 AI 친구와 부모를 위한 인사이트를 연결하는 가족 소통 서비스.'],
-  ['/ai-services/mom-ie', '친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI'],
-  ['/ai-services/mom-ie', '지금은 개발 중입니다.'],
-  // §6.2 Arctera 허브
-  ['/solutions', '기업 데이터의 보존부터, 컴플라이언스와 eDiscovery까지.'],
-  ['/solutions', '휴미즈는 고객의 데이터 환경과 운영 요구를 바탕으로 제품의 적용 범위와 연계 구성을 함께 검토합니다.'],
+  // 요청서 003 §3-3 12~15) 프로젝트 상세 Lead
+  ['/ai-services/anybuild', '막연한 아이디어를 사용자 문제·기능·서비스 구조와 개발 범위로 구체화합니다'],
+  ['/ai-services/hairai', '사진 한 장으로 나에게 어울리는 헤어스타일을 탐색하는 AI 이미지 서비스'],
+  ['/ai-services/k-bestie', 'AI 친구와 아이의 자연스러운 대화를 부모의 이해와 가족 소통으로 연결합니다'],
+  ['/ai-services/mom-ie', '친구처럼 곁에, 가족과 더 가까이'],
+  ['/ai-services/mom-ie', '개발 중'],
+  // 요청서 003 §3-3 9) Arctera 솔루션 허브
+  ['/solutions', 'Capture에서, Compliance까지'],
+  ['/solutions', '고객의 데이터 환경과 운영 정책을 확인하고 제품 적용 범위, 연계 구조와 이관 조건을 검토합니다'],
   ['/solutions', '휴미즈는 Arctera의 공식 파트너가 아닙니다.'],
   // §6.4 6개 과제
   ['/solutions', '커뮤니케이션 컴플라이언스'],
@@ -69,15 +70,15 @@ const CHECKS = [
   ['/solutions', 'Enterprise Vault Capture (formerly Merge1)'],
   ['/solutions', 'Data Insight'],
   ['/solutions', 'eDiscovery Platform'],
-  // §7 제품 상세
-  ['/solutions/enterprise-vault', '중요한 정보를 오래 보존하고, 필요한 순간 활용할 수 있도록.'],
+  // 요청서 003 §3-3 16~19) 제품 상세 — 대표메시지
+  ['/solutions/enterprise-vault', 'Enterprise Archiving에서, Information Governance까지'],
   ['/solutions/enterprise-vault', 'Discovery Accelerator'],
-  ['/solutions/enterprise-vault-capture', '이메일 밖의 업무 대화도, 보존과 검토의 흐름 안으로.'],
+  ['/solutions/enterprise-vault-capture', '모든 업무 대화를, 하나의 컴플라이언스 흐름으로'],
   ['/solutions/enterprise-vault-capture', '기존 Merge1으로 알려진 Enterprise Vault Capture'],
   ['/solutions/data-insight', 'Enterprise Vault Data Insight'],
-  ['/solutions/data-insight', '어떤 데이터가 어디에 있고, 어떻게 사용되는지부터.'],
+  ['/solutions/data-insight', '보이지 않는 데이터에서, 관리 가능한 데이터로'],
   ['/solutions/ediscovery-platform', 'Enterprise Vault eDiscovery Platform'],
-  ['/solutions/ediscovery-platform', '필요한 자료를 찾고, 보존하고, 검토 가능한 과정으로 제출합니다.'],
+  ['/solutions/ediscovery-platform', 'Search에서, Evidence까지'],
 ];
 
 const TITLES = [

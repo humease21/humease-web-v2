@@ -22,29 +22,24 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
       <div className="shell w-full">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,6fr)_minmax(0,4fr)] lg:gap-24">
           <div>
-            <Reveal as="p" className="eyebrow">{aboutCopy ? '전문성' : '전문성'}</Reveal>
+            <Reveal as="p" className="eyebrow">전문성</Reveal>
             <Reveal delay={1} slow>
-              <p className="display-ko mt-7">
-                <span className="text-[clamp(20px,2.8vw,36px)]">20년 이상의 IT 전문 경험,</span><br />
-                <span className="text-[var(--color-accent)]">기업의 AX 전환을 성과로 연결합니다.</span>
-              </p>
-            </Reveal>
-            <Reveal delay={2}>
-              <h2 className="title-ko-sm mt-10">수많은 문제를 해결해 온 경험에서 기술의 깊이가 나옵니다.</h2>
+              {aboutCopy ? (
+                <p className="display-ko mt-7">경험에서 축적된<br />기술의 깊이</p>
+              ) : (
+                <p className="display-ko mt-7">
+                  <span className="text-[clamp(20px,2.8vw,36px)]">20년의 Enterprise IT 경험,</span><br />
+                  <span className="text-[var(--color-accent)]">AX 실행력으로</span>
+                </p>
+              )}
             </Reveal>
             <Reveal delay={3}>
               <p className="lead measure mt-7">
-                기업의 복잡한 IT 환경을 이해하고, 실행 가능한 구조로 설계합니다.
+                {aboutCopy
+                  ? <>Enterprise IT와 데이터 컴플라이언스 현장에서 축적한 경험을 바탕으로<br />복잡한 기업 환경을 실행 가능한 구조로 전환합니다</>
+                  : <>수많은 기업 IT 환경에서 문제를 해결해 온 경험을 바탕으로<br />필요한 기술을 선택하고 실행 가능한 구조로 연결합니다</>}
               </p>
             </Reveal>
-            {/* docs/03 P02 승인 공개 문구 — 회사소개에서만 노출한다 */}
-            {aboutCopy && (
-              <Reveal delay={3}>
-                <p className="lead measure mt-5">
-                  Enterprise IT와 데이터 컴플라이언스에 대한 실무 경험을 바탕으로 설계와 구현을 지원합니다.
-                </p>
-              </Reveal>
-            )}
             <Reveal delay={4}>
               <A href={aboutCopy ? '/contact' : '/about'} className="cta-ghost mt-11">
                 {aboutCopy ? '함께할 프로젝트 문의' : '휴미즈 알아보기'}<span aria-hidden="true">→</span>

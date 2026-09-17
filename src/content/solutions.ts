@@ -44,6 +44,10 @@ export type Product = {
   anchor: string;
   role: string;
   subtitleKo: string;
+  /** 대표메시지 — Hero 아래 별도 Statement 구간에 표시. '\n' 은 <br /> 로 렌더링한다. */
+  statement: string;
+  /** 기능 섹션 제목. 제품별로 다르다('주요 기능' 고정 문구 대체) */
+  featuresTitle: string;
   /** §6.4 — Hero 뒤 첫 정보 구간의 정의. '무엇인지'를 첫 문장부터 답한다. */
   definition: string;
   /** §7.1 — 휴미즈 관점의 검토 항목. 수행 실적 주장이 아니라 검토 기준이다. */
@@ -66,7 +70,9 @@ export const products: Product[] = [
     seoTitle: 'Enterprise Vault Complete · 아카이빙과 거버넌스 | 휴미즈',
     anchor: 'ev',
     role: '기업 정보를 보존하고 정책에 따라 관리하는 아카이빙·거버넌스',
-    subtitleKo: '중요한 정보를 오래 보존하고, 필요한 순간 활용할 수 있도록.',
+    subtitleKo: '기업 커뮤니케이션을 정책에 따라\n보존·검색·관리하고\n컴플라이언스와 조사 업무에 활용하는\nEnterprise Information Archiving 플랫폼',
+    statement: 'Enterprise Archiving에서,\nInformation Governance까지',
+    featuresTitle: 'Capture · Archive · Govern · Discover',
     definition:
       'Enterprise Vault Complete는 기업 정보를 보존·검색하고 거버넌스 업무에 활용하기 위한 엔터프라이즈 정보 아카이빙 및 관리 플랫폼입니다. 실제 사용 기능은 선택 구성과 라이선스 조건을 확인해야 합니다.',
     reviewChecklist: [
@@ -117,7 +123,9 @@ export const products: Product[] = [
     alternateName: 'Merge1',
     anchor: 'merge1',
     role: '여러 커뮤니케이션 채널의 데이터를 수집해 보존·검토 환경으로 연결',
-    subtitleKo: '이메일 밖의 업무 대화도, 보존과 검토의 흐름 안으로.',
+    subtitleKo: 'Teams·Slack 등 다양한 커뮤니케이션 데이터를 수집해\n아카이빙과 컴플라이언스 환경으로 연결합니다',
+    statement: '모든 업무 대화를,\n하나의 컴플라이언스 흐름으로',
+    featuresTitle: 'Capture · Preserve Context · Connect',
     definition:
       'Enterprise Vault Capture는 기존 Merge1으로 알려진 기업 커뮤니케이션 데이터 수집 솔루션입니다. 협업·메시징 데이터를 수집하고 관련 메타데이터를 유지해 아카이빙·컴플라이언스·조사 흐름과 연결합니다.',
     reviewChecklist: [
@@ -136,7 +144,7 @@ export const products: Product[] = [
       { area: '아카이브 연계', body: '수집한 기록을 Enterprise Vault 또는 지원되는 아카이브 환경으로 전달합니다.' },
     ],
     extras: [
-      { title: '기존 이름으로 찾아오셨나요?', body: 'Merge1, Arctera Merge1 또는 Veritas Merge1이라는 이름으로 찾아오셨나요? 이 페이지에서는 현재 공식 명칭인 Enterprise Vault Capture를 기준으로 제품의 역할을 안내합니다.' },
+      { title: 'Merge1에서,\nEnterprise Vault Capture로', body: 'Merge1, Arctera Merge1 또는 Veritas Merge1이라는 이름으로 찾아오셨나요? 이 페이지에서는 현재 공식 명칭인 Enterprise Vault Capture를 기준으로 제품의 역할을 안내합니다.' },
     ],
     review:
       '수집 대상과 채널별 API·권한, 필요한 데이터 범위, 기존 기록의 처리 조건, 목적지 아카이브, 누락 확인 및 재처리 절차를 검토합니다.',
@@ -168,7 +176,9 @@ export const products: Product[] = [
     officialName: 'Enterprise Vault Data Insight',
     anchor: 'datainsight',
     role: '데이터 현황·사용·접근 패턴을 분석해 관리 판단 지원',
-    subtitleKo: '어떤 데이터가 어디에 있고, 어떻게 사용되는지부터.',
+    subtitleKo: '비정형 데이터의 위치·규모·사용·접근·소유 현황을 분석해\n데이터 거버넌스 판단을 지원합니다',
+    statement: '보이지 않는 데이터에서,\n관리 가능한 데이터로',
+    featuresTitle: 'Discover · Understand · Govern',
     definition:
       'Data Insight는 비정형 데이터의 현황, 사용·접근과 소유권을 분석해 관리 판단을 돕는 제품입니다. 데이터 자체를 장기 보관하는 아카이브와 역할을 구분해야 합니다.',
     reviewChecklist: [
@@ -216,7 +226,9 @@ export const products: Product[] = [
     officialName: 'Enterprise Vault eDiscovery Platform',
     anchor: 'ediscovery',
     role: '조사 자료의 검색·보존·수집·검토·제출 과정 지원',
-    subtitleKo: '필요한 자료를 찾고, 보존하고, 검토 가능한 과정으로 제출합니다.',
+    subtitleKo: '법적 분쟁·내부 조사·규제 대응에 필요한 데이터를\n검색·보존·수집·검토하고\n제출까지 연결합니다',
+    statement: 'Search에서,\nEvidence까지',
+    featuresTitle: 'Preserve · Collect · Review · Produce',
     definition:
       'eDiscovery Platform은 조사나 자료 제출에 필요한 정보의 보존, 수집, 검토와 내보내기 과정을 지원하는 제품입니다. 사건별 요구와 데이터 소스에 맞춰 적용 범위를 검토합니다.',
     reviewChecklist: [

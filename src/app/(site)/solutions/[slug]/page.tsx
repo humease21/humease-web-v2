@@ -1,6 +1,7 @@
+import { Fragment } from 'react';
 import { notFound } from 'next/navigation';
 import { CinematicHero } from '@/components/brand/CinematicHero';
-import { Scene } from '@/components/sections/Scene';
+import { Scene, Statement } from '@/components/sections/Scene';
 import { AnswerBlock } from '@/components/content/AnswerBlock';
 import { QuestionList } from '@/components/content/QuestionList';
 import { SourceNotes } from '@/components/content/SourceNotes';
@@ -25,6 +26,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = productBySlug(slug);
   if (!p) return {};
   return pageMeta({ title: p.seoTitle, description: p.metaDescription, path: `/solutions/${p.slug}` });
+}
+
+/** '\n' 이 있는 콘텐츠 문자열을 화면 줄바꿈으로 렌더링한다. */
+function withLineBreaks(text: string) {
+  return text.split('\n').map((line, i, arr) => (
+    <Fragment key={i}>
+      {line}
+      {i < arr.length - 1 && <br />}
+    </Fragment>
+  ));
 }
 
 const COVER = {
@@ -67,16 +78,20 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <CinematicHero
         eyebrow="Arctera 솔루션"
         titleKo={p.name}
-        lead={p.subtitleKo}
+        lead={withLineBreaks(p.subtitleKo)}
         image={COVER[p.slug as keyof typeof COVER] ?? assets.A12}
         ambient="silver"
       />
 
       <Scene mask="none">
+        <Statement titleKo={withLineBreaks(p.statement)} />
+      </Scene>
+
+      <Scene mask="none">
         <AnswerBlock term={`${p.name}란?`} definition={p.definition} />
         <Reveal delay={2}><p className="lead measure mt-9">{p.intro}</p></Reveal>
 
-        <Reveal as="p" delay={2} className="eyebrow mt-20">주요 기능</Reveal>
+        <Reveal as="p" delay={2} className="eyebrow mt-20">{p.featuresTitle}</Reveal>
         <dl className="mt-8">
           {p.features.map((f, i) => (
             <Reveal key={f.area} delay={((i % 4) + 1) as 1 | 2 | 3 | 4} className="cap-row">
@@ -92,7 +107,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <dl className="mt-8">
               {p.extras.map((e, i) => (
                 <Reveal key={e.title} delay={((i % 4) + 1) as 1 | 2 | 3 | 4} className="cap-row">
-                  <dt className="text-[15px] font-semibold text-[var(--color-text)]">{e.title}</dt>
+                  <dt className="text-[15px] font-semibold text-[var(--color-text)]">{withLineBreaks(e.title)}</dt>
                   <dd className="text-[15px] leading-[1.75] text-[var(--color-muted)]">{e.body}</dd>
                 </Reveal>
               ))}

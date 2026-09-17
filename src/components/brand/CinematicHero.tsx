@@ -17,7 +17,7 @@ export function CinematicHero({
 }: {
   eyebrow: string;
   titleEn?: string;
-  titleKo: string;
+  titleKo: React.ReactNode;
   lead?: React.ReactNode;
   ctas?: Cta[];
   badge?: string;
@@ -29,7 +29,8 @@ export function CinematicHero({
   align?: 'bottom' | 'center';
 }) {
   // Source Serif 4 는 한글 글리프가 없다. 한글이 섞이면 산세리프 대형 제목을 쓴다.
-  const heroTitleClass = /[가-힣]/.test(titleKo)
+  // titleKo 는 항상 한글이다(영문 제목은 별도 titleEn). ReactNode 인 경우도 한글로 간주한다.
+  const heroTitleClass = typeof titleKo !== 'string' || /[가-힣]/.test(titleKo)
     ? (heroScale ? 'display-hero-ko' : 'display-ko')
     : 'display-en';
 

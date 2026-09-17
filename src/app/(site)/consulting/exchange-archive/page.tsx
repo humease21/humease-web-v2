@@ -25,15 +25,23 @@ export default function Page() {
     <>
       <CinematicHero
         eyebrow="Exchange 아카이빙"
-        titleKo="메일의 가치는 남기고, 운영의 부담은 줄이도록."
-        lead="메일 보존과 검색, 사용자의 접근 방식과 시스템 운영을 함께 고려해 아카이빙 구조를 설계합니다."
+        titleKo={<>메일 보관에서,<br />정보 거버넌스로</>}
+        lead={
+          <>
+            기업 이메일을 정책에 따라 보존하고
+            <br />
+            필요한 순간 검색·복원·조사할 수 있는
+            <br />
+            아카이빙 환경을 설계합니다
+          </>
+        }
         image={assets.A07}
         ambient="silver"
         align="bottom"
       />
 
       <Scene mask="none">
-        <Statement titleKo="보관 용량만이 아니라, 사용하는 방식까지." paragraphs={['아카이브의 목적은 데이터를 옮기는 데서 끝나지 않습니다. 무엇을 얼마나 보관할지, 사용자가 어떻게 찾을지, 운영자가 어떻게 관리할지가 함께 정리되어야 합니다.']} />
+        <Statement titleKo={<>용량이 아닌,<br />보존과 활용의 기준</>} paragraphs={['아카이브의 목적은 데이터를 옮기는 데서 끝나지 않습니다. 무엇을 얼마나 보관할지, 사용자가 어떻게 찾을지, 운영자가 어떻게 관리할지가 함께 정리되어야 합니다.']} />
       </Scene>
 
       <Scene image={assets.A07} mask="scene" ambient="silver">

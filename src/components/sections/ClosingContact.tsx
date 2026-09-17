@@ -19,11 +19,11 @@ export function ClosingContact({ image }: { image?: { src: string; width: number
         <div className="max-w-[min(100%,1000px)]">
           <Reveal as="p" className="eyebrow">문의</Reveal>
           <Reveal delay={1} slow>
-            <h2 className="title-ko mt-7">해결하고 싶은 문제가 있다면,<br />언제든지 연락주세요</h2>
+            <h2 className="title-ko mt-7">데이터와 AI,<br />다음 단계로</h2>
           </Reveal>
           <Reveal delay={2}>
             <p className="lead mt-8">
-              기업 환경의 IT 고민부터 AX 전환에 따른 아이디어까지, 현재 상황과 기대하는 변화를 알려주세요.
+              현재 환경과 해결해야 할 문제를 알려주세요<br />필요한 기술과 실행 방향을 함께 검토합니다
             </p>
           </Reveal>
           <Reveal delay={3}>

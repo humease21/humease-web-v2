@@ -16,8 +16,8 @@ export default function Page() {
     <>
       <CinematicHero
         eyebrow="인사이트"
-        titleKo="기술을 이해하고, 현장에 연결하는 기록."
-        lead="기업 데이터와 AI 서비스의 실무에서 마주하는 질문과 생각을 나눕니다."
+        titleKo={<>Enterprise Data와<br />AX의 현장</>}
+        lead={<>기업 데이터, 컴플라이언스, AI 전환 과정에서<br />마주하는 기술과 운영의 문제를 다룹니다</>}
         image={assets.A03}
         ambient="silver"
         align="center"

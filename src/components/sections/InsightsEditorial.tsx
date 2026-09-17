@@ -16,16 +16,16 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
       <div className={compact ? '' : 'max-w-[820px]'}>
         <Reveal as="p" className="eyebrow">인사이트</Reveal>
         <Reveal delay={1} slow>
-          <h2 className="title-ko mt-6">현장에서 상담하고,<br />해결 방안을 제안드립니다.</h2>
+          <h2 className="title-ko mt-6">기술에서,<br />실제 적용까지</h2>
         </Reveal>
         <Reveal delay={2}>
           <p className="lead measure mt-8">
-            기업 데이터 관리와 AX 전환에 따른 휴미즈 컨설팅을 만나보세요.
+            기업 데이터 관리와 AX 전환에 따른 휴미즈 컨설팅을 만나보세요
           </p>
         </Reveal>
         <Reveal delay={3}>
           <p className="lead measure mt-5">
-            휴미즈 블로그에서 다양한 뉴스와 AI 정보들을 확인하실 수 있습니다.
+            휴미즈 블로그에서 다양한 뉴스와 AI 정보들을 확인하실 수 있습니다
           </p>
         </Reveal>
         <Reveal delay={4}>

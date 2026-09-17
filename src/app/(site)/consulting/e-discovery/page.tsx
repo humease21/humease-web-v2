@@ -25,15 +25,23 @@ export default function Page() {
     <>
       <CinematicHero
         eyebrow="e-Discovery"
-        titleKo="필요한 증거를, 설명 가능한 과정으로."
-        lead="조사·감사·분쟁 대응에 필요한 데이터의 보존, 수집, 검색과 검토 흐름을 기업 환경에 맞게 설계합니다."
+        titleKo={<>데이터에서,<br />증거로</>}
+        lead={
+          <>
+            조사·감사·분쟁 대응에 필요한 데이터를
+            <br />
+            보존하고 검색·수집·검토·제출할 수 있는
+            <br />
+            eDiscovery 체계를 설계합니다
+          </>
+        }
         image={assets.A05}
         ambient="silver"
         align="bottom"
       />
 
       <Scene mask="none">
-        <Statement titleKo="자료를 찾는 일보다, 대응 체계를 만드는 일." paragraphs={['데이터가 여러 시스템에 흩어져 있거나, 요청할 때마다 담당자가 수작업으로 대응하고 있다면 범위·권한·절차부터 정리해야 합니다.']} />
+        <Statement titleKo={<>검색보다 중요한,<br />대응 체계</>} paragraphs={['데이터가 여러 시스템에 흩어져 있거나, 요청할 때마다 담당자가 수작업으로 대응하고 있다면 범위·권한·절차부터 정리해야 합니다.']} />
       </Scene>
 
       <Scene image={assets.A05} mask="scene" ambient="silver">

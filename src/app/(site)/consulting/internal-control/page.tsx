@@ -25,15 +25,23 @@ export default function Page() {
     <>
       <CinematicHero
         eyebrow="내부 통제"
-        titleKo="리스크를 발견하고, 대응을 기록하는 구조."
-        lead="민감정보와 업무 커뮤니케이션을 관리하는 기준부터 점검·조치의 흐름까지. 실제 운영을 고려한 통제 체계를 설계합니다."
+        titleKo={<>탐지에서,<br />대응과 증적까지</>}
+        lead={
+          <>
+            기업 커뮤니케이션의 위험을 탐지하고
+            <br />
+            검토·조치·감사 이력까지 관리할 수 있는
+            <br />
+            내부 통제 체계를 설계합니다
+          </>
+        }
         image={assets.A06}
         ambient="silver"
         align="center"
       />
 
       <Scene mask="none">
-        <Statement titleKo="도구보다 먼저, 무엇을 어떻게 관리할지 정합니다." paragraphs={['모든 데이터를 무작정 수집하거나 경고를 늘리는 대신, 필요한 범위와 담당자의 역할, 예외 상황과 조치 기준을 구체화합니다.']} />
+        <Statement titleKo={<>더 많은 경고가 아닌,<br />명확한 통제</>} paragraphs={['모든 데이터를 무작정 수집하거나 경고를 늘리는 대신, 필요한 범위와 담당자의 역할, 예외 상황과 조치 기준을 구체화합니다.']} />
       </Scene>
 
       <Scene image={assets.A06} mask="scene" ambient="silver">

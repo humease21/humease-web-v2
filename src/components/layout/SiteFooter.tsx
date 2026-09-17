@@ -17,6 +17,9 @@ export function SiteFooter() {
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset('/brand/logo-horizontal-en.webp')} alt="휴미즈" width={337} height={56} className="h-5 w-auto" />
+            <p className="mt-3 text-[12px] tracking-[0.04em] text-[var(--color-muted)]">
+              Enterprise Data · Data Governance · Compliance · AX · AI Services
+            </p>
             <p className="mt-6 text-[14px] text-[var(--color-muted)]">{company.nameKo}</p>
             <a href={`mailto:${company.email}`} className="mt-1 inline-block text-[14px] text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]">
               {company.email}

@@ -92,7 +92,7 @@ export function Statement({
   eyebrow, titleKo, paragraphs, cta, align = 'left', measure = true,
 }: {
   eyebrow?: string;
-  titleKo: string;
+  titleKo: React.ReactNode;
   paragraphs?: React.ReactNode[];
   cta?: { label: string; href: string; primary?: boolean };
   align?: 'left' | 'center';

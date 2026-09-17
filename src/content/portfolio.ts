@@ -42,7 +42,7 @@ export type Project = {
   plannedFeatures: string[];
   aiRole: string[];
   validationNotes: string[];
-  currentStageNote: string;
+  currentStageNote: string | null;
   sourceRefs: { label: string; note: string }[];
   reviewedAt: string;
   publicationApproved: boolean;
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     plannedFeatures: [],
     aiRole: [],
     validationNotes: [],
-    currentStageNote: '기존 홈페이지 포트폴리오에 등록된 프로젝트입니다. 현재 운영 단계와 제공 기능은 확인 후 표기합니다.',
+    currentStageNote: null,
     sourceRefs: [{ label: '구 홈페이지 public/data/ai-services.json', note: '등록 사실 확인 2026-09-06' }],
     reviewedAt: '2026-09-06',
     publicationApproved: true,
@@ -159,7 +159,7 @@ export const projects: Project[] = [
     plannedFeatures: [],
     aiRole: [],
     validationNotes: [],
-    currentStageNote: '기존 홈페이지 포트폴리오에 등록된 프로젝트입니다. 현재 운영 단계와 분석 정확도는 확인 후 표기합니다.',
+    currentStageNote: null,
     sourceRefs: [{ label: '구 홈페이지 public/data/ai-services.json', note: '등록 사실 확인 2026-09-06' }],
     reviewedAt: '2026-09-06',
     publicationApproved: true,
@@ -167,7 +167,7 @@ export const projects: Project[] = [
   {
     slug: 'k-bestie',
     name: '내친구 케이',
-    summary: '아이와 대화하는 AI 친구와 부모를 위한 인사이트를 연결하는 가족 소통 서비스.',
+    summary: '아이와 대화하는 AI 친구와 부모를 위한 인사이트를 연결하는 가족 소통 서비스',
     category: '가족 소통 AI',
     kind: null,
     stage: null,
@@ -181,7 +181,7 @@ export const projects: Project[] = [
     externalUrl: 'https://www.k-bestie.com/',
     externalLinkVerifiedAt: '2026-09-06',
     contribution: null,
-    operatorLabel: '운영 주체는 별도 확인 대상입니다.',
+    operatorLabel: null,
     problem: ['아이의 마음을 이해하고 대화를 이어가는 계기를 만들기 어렵습니다.'],
     approach: ['아이와 대화하는 AI 친구와, 부모를 위한 인사이트를 연결하는 방향을 다룹니다.'],
     highlights: [],
@@ -190,7 +190,7 @@ export const projects: Project[] = [
     plannedFeatures: [],
     aiRole: [],
     validationNotes: [],
-    currentStageNote: '기존 홈페이지 포트폴리오에 등록된 프로젝트입니다. 최신 공개 단계와 운영 주체는 확인 후 표기합니다.',
+    currentStageNote: null,
     sourceRefs: [{ label: '구 홈페이지 public/data/ai-services.json', note: '등록 사실 확인 2026-09-06' }],
     reviewedAt: '2026-09-06',
     publicationApproved: true,

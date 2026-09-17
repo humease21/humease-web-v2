@@ -15,3 +15,6 @@ C:*
 
 # TypeScript 증분 빌드 캐시
 *.tsbuildinfo
+
+# Supabase CLI 로컬 링크 상태(pooler URL 등 연결 정보 포함) — 커밋하지 않는다
+supabase/.temp/

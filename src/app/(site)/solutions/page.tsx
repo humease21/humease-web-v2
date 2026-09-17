@@ -27,8 +27,8 @@ export default function Page() {
       ]} />
       <CinematicHero
         eyebrow="Arctera 솔루션"
-        titleKo="기업 데이터의 보존부터, 컴플라이언스와 eDiscovery까지."
-        lead="기업의 커뮤니케이션과 정보를 수집하고, 보존하고, 필요한 순간 찾을 수 있도록. 주요 Arctera 솔루션의 역할과 적용 시 검토할 사항을 한국어로 안내합니다."
+        titleKo={<>Capture에서,<br />Compliance까지</>}
+        lead={<>기업 커뮤니케이션의<br />수집·보존·분류·감독·조사를 연결하는<br />Arctera 솔루션을 소개합니다</>}
         ctas={[
           { label: '주요 제품 살펴보기', href: '#products' },
           { label: '솔루션 상담', href: '/contact', primary: false },
@@ -39,13 +39,14 @@ export default function Page() {
 
       <Scene mask="none">
         <AnswerBlock
-          term="Arctera 솔루션이란?"
-          definition="Arctera Solutions는 기업 데이터의 수집, 보존, 검토와 조사에 활용되는 제품 정보를 한국어로 소개하는 영역입니다. 제품의 역할과 휴미즈가 함께 검토할 적용 항목을 구분해 안내합니다."
+          term="Enterprise Information Governance"
+          definition={<>이메일과 협업 커뮤니케이션을 수집·보존하고<br />정책에 따라 관리하며<br />컴플라이언스와 eDiscovery에 활용할 수 있는 제품군입니다</>}
         />
         <div className="mt-14">
           <Statement
             eyebrow="휴미즈의 역할"
-            titleKo="휴미즈는 고객의 데이터 환경과 운영 요구를 바탕으로 제품의 적용 범위와 연계 구성을 함께 검토합니다."
+            titleKo={<>제품에서,<br />실제 적용 환경까지</>}
+            paragraphs={[<>고객의 데이터 환경과 운영 정책을 확인하고<br />제품 적용 범위, 연계 구조와 이관 조건을 검토합니다</>]}
           />
         </div>
       </Scene>

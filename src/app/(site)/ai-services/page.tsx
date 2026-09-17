@@ -24,8 +24,8 @@ export default function Page() {
       ]} />
       <CinematicHero
         eyebrow="AI 포트폴리오"
-        titleKo="직접 만든 서비스로, AI의 가능성을 보여줍니다."
-        lead="아이디어를 어떻게 서비스로 구체화했는지, 어떤 문제를 풀고 무엇을 구현했는지. 휴미즈의 AI 개발 포트폴리오를 소개합니다."
+        titleKo={<>아이디어에서,<br />실제 AI 서비스로</>}
+        lead={<>직접 문제를 정의하고<br />기획·설계·개발한 AI 프로젝트와<br />그 과정에서 해결한 문제를 소개합니다</>}
         image={assets.A09}
         ambient="cool"
       />
@@ -42,7 +42,7 @@ export default function Page() {
 
       <Scene mask="none">
         <Statement
-          titleKo="AI 아이디어를 함께 구체화하고 싶으신가요?"
+          titleKo={<>아이디어에서,<br />첫 번째 사용자까지</>}
           cta={{ label: '협업 문의', href: '/contact', primary: true }}
           align="center"
         />
