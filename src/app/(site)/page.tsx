@@ -35,8 +35,8 @@ export default function HomePage() {
       ]} />
       <CinematicHero
         eyebrow="HUMEASE"
-        titleKo="복잡한 데이터와 아이디어를 실제로 작동하는 기술로"
-        lead="기업 데이터의 보존과 통제부터 AI 서비스의 설계와 구현까지. 휴미즈는 기술을 현실의 문제 해결로 연결합니다."
+        titleKo="기업 데이터와 아이디어를 실제 동작하는 서비스로"
+        lead={<>기업 데이터의 보존과 통제부터 AI 서비스의 설계와 구현까지<br />휴미즈는 현실의 문제를 해결로 연결합니다.</>}
         ctas={[
           { label: '사업영역 살펴보기', href: '#business' },
           { label: '프로젝트 문의', href: '/contact', primary: false },
@@ -55,8 +55,9 @@ export default function HomePage() {
       <Scene mask="none">
         <Statement
           eyebrow="왜 휴미즈인가"
-          titleKo="데이터의 신뢰에서, AI의 실행으로."
-          paragraphs={['필요한 정보를 보존하고, 찾아내고, 올바르게 다루는 일. 휴미즈는 기업 데이터 환경에 대한 이해를 바탕으로 실제 사용되는 AI 서비스와 시스템을 설계합니다.']}
+          titleKo="데이터를 이해하고, AX 전환 설계"
+          paragraphs={['20년 이상의 Enterprise IT 경험으로, 데이터 거버넌스부터 AI 활용까지 기업의 AX 전환 지원합니다.']}
+          measure={false}
         />
       </Scene>
 
@@ -64,8 +65,8 @@ export default function HomePage() {
       <NumberedScene
         ordinal="01"
         eyebrow="기업 데이터"
-        titleKo="중요한 데이터는, 보관한 뒤에도 관리할 수 있어야 합니다."
-        lead="무엇을 얼마나 보존하고, 누가 접근하며, 필요한 순간 어떻게 찾아 제출할지. 데이터의 전체 흐름을 고객 환경과 운영 요구에 맞춰 검토합니다."
+        titleKo={<>중요한 데이터는<br />보관보다 관리가 중요합니다</>}
+        lead={<>무엇을 얼마나 보존하고, 누가 접근하며, 필요할 때 어떻게 활용할지<br />데이터의 전체 흐름을 고객 환경과 운영 기준에 맞춰 설계합니다.</>}
         capabilities={[
           { title: '보존', body: '필요한 데이터를 정책에 맞게 남깁니다.' },
           { title: '검색', body: '필요한 정보와 관련 기록을 찾는 구조를 설계합니다.' },
@@ -82,7 +83,7 @@ export default function HomePage() {
         <Reveal as="p" className="eyebrow">Arctera 솔루션</Reveal>
         <Reveal delay={1}>
           <p className="title-ko-sm measure mt-6">
-            Arctera 솔루션 — 제품의 기능과 고객 환경에 맞는 적용 범위를 살펴보세요.
+            제품의 기능과 고객 환경에 맞는 해결방안을 살펴보세요
           </p>
         </Reveal>
         <Reveal delay={2}>
@@ -94,7 +95,7 @@ export default function HomePage() {
       <NumberedScene
         ordinal="02"
         eyebrow="AI 서비스"
-        titleKo="아이디어를, 실제로 쓰이는 AI로."
+        titleKo={<>단순 아이디어를<br />AI를 활용한 서비스로</>}
         lead="해결할 문제와 사용할 사람을 먼저 정하고, 대화 경험·데이터 흐름·업무 연결을 설계합니다. 필요한 기능을 구현한 뒤 실제 사용 과정에서 확인하고 개선합니다."
         capabilities={[
           { title: 'AI 서비스 기획', body: '해결할 문제와 사용할 사람을 먼저 정합니다.' },
@@ -110,11 +111,11 @@ export default function HomePage() {
       {/* HOW WE WORK — 방법론은 한 번만 */}
       <Scene mask="none">
         <Reveal as="p" className="eyebrow">일하는 방식</Reveal>
-        <Reveal delay={1} slow><h2 className="title-ko mt-6">문제를 이해하는 데서, 작동을 확인하는 데까지.</h2></Reveal>
+        <Reveal delay={1} slow><h2 className="title-ko mt-6">문제를 이해하고, 해결하는 서비스로 전환까지</h2></Reveal>
         <ul className="mt-12">
           {HOW_WE_WORK.map((w, i) => (
             <Reveal as="li" key={w.k} delay={((i % 4) + 1) as 1 | 2 | 3 | 4} className="cap-row">
-              <h3 className="font-[family-name:var(--font-display)] text-[22px] text-[var(--color-accent)] md:text-[28px]">{w.k}</h3>
+              <h3 className="font-[family-name:var(--font-sans)] text-[22px] text-[var(--color-accent)] md:text-[28px]">{w.k}</h3>
               <p className="lead">{w.v}</p>
             </Reveal>
           ))}
@@ -124,10 +125,10 @@ export default function HomePage() {
       {/* AI PORTFOLIO — 데이터 기반 */}
       <Scene mask="none">
         <Reveal as="p" className="eyebrow">AI 포트폴리오</Reveal>
-        <Reveal delay={1} slow><h2 className="title-ko mt-6">우리가 만든 것들이, 우리의 역량을 설명합니다.</h2></Reveal>
+        <Reveal delay={1} slow><h2 className="title-ko mt-6">우리가 만든 서비스가, 새로운 일상을 만듭니다</h2></Reveal>
         <Reveal delay={2}>
-          <p className="lead measure mt-8">
-            아이디어에서 출발해 서비스로 이어지는 과정. 휴미즈의 AI 개발 프로젝트와 그 안에서 풀어가는 문제를 소개합니다.
+          <p className="lead mt-8">
+            아이디어를 실제 서비스로 구현해 온 과정, 휴미즈의 AI 프로젝트가 해결한 문제를 소개합니다.
           </p>
         </Reveal>
         <div className="mt-12"><PortfolioList items={featuredProjects(3)} /></div>

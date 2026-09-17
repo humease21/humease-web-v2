@@ -18,7 +18,7 @@ export function CinematicHero({
   eyebrow: string;
   titleEn?: string;
   titleKo: string;
-  lead?: string;
+  lead?: React.ReactNode;
   ctas?: Cta[];
   badge?: string;
   image: Asset;

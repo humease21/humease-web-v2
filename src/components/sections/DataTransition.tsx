@@ -69,7 +69,7 @@ export function DataTransition({ image }: { image: Asset }) {
               style={{ opacity: fromOpacity, transform: `translateY(${-settle * 14}px)` }}
             >
               <p className="eyebrow">흩어진 데이터</p>
-              <p className="display-ko mt-5">흩어진 기록, 서로 다른 시스템, 찾기 어려운 정보.</p>
+              <p className="display-ko mt-5">흩어진 데이터와 관리 기준,<br />AI 여정에 복잡한 IT 환경</p>
             </div>
 
             <div
@@ -81,7 +81,7 @@ export function DataTransition({ image }: { image: Asset }) {
               }}
             >
               <p className="eyebrow">이해할 수 있는 정보로</p>
-              <p className="display-ko mt-5">정돈된 데이터가 사람에게 쓸모 있는 판단으로 이어집니다.</p>
+              <p className="display-ko mt-5">데이터 거버넌스를 통해<br />AX 전환을 도와드립니다</p>
             </div>
           </div>
 

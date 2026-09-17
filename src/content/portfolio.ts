@@ -52,7 +52,7 @@ export const projects: Project[] = [
   {
     slug: 'mom-ie',
     name: '맘이음',
-    summary: '친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI.',
+    summary: '친구처럼 곁에 있고, 비서처럼 도와주고, 가족과 연결해주는 AI',
     category: '가족 소통 AI',
     kind: '자체 서비스',
     stage: '개발 중',
@@ -105,7 +105,7 @@ export const projects: Project[] = [
   {
     slug: 'anybuild',
     name: 'AnyBuild',
-    summary: '단순 아이디어도 구체화된 사업화 방향으로 연결하는 AI 서비스.',
+    summary: '단순 아이디어도 구체화된 사업화 전환으로 연결하는 AI 서비스',
     category: '서비스 기획·구현',
     kind: null,
     stage: null,
@@ -136,7 +136,7 @@ export const projects: Project[] = [
   {
     slug: 'hairai',
     name: 'HairAI',
-    summary: '미용실 가기 전, 사진 한 장으로 나에게 어울리는 헤어스타일을 찾아주는 AI 서비스.',
+    summary: '미용실 가기 전, 사진 한 장으로 나에게 어울리는 헤어스타일을 찾아주는 AI 서비스',
     category: '이미지 기반 추천',
     kind: null,
     stage: null,

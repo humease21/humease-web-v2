@@ -47,8 +47,8 @@ export function NumberedScene({
 }: {
   ordinal: string;
   eyebrow: string;
-  titleKo: string;
-  lead: string;
+  titleKo: React.ReactNode;
+  lead: React.ReactNode;
   capabilities: { title: string; body: string }[];
   cta?: { label: string; href: string };
   image?: Asset;
@@ -89,21 +89,22 @@ export function NumberedScene({
 
 /** 편집형 본문 블록 — 반복 카드 대신 문장 중심 */
 export function Statement({
-  eyebrow, titleKo, paragraphs, cta, align = 'left',
+  eyebrow, titleKo, paragraphs, cta, align = 'left', measure = true,
 }: {
   eyebrow?: string;
   titleKo: string;
-  paragraphs?: string[];
+  paragraphs?: React.ReactNode[];
   cta?: { label: string; href: string; primary?: boolean };
   align?: 'left' | 'center';
+  measure?: boolean;
 }) {
   return (
     <div className={align === 'center' ? 'mx-auto max-w-[900px] text-center' : ''}>
       {eyebrow && <Reveal as="p" className="eyebrow">{eyebrow}</Reveal>}
       <Reveal delay={1} slow><h2 className="title-ko mt-6">{titleKo}</h2></Reveal>
       {paragraphs?.map((p, i) => (
-        <Reveal key={p.slice(0, 24)} delay={((i % 3) + 2) as 2 | 3 | 4}>
-          <p className={`lead mt-7 ${align === 'center' ? 'mx-auto measure' : 'measure'}`}>{p}</p>
+        <Reveal key={i} delay={((i % 3) + 2) as 2 | 3 | 4}>
+          <p className={`lead mt-7 ${measure ? (align === 'center' ? 'mx-auto measure' : 'measure') : ''}`}>{p}</p>
         </Reveal>
       ))}
       {cta && (

@@ -16,7 +16,7 @@ export function InsightsEditorial({ articles, compact }: { articles: Article[]; 
       <div className={compact ? '' : 'max-w-[820px]'}>
         <Reveal as="p" className="eyebrow">인사이트</Reveal>
         <Reveal delay={1} slow>
-          <h2 className="title-ko mt-6">현장에서 상담하고, 해결 방안을 드립니다.</h2>
+          <h2 className="title-ko mt-6">현장에서 상담하고,<br />해결 방안을 제안드립니다.</h2>
         </Reveal>
         <Reveal delay={2}>
           <p className="lead measure mt-8">

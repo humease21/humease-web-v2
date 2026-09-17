@@ -25,7 +25,7 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
             <Reveal as="p" className="eyebrow">{aboutCopy ? '전문성' : '전문성'}</Reveal>
             <Reveal delay={1} slow>
               <p className="display-ko mt-7">
-                20년 이상의 IT 전문 경험,<br />
+                <span className="text-[clamp(20px,2.8vw,36px)]">20년 이상의 IT 전문 경험,</span><br />
                 <span className="text-[var(--color-accent)]">기업의 AX 전환을 성과로 연결합니다.</span>
               </p>
             </Reveal>
@@ -34,7 +34,7 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
             </Reveal>
             <Reveal delay={3}>
               <p className="lead measure mt-7">
-                기업 환경의 운영 제약을 이해하고, 다양한 기술을 활용해 실행 가능한 구조로 설계합니다.
+                기업의 복잡한 IT 환경을 이해하고, 실행 가능한 구조로 설계합니다.
               </p>
             </Reveal>
             {/* docs/03 P02 승인 공개 문구 — 회사소개에서만 노출한다 */}
