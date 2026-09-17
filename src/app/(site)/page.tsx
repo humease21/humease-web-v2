@@ -35,7 +35,7 @@ export default function HomePage() {
       ]} />
       <CinematicHero
         eyebrow="HUMEASE"
-        titleKo="복잡한 데이터와 아이디어를, 실제로 작동하는 기술로."
+        titleKo="복잡한 데이터와 아이디어를 실제로 작동하는 기술로"
         lead="기업 데이터의 보존과 통제부터 AI 서비스의 설계와 구현까지. 휴미즈는 기술을 현실의 문제 해결로 연결합니다."
         ctas={[
           { label: '사업영역 살펴보기', href: '#business' },
