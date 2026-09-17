@@ -6,7 +6,6 @@ import { A } from '@/components/ui/Link';
  *
  * docs/01 §5 준수: 회사 경력과 개인 경력을 분리한다.
  * 아래 키워드는 **전문가 개인 경력**이라는 제목 아래에만 둔다.
- * 현재 소속·공식 파트너 관계로 오인될 표현을 쓰지 않는다(과거 이력임을 명시).
  */
 const KEYWORDS = [
   'Microsoft MVP',
@@ -26,16 +25,16 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
             <Reveal as="p" className="eyebrow">{aboutCopy ? '전문성' : '전문성'}</Reveal>
             <Reveal delay={1} slow>
               <p className="display-ko mt-7">
-                20년 이상의 Enterprise IT 경험을,<br />
-                <span className="text-[var(--color-accent)]">AI 시대의 문제 해결에 연결합니다.</span>
+                20년 이상의 IT 전문 경험,<br />
+                <span className="text-[var(--color-accent)]">기업의 AX 전환을 성과로 연결합니다.</span>
               </p>
             </Reveal>
             <Reveal delay={2}>
-              <h2 className="title-ko-sm mt-10">기술의 깊이는, 문제를 해결해 온 경험에서 나옵니다.</h2>
+              <h2 className="title-ko-sm mt-10">수많은 문제를 해결해 온 경험에서 기술의 깊이가 나옵니다.</h2>
             </Reveal>
             <Reveal delay={3}>
               <p className="lead measure mt-7">
-                기업 데이터 환경과 운영 제약을 이해하는 전문성을 바탕으로, 필요한 기술을 선택하고 실행 가능한 구조를 설계합니다.
+                기업 환경의 운영 제약을 이해하고, 다양한 기술을 활용해 실행 가능한 구조로 설계합니다.
               </p>
             </Reveal>
             {/* docs/03 P02 승인 공개 문구 — 회사소개에서만 노출한다 */}
@@ -62,17 +61,12 @@ export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
             <ul className="mt-7">
               {KEYWORDS.map((k, i) => (
                 <Reveal as="li" key={k} delay={((i % 4) + 1) as 1 | 2 | 3 | 4}>
-                  <span className="block border-t border-[color-mix(in_srgb,var(--color-line)_55%,transparent)] py-4 font-[family-name:var(--font-display)] text-[20px] tracking-[-0.01em] text-[var(--color-text)] md:text-[26px]">
+                  <span className="block border-t border-[color-mix(in_srgb,var(--color-line)_55%,transparent)] py-4 font-[family-name:var(--font-sans)] text-[20px] tracking-[-0.01em] text-[var(--color-text)] md:text-[26px]">
                     {k}
                   </span>
                 </Reveal>
               ))}
             </ul>
-            <Reveal delay={4}>
-              <p className="mt-6 text-[13px] leading-relaxed text-[var(--color-muted)]">
-                개인이 쌓아 온 경력이며, 회사의 현재 소속·공식 파트너 관계를 뜻하지 않습니다.
-              </p>
-            </Reveal>
           </div>
         </div>
       </div>

@@ -105,7 +105,7 @@ export const projects: Project[] = [
   {
     slug: 'anybuild',
     name: 'AnyBuild',
-    summary: '아이디어를 서비스 기획과 구현으로 연결하는 AI 프로젝트.',
+    summary: '단순 아이디어도 구체화된 사업화 방향으로 연결하는 AI 서비스.',
     category: '서비스 기획·구현',
     kind: null,
     stage: null,
@@ -136,7 +136,7 @@ export const projects: Project[] = [
   {
     slug: 'hairai',
     name: 'HairAI',
-    summary: '사진을 바탕으로 어울리는 헤어스타일을 살펴보는 AI 프로젝트.',
+    summary: '미용실 가기 전, 사진 한 장으로 나에게 어울리는 헤어스타일을 찾아주는 AI 서비스.',
     category: '이미지 기반 추천',
     kind: null,
     stage: null,
