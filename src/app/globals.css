@@ -17,7 +17,10 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  /* 사이트 전체가 항상 다크 테마다(라이트 모드 없음). 이 선언이 없으면 네이티브 <select>
+     드롭다운·스크롤바 등 OS 폼 컨트롤이 밝은 배경으로 렌더돼, 상속된 밝은 글자색과
+     겹쳐 옵션 텍스트를 읽을 수 없게 된다(요청서 §3-4 — Enterprise Data 등 옵션 가독성 버그). */
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; color-scheme: dark; }
   body {
     background-color: var(--color-bg);
     color: var(--color-text);
