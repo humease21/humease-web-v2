@@ -1,7 +1,7 @@
 # 자산 인벤토리
 
-- 생성: 2026-09-17 / `npm run verify:assets` 자동 생성
-- 원본 보관 위치: `/mnt/e/VibeCoding/Humease-homepage-v2/Images/` (배포 디렉터리 밖, 무변경)
+- 생성: 2026-09-18 / `npm run verify:assets` 자동 생성
+- 원본 보관 위치: `Images/`(저장소 루트, 배포 디렉터리 밖, 무변경)
 - 웹 출력본: `public/images/` — 포맷 변환·리사이즈·압축만 수행. 재색상·합성·생성형 업스케일 없음
 - **내부 문서.** 브라우저로 전달하는 `src/content/assets.ts` 에는 이 정보를 넣지 않는다.
 

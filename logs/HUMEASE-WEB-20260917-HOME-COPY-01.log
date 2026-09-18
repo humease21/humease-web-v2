@@ -1,0 +1,7 @@
+2026-09-17T17:00:00+09:00 착수 worker=Claude(직접) 사유=CLAUDE.md §1 예외 — 문구 치환 20건, 코드 리스크 낮음. md 기록 없이 바로 착수(사후 소급 기록)
+2026-09-17T17:00:00+09:00 결과 status=ok changed=10 evidence=humease-web-v2 commit 0d4af6a, git diff --stat 10 files changed, 27 insertions(+), 34 deletions(-)
+2026-09-17T17:00:00+09:00 게이트정적 reviewer=Claude(사람 승인 하 직접수정) verdict=pass 근거=lint/tsc 통과, docs/03·verify-request-copy.mjs 동기화, 폰트 서브셋 재생성 후 verify-font-subset PASS
+2026-09-17T17:00:00+09:00 게이트동적 verdict=pass 근거=preview·production 두 빌드 모두 CI 동일 verify 스크립트 11종 로컬 재현 PASS, GitHub Actions 배포 성공, curl 캐시버스팅 재확인, 사용자 본인 기기 페이지소스 직접 확인
+2026-09-17T17:00:00+09:00 비고 12번(경력 고지 삭제)은 컴플라이언스 문구라 착수 전 사람 확인 질문 후 진행. 15번은 기존 구현이 요청과 동일해 무변경.
+2026-09-17T17:00:00+09:00 비고 배포 후 사용자가 "하나도 안 바뀌었다"고 보고 → 원인은 미변경 섹션("왜 휴미즈인가", "흩어진 데이터")을 변경된 것으로 오인 + 스크롤 위치. 배포 자체는 정상이었음(반복 확인).
+2026-09-17T17:00:00+09:00 done

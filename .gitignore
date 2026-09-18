@@ -7,7 +7,13 @@ out/
 .omc/
 .DS_Store
 *.log
+!logs/*.log
 next-env.d.ts
+
+# 오케스트레이션 킷(queue-run) — 에이전트 런타임 산출물·워커 결과물
+.claude/logs/
+result.json
+worktrees/
 docs/reports/evidence/lh-*.json
 
 # Lighthouse 가 WSL 에서 남기는 Windows 경로 형태 잔재

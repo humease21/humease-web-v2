@@ -1,0 +1,11 @@
+2026-09-18T08:20:00+09:00 착수 파일=주식회사 휴미즈 개인정보처리방침 V1.0.md, 주식회사 휴미즈 홈페이지 이용약관 V1.0.md, 프로젝트 문의 개인정보 수집·이용 동의문 V1.0.md worker=claude(직접)
+2026-09-18 결과 status=ok /privacy, /terms 신규 라우트 — 원문 줄 단위 렌더 대조 스크립트로 누락 0건 확인, 커밋 cfa7d70
+2026-09-18 결과 status=ok Footer 개인정보처리방침/이용약관 링크, company.representative=정미경 대표이사 확정(사업자등록번호·주소·대표전화는 여전히 미확인, 추정 안 함)
+2026-09-18 결과 status=ok /contact 동의문 V1.0 전문 UI 교체, 미동의 시 submit 비활성화(프리렌더 HTML disabled 확인)
+2026-09-18 결과 status=ok Tokyo(ap-northeast-1) 리전 명시 호출 — supabase-js region 옵션 / x-region 헤더
+2026-09-18 결과 status=ok submit-inquiry Discord payload 비식별화(회사명/담당자/이메일/전화/문의내용/문의ID 전부 제외), retention pg_cron(jobid 9, 3년/12개월) Management API 로 적용
+2026-09-18T10:58:00Z 게이트정적 reviewer=claude(직접) verdict=pass 근거=tsc/eslint 클린, preview 10/10 + production 11/11 verify PASS, GitHub Actions run 전체 성공
+2026-09-18 실주요 이슈1: HUMEASE_DISCORD_WEBHOOK_URL secret 등록(대표 제공 URL, 값은 로그/git 미기록), Discord 표시명 "휴미즈(앱)" + HUMEASE 아이콘 아바타 설정, 실 문의 1건으로 종단검증(DB insert 성공 → discord_notification_status: sent) 후 테스트 행 즉시 삭제
+2026-09-18 실주요 이슈2(치명적, 사용자 제보로 발견): Tokyo 리전 헤더(x-region) 추가가 두 Edge Function 의 CORS Access-Control-Allow-Headers 에 반영되지 않아 실제 브라우저에서 문의 제출·페이지뷰 수집이 전부 실패. curl 스모크 테스트는 CORS 를 적용하지 않아 발견하지 못했다. 대표님이 /contact 에서 실제로 "접수 실패"를 겪고 제보해 발견. DB 확인으로 실패 재현 확인 → playwright 로 실제 브라우저 흐름 재현해 원인(x-region 미허용) 특정 → 두 함수 모두 Access-Control-Allow-Headers 에 x-region 추가 → 재배포 → playwright 로 재검증(200, 성공 UI, discord sent, 테스트 행 삭제) → 커밋 d4b55d7
+2026-09-18 영향 구간: 2026-09-17T14:38Z(cfa7d70 배포) ~ 2026-09-18(d4b55d7 배포). 이 구간 동안 방문자 페이지뷰 수집 공백 발생(DB 로 확인, 개인정보 영향 없음 — 수집 실패일 뿐 오저장 없음). 문의 제출 실패 건수는 대표님 제보 1건 외 추가 확인된 건 없음(DB 에 실패 흔적 남지 않는 구조).
+2026-09-18 done 커밋=cfa7d70(법률 V1.0 구현), fa3e897(retention/Discord blocker 해소), 6419620(Discord embed 비식별화), d4b55d7(CORS 긴급수정) — 전부 humease-web-v2 main, GitHub Actions 전체 성공, Production 실측 확인 완료

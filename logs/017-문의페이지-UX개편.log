@@ -1,0 +1,7 @@
+2026-09-18 착수 파일=queue/todo/017-문의페이지-UX개편.md worker=claude(직접)
+2026-09-18 결과 status=ok /contact 데스크톱(lg=1024px+) 좌우 2열(히어로/폼), 1024px 미만 1열 자연 전환. 커밋 cf05d34
+2026-09-18 결과 status=ok 개인정보 동의 상시노출 블록 → 체크박스+내용보기 버튼 + Modal(네이티브 dialog). 문구 무변경
+2026-09-18 결과 status=ok select 가독성 버그 — html{color-scheme:dark} 한 줄로 해결(native select 유지, custom listbox 미사용)
+2026-09-18T?? 게이트정적 reviewer=claude(직접) verdict=pass 근거=tsc/eslint 클린, production verify 11/11 PASS
+2026-09-18 게이트동적 reviewer=claude(직접, playwright) verdict=pass 근거=320/390/430/768/1440/1920 overflow 없음 확인, 1440/1920 email 필드 첫 viewport 확인, select colorScheme:dark 컴퓨티드 확인, 모달 열기/ESC/오버레이닫기/포커스복귀/전문텍스트 확인, 관심분야 옵션 8개 전수 확인, 동의 전/후 submit disabled 토글 확인, 실제 제출 200 성공, DB 저장 확인(status:new), Discord sent 확인, 관리자/`/privacy`/`/terms` HTTP 200 회귀 없음 확인, 테스트 행 즉시 삭제
+2026-09-18 done 커밋=cf05d34, GitHub Actions 전체 성공, Production 실측 확인 완료

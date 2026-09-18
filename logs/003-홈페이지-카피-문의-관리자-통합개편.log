@@ -1,0 +1,12 @@
+2026-09-17T22:00:00+09:00 착수 worker=claude(직접+서브에이전트) model=opus/sonnet 혼합 — 원본 Request + deep-interview 델타 기준 Phase 0~8
+2026-09-17T13:51:12Z 결과 status=ok phase=1(카피) 커밋=97732ee 19페이지 카피 전면 개편, verify 11종 PASS
+2026-09-17T13:57:54Z 결과 status=ok phase=6(사이트분석 수집) 커밋=8ced107 log-page-view Edge Function 배포
+2026-09-17T14:18:54Z 결과 status=fail phase=2(Supabase 배선) 커밋=4826212 GitHub Actions 실패 — 원인: verify-client-exposure.mjs 구버전이 anon key JWT 를 무조건 차단(role 판별 없음). Production 미배포(직전 성공본 유지, 실사용자 영향 없음).
+2026-09-17T14:38:19Z 결과 status=ok phase=4~7(관리자 백오피스) 커밋=5b846ad GitHub Actions run 35234906140 성공·배포 완료. verify-client-exposure.mjs 를 JWT role 판별 로직으로 수정해 4826212 의 근본 원인도 함께 해결.
+2026-09-17T14:39:00Z 게이트정적 reviewer=architect(opus, THOROUGH tier) verdict=pass 근거=9개 Acceptance Criteria 전부 파일:라인 근거로 확인, 결함 7건(Low/Info, 비차단)
+2026-09-17T14:40:00Z 재검증 reviewer=claude(직접) verdict=pass 근거=tsc/eslint 클린 재실행, preview+production verify 11종 재실행 PASS, anon RLS curl 직접 재현(SELECT=[] / INSERT=42501), log-page-view 스모크 테스트 직접 실행({"ok":true})
+2026-09-17T14:42:00Z 게이트동적 verdict=보류 사유=CLAUDE.md §4 — E2E 없음, 실제 Google OAuth 로그인 왕복은 사람 확인 필요. queue/qa 로 이동.
+2026-09-17T14:45:00Z Production 확인 curl https://www.humease.com/admin/login/ noindex 메타 확인, sitemap.xml 에 admin 0건, 홈 HTTP 200
+2026-09-17T14:46:00Z qa대기 커밋=5b846ad, GitHub Actions run=35234906140(success), 남은 미해결=대표님 실제 로그인 왕복 확인, Discord Webhook URL 등록, CONTACT_MODE=live 전환 승인, humease_page_views 스모크 테스트 행 1건 정리(path=/__smoke_test_*)
+2026-09-18T00:00:00+09:00 게이트동적 verdict=pass 근거=대표 직접 확인 — /admin/login Google OAuth(markanitp@gmail.com) 로그인 후 /admin 대시보드 정상 표시 확인. 사용자 발화: "모두 정상이다 done"
+2026-09-18T00:00:00+09:00 done 003 전체 완료 확정 — 모든 하위 스토리(US-001~014) 및 후속 V1.1/UX개편까지 포함해 최종 종료

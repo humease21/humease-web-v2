@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import sharp from 'sharp';
 
-const ORIG_DIR = '/mnt/e/VibeCoding/Humease-homepage-v2/Images';
+const ORIG_DIR = path.join(process.cwd(), 'Images');
 const WEB_DIR = path.join(process.cwd(), 'public/images');
 const REPORTS = path.join(process.cwd(), 'docs/reports');
 
@@ -78,7 +78,7 @@ if (hasOriginals) {
   const lines = [
     '# 자산 인벤토리', '',
     `- 생성: ${new Date().toISOString().slice(0, 10)} / \`npm run verify:assets\` 자동 생성`,
-    '- 원본 보관 위치: `/mnt/e/VibeCoding/Humease-homepage-v2/Images/` (배포 디렉터리 밖, 무변경)',
+    '- 원본 보관 위치: `Images/`(저장소 루트, 배포 디렉터리 밖, 무변경)',
     '- 웹 출력본: `public/images/` — 포맷 변환·리사이즈·압축만 수행. 재색상·합성·생성형 업스케일 없음',
     '- **내부 문서.** 브라우저로 전달하는 `src/content/assets.ts` 에는 이 정보를 넣지 않는다.', '',
     '## 매핑·해시', '',
