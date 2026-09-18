@@ -42,7 +42,10 @@ function corsHeaders(origin: string | null) {
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'content-type, apikey, authorization',
+    // x-region: supabase-js 의 FunctionInvokeOptions.region(Tokyo 명시 호출)이 자동으로
+    // 붙이는 헤더다. CORS preflight 허용 목록에 없으면 브라우저가 실제 POST 를 막는다
+    // (curl 은 CORS 를 적용하지 않아 이 문제가 로컬 검증에서는 드러나지 않았다).
+    'Access-Control-Allow-Headers': 'content-type, apikey, authorization, x-region, x-client-info',
     Vary: 'Origin',
   };
 }

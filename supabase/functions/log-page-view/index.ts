@@ -17,7 +17,9 @@ function corsHeaders(origin: string | null) {
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'content-type, apikey, authorization',
+    // x-region: 클라이언트가 Tokyo 리전을 명시하려고 보내는 헤더(PageViewTracker.tsx).
+    // 허용 목록에 없으면 브라우저 CORS preflight 가 실제 POST 를 막는다.
+    'Access-Control-Allow-Headers': 'content-type, apikey, authorization, x-region',
     Vary: 'Origin',
   };
 }
