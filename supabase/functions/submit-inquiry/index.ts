@@ -1,9 +1,10 @@
 // Supabase Edge Function: submit-inquiry
 // 흐름: 입력 검증 → DB INSERT(먼저) → Discord Webhook 시도 → 실패해도 사용자에게는 success
-// 2026-09-18: Discord 알림 payload 비식별화(개인정보처리방침 제4조) 재배포 완료(version 3).
+// 2026-09-18: HUMEASE_DISCORD_WEBHOOK_URL secret 등록·실 문의 1건으로 종단 검증 완료
+// (discord_notification_status: sent, 테스트 행은 검증 직후 삭제). Discord Webhook 은
+// 내친구 케이(K-Bestie)와 같은 채널이지만 이름 "휴미즈(앱)" + HUMEASE 아이콘 아바타의
+// 별도 Webhook — 기존 K-Bestie DISCORD_WEBHOOK_URL secret 은 건드리지 않았다.
 // 필요 Secret: HUMEASE_DISCORD_WEBHOOK_URL, PRIVACY_POLICY_VERSION (없으면 기본값 'v1' 사용)
-// HUMEASE_DISCORD_WEBHOOK_URL 은 2026-09-18 기준 아직 미설정 — 값이 없으면 discordStatus 는
-// 'pending' 으로 안전하게 스킵된다. 값 등록 시 별도 코드 변경 없이 바로 동작한다.
 // SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY 는 Supabase가 Edge Function 런타임에 자동 주입한다.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2';
@@ -114,16 +115,40 @@ function validate(body: unknown, origin: string | null): { ok: true; data: Inqui
  * Discord 는 알림 채널일 뿐이다 — Source of Truth 는 DB.
  * 개인정보처리방침 제4조: "신규 문의 알림을 위해 사용하는 외부 메신저에는 담당자명, 이메일,
  * 전화번호, 회사명, 문의 내용 또는 문의 식별번호 등 문의자를 식별할 수 있는 정보를
- * 전송하지 않는다." 문의 레코드와 연결 가능한 값은 어떤 것도 payload 에 넣지 않는다.
- * 상세는 관리자 페이지(RLS + Google OAuth 인증 뒤)에서만 확인한다.
+ * 전송하지 않는다." company_name/contact_name/email/phone/message/id 는 어떤 것도
+ * payload 에 넣지 않는다 — interest_area·접수 시간처럼 개인을 특정할 수 없는 값만 보낸다.
+ * 상세는 관리자 페이지(RLS + Google OAuth 인증 뒤)에서 최신순으로 확인한다.
+ *
+ * 이 채널은 내친구 케이(K-Bestie) 알림과 같은 Discord 채널을 쓰지만, Webhook 은
+ * HUMEASE 전용(HUMEASE_DISCORD_WEBHOOK_URL)이다 — 이름 "휴미즈(앱)", HUMEASE
+ * 아이콘 아바타로 Discord UI 에서 K-Bestie 알림과 구분된다.
  */
-async function notifyDiscord(webhookUrl: string) {
-  const content = 'HUMEASE 새 문의가 접수되었습니다. 관리자 페이지에서 확인하세요.';
+const KST_TIME_FORMAT = new Intl.DateTimeFormat('ko-KR', {
+  timeZone: 'Asia/Seoul',
+  year: 'numeric', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit', hour12: false,
+});
+
+async function notifyDiscord(webhookUrl: string, inquiry: { interestArea?: string; createdAt: string }) {
+  const payload = {
+    content: null,
+    allowed_mentions: { parse: [] as string[] },
+    embeds: [{
+      title: 'HUMEASE 새 문의 접수',
+      description: '관리자 페이지(/admin/inquiries)에서 최신순으로 확인해 주세요.',
+      color: 0xc7b99d,
+      fields: [
+        { name: '유형', value: '홈페이지 문의', inline: true },
+        { name: '관심 분야', value: inquiry.interestArea ?? '미선택', inline: true },
+        { name: '접수 시간', value: `${KST_TIME_FORMAT.format(new Date(inquiry.createdAt))} (KST)`, inline: false },
+      ],
+    }],
+  };
 
   const res = await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ content }),
+    body: JSON.stringify(payload),
   });
   if (!res.ok) throw new Error(`discord webhook ${res.status}`);
 }
@@ -164,7 +189,7 @@ Deno.serve(async (req) => {
       privacy_consent_at: nowIso,
       privacy_policy_version: privacyPolicyVersion,
     })
-    .select('id')
+    .select('id, interest_area, created_at')
     .single();
 
   // DB 실패 — Discord 는 시도하지 않는다. 사용자에게는 error.
@@ -180,7 +205,7 @@ Deno.serve(async (req) => {
   let discordStatus: 'sent' | 'failed' | 'pending' = 'pending';
   if (discordWebhookUrl) {
     try {
-      await notifyDiscord(discordWebhookUrl);
+      await notifyDiscord(discordWebhookUrl, { interestArea: inserted.interest_area ?? undefined, createdAt: inserted.created_at });
       discordStatus = 'sent';
     } catch (err) {
       console.error('discord notify failed', err);
