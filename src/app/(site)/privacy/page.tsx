@@ -6,9 +6,11 @@ import { metaForPath } from '@/content/search-pages';
 export const metadata = pageMeta({ ...metaForPath('/privacy'), path: '/privacy' });
 
 /**
- * 개인정보처리방침 V1.0. 대표 승인본(queue/todo 업로드, 2026-09-18)을 그대로 옮긴다.
- * 임의 축약·추가·법률해석 변경을 하지 않는다. Microsoft 365 실제 데이터 위치 등
- * 원본에 없는 값은 추정해 추가하지 않는다.
+ * 개인정보처리방침. V1.0(대표 승인본, queue/todo 업로드, 2026-09-18)을 베이스로,
+ * V1.1(2026-09-18, 대표 승인)에서 Discord 알림 실제 동작과 문구를 일치시키기 위해
+ * 제4조/제5조/제6조에 Discord 관련 조항을 추가했다. 기존 V1.0 본문은 queue/done 에
+ * 원본 그대로 보존돼 있다 — 조용히 덮어쓰지 않는다. Microsoft 365 실제 데이터 위치,
+ * Discord 개인정보 보호 문의처 등 검증되지 않은 값은 추정해 추가하지 않는다.
  */
 export default function Page() {
   return (
@@ -22,7 +24,7 @@ export default function Page() {
         <LegalP>
           회사는 개인정보의 처리 목적, 처리하는 개인정보의 항목, 보유기간, 정보주체의 권리 및 개인정보 보호조치 등을 다음과 같이 공개합니다.
         </LegalP>
-        <LegalMeta>시행일: 2026년 9월 18일</LegalMeta>
+        <LegalMeta>버전: V1.1 · 시행일: 2026년 9월 18일</LegalMeta>
 
         <LegalH2>제1조 개인정보의 처리 목적</LegalH2>
         <LegalP>회사는 다음의 목적으로 개인정보를 처리합니다.</LegalP>
@@ -121,7 +123,7 @@ export default function Page() {
           <li>수사기관 또는 관계기관의 적법한 요청이 있는 경우</li>
         </LegalOl>
         <LegalP>
-          신규 문의 알림을 위해 사용하는 외부 메신저에는 담당자명, 이메일, 전화번호, 회사명, 문의 내용 또는 문의 식별번호 등 문의자를 식별할 수 있는 정보를 전송하지 않습니다.
+          신규 문의를 관리자에게 신속히 알리기 위해 Discord 알림 서비스를 이용하며, 이때 회사명, 담당자명, 관심 분야, 문의 내용의 일부(앞부분 최대 20자)를 전송합니다. 이메일 주소, 전화번호, 문의 내용 전문, 문의 식별번호는 Discord로 전송하지 않습니다.
         </LegalP>
 
         <LegalH2>제5조 개인정보 처리업무의 위탁</LegalH2>
@@ -144,6 +146,13 @@ export default function Page() {
         <LegalUl>
           <li>위탁업무: 회사 공식 이메일 송수신 및 보관</li>
           <li>보유기간: 이메일 이용 목적 달성 또는 회사의 보유정책 및 서비스 계약 종료 시까지</li>
+        </LegalUl>
+
+        <LegalH3>Discord Inc.</LegalH3>
+        <LegalUl>
+          <li>위탁업무: 신규 문의 접수 알림 발송</li>
+          <li>처리정보: 회사명, 담당자명, 관심 분야, 문의 내용 일부(앞부분 최대 20자)</li>
+          <li>보유기간: Discord 채널 내 메시지 보관 정책에 따름(회사가 직접 관리하지 않음)</li>
         </LegalUl>
         <LegalP>회사는 위탁계약 및 서비스 이용 과정에서 개인정보가 안전하게 관리될 수 있도록 필요한 사항을 확인하고 관리합니다.</LegalP>
 
@@ -176,6 +185,16 @@ export default function Page() {
           <li>이용 목적: 웹사이트 콘텐츠 전송, 서비스 운영 및 보안</li>
           <li>보유기간: GitHub의 개인정보 보호정책 및 계약에서 정한 기간</li>
         </LegalUl>
+        <LegalH3>Discord Inc.</LegalH3>
+        <LegalUl>
+          <li>이전받는 자: Discord Inc.</li>
+          <li>주요 처리 국가: 미국 및 Discord의 글로벌 서비스 인프라 소재 국가</li>
+          <li>이전되는 개인정보: 회사명, 담당자명, 관심 분야, 문의 내용 일부(앞부분 최대 20자)</li>
+          <li>이전 시기 및 방법: 문의 접수 시 암호화된 네트워크를 통해 전송</li>
+          <li>이용 목적: 관리자에게 신규 문의 발생을 신속히 알리기 위함</li>
+          <li>보유기간: Discord 채널 내 메시지 보관 정책에 따름</li>
+        </LegalUl>
+
         <LegalP>정보주체는 개인정보의 국외 처리에 관한 문의를 회사 개인정보 보호책임자에게 할 수 있습니다.</LegalP>
 
         <LegalH2>제7조 개인정보의 파기</LegalH2>
@@ -240,6 +259,8 @@ export default function Page() {
           공고일: 2026년 9월 18일
           <br />
           시행일: 2026년 9월 18일
+          <br />
+          개정 이력 — V1.1(2026-09-18): 신규 문의 Discord 알림에 회사명·담당자명·관심 분야·문의 내용 일부(최대 20자)가 전송되는 사실을 반영해 제4조·제5조·제6조를 개정(이메일·전화번호·문의 내용 전문·문의 식별번호는 전송하지 않음). V1.0(2026-09-18)에서 변경.
         </LegalMeta>
       </article>
     </Scene>

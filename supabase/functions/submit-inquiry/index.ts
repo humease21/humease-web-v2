@@ -1,10 +1,12 @@
 // Supabase Edge Function: submit-inquiry
 // 흐름: 입력 검증 → DB INSERT(먼저) → Discord Webhook 시도 → 실패해도 사용자에게는 success
-// 2026-09-18: HUMEASE_DISCORD_WEBHOOK_URL secret 등록·실 문의 1건으로 종단 검증 완료
-// (discord_notification_status: sent, 테스트 행은 검증 직후 삭제). Discord Webhook 은
-// 내친구 케이(K-Bestie)와 같은 채널이지만 이름 "휴미즈(앱)" + HUMEASE 아이콘 아바타의
-// 별도 Webhook — 기존 K-Bestie DISCORD_WEBHOOK_URL secret 은 건드리지 않았다.
-// 필요 Secret: HUMEASE_DISCORD_WEBHOOK_URL, PRIVACY_POLICY_VERSION (없으면 기본값 'v1' 사용)
+// 2026-09-18: 개인정보처리방침/동의문 V1.1 개정에 맞춰 Discord embed 를 회사명/담당자명/
+// 관심 분야/문의 내용(앞 20자)/접수 시간으로 재구성(이전 버전은 비식별 요약 문구였다).
+// 이메일/전화번호/문의 전문/문의 id 는 여전히 전송하지 않는다.
+// Discord Webhook 은 내친구 케이(K-Bestie)와 같은 채널이지만 이름 "휴미즈(앱)" +
+// HUMEASE 아이콘 아바타의 별도 Webhook — 기존 K-Bestie DISCORD_WEBHOOK_URL secret 은
+// 건드리지 않았다.
+// 필요 Secret: HUMEASE_DISCORD_WEBHOOK_URL, PRIVACY_POLICY_VERSION(기본값 'v1.1')
 // SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY 는 Supabase가 Edge Function 런타임에 자동 주입한다.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2';
@@ -116,11 +118,9 @@ function validate(body: unknown, origin: string | null): { ok: true; data: Inqui
 
 /**
  * Discord 는 알림 채널일 뿐이다 — Source of Truth 는 DB.
- * 개인정보처리방침 제4조: "신규 문의 알림을 위해 사용하는 외부 메신저에는 담당자명, 이메일,
- * 전화번호, 회사명, 문의 내용 또는 문의 식별번호 등 문의자를 식별할 수 있는 정보를
- * 전송하지 않는다." company_name/contact_name/email/phone/message/id 는 어떤 것도
- * payload 에 넣지 않는다 — interest_area·접수 시간처럼 개인을 특정할 수 없는 값만 보낸다.
- * 상세는 관리자 페이지(RLS + Google OAuth 인증 뒤)에서 최신순으로 확인한다.
+ * 개인정보처리방침 V1.1 제4조: 회사명·담당자명·관심 분야·문의 내용 일부(앞부분 최대 20자)만
+ * 전송한다. 이메일·전화번호·문의 내용 전문·문의 식별번호(id)는 어떤 것도 payload 에 넣지
+ * 않는다 — email/phone/id 는 이 함수가 아예 받지도 않는다(타입에 없음).
  *
  * 이 채널은 내친구 케이(K-Bestie) 알림과 같은 Discord 채널을 쓰지만, Webhook 은
  * HUMEASE 전용(HUMEASE_DISCORD_WEBHOOK_URL)이다 — 이름 "휴미즈(앱)", HUMEASE
@@ -132,17 +132,33 @@ const KST_TIME_FORMAT = new Intl.DateTimeFormat('ko-KR', {
   hour: '2-digit', minute: '2-digit', hour12: false,
 });
 
-async function notifyDiscord(webhookUrl: string, inquiry: { interestArea?: string; createdAt: string }) {
+const MESSAGE_PREVIEW_MAX_CHARS = 20;
+
+/** 앞부분 최대 20자. 초과분은 "..." 로 생략한다(원문 전체를 Discord 로 보내지 않는다). */
+function previewMessage(message: string): string {
+  const chars = Array.from(message);
+  if (chars.length <= MESSAGE_PREVIEW_MAX_CHARS) return message;
+  return chars.slice(0, MESSAGE_PREVIEW_MAX_CHARS).join('') + '...';
+}
+
+async function notifyDiscord(webhookUrl: string, inquiry: {
+  companyName: string;
+  contactName: string;
+  interestArea?: string;
+  message: string;
+  createdAt: string;
+}) {
   const payload = {
     content: null,
     allowed_mentions: { parse: [] as string[] },
     embeds: [{
       title: 'HUMEASE 새 문의 접수',
-      description: '관리자 페이지(/admin/inquiries)에서 최신순으로 확인해 주세요.',
       color: 0xc7b99d,
       fields: [
-        { name: '유형', value: '홈페이지 문의', inline: true },
+        { name: '회사명', value: inquiry.companyName, inline: true },
+        { name: '담당자명', value: inquiry.contactName, inline: true },
         { name: '관심 분야', value: inquiry.interestArea ?? '미선택', inline: true },
+        { name: '문의 내용', value: previewMessage(inquiry.message), inline: false },
         { name: '접수 시간', value: `${KST_TIME_FORMAT.format(new Date(inquiry.createdAt))} (KST)`, inline: false },
       ],
     }],
@@ -179,7 +195,7 @@ Deno.serve(async (req) => {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const discordWebhookUrl = Deno.env.get('HUMEASE_DISCORD_WEBHOOK_URL');
-  const privacyPolicyVersion = Deno.env.get('PRIVACY_POLICY_VERSION') ?? 'v1';
+  const privacyPolicyVersion = Deno.env.get('PRIVACY_POLICY_VERSION') ?? 'v1.1';
 
   // service_role 로만 INSERT 한다 — anon 에게는 INSERT 정책조차 주지 않는다(마이그레이션 참고).
   const supabase = createClient(supabaseUrl, serviceRoleKey);
@@ -192,7 +208,7 @@ Deno.serve(async (req) => {
       privacy_consent_at: nowIso,
       privacy_policy_version: privacyPolicyVersion,
     })
-    .select('id, interest_area, created_at')
+    .select('id, company_name, contact_name, interest_area, message, created_at')
     .single();
 
   // DB 실패 — Discord 는 시도하지 않는다. 사용자에게는 error.
@@ -208,7 +224,13 @@ Deno.serve(async (req) => {
   let discordStatus: 'sent' | 'failed' | 'pending' = 'pending';
   if (discordWebhookUrl) {
     try {
-      await notifyDiscord(discordWebhookUrl, { interestArea: inserted.interest_area ?? undefined, createdAt: inserted.created_at });
+      await notifyDiscord(discordWebhookUrl, {
+        companyName: inserted.company_name,
+        contactName: inserted.contact_name,
+        interestArea: inserted.interest_area ?? undefined,
+        message: inserted.message,
+        createdAt: inserted.created_at,
+      });
       discordStatus = 'sent';
     } catch (err) {
       console.error('discord notify failed', err);
