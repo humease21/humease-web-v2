@@ -1,11 +1,9 @@
 // Supabase Edge Function: submit-inquiry
 // 흐름: 입력 검증 → DB INSERT(먼저) → Discord Webhook 시도 → 실패해도 사용자에게는 success
-// 2026-09-18: Discord 알림 payload 를 비식별화(개인정보처리방침 제4조). 이 변경은 로컬에만
-// 있고 아직 재배포되지 않았다 — 이 세션의 Supabase CLI 토큰이 이 프로젝트(cgydvjqhsllpeuxbephb)
-// 소속 조직이 아닌 다른 조직 계정으로 인증돼 있어 `supabase functions deploy`/Management API가
-// 전부 403 이다. 재배포 명령(올바른 계정으로 `supabase login` 후):
-//   supabase functions deploy submit-inquiry --project-ref cgydvjqhsllpeuxbephb
+// 2026-09-18: Discord 알림 payload 비식별화(개인정보처리방침 제4조) 재배포 완료(version 3).
 // 필요 Secret: HUMEASE_DISCORD_WEBHOOK_URL, PRIVACY_POLICY_VERSION (없으면 기본값 'v1' 사용)
+// HUMEASE_DISCORD_WEBHOOK_URL 은 2026-09-18 기준 아직 미설정 — 값이 없으면 discordStatus 는
+// 'pending' 으로 안전하게 스킵된다. 값 등록 시 별도 코드 변경 없이 바로 동작한다.
 // SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY 는 Supabase가 Edge Function 런타임에 자동 주입한다.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2';

@@ -7,13 +7,10 @@
 -- 에 대한 DELETE RLS 정책도 주지 않는다 — 기존 RLS(anon 전면 차단, admin 은 select/update만)
 -- 는 이 마이그레이션으로 바뀌지 않는다.
 --
--- 적용은 Supabase Management API(`/v1/projects/{ref}/database/query`)로 직접 수행한다.
--- 이 프로젝트는 다른 앱과 DB 를 공유하므로 `supabase db push` 를 쓰지 않는다.
---
--- 2026-09-18 기준 미적용: 이 세션의 Supabase 인증 토큰이 이 프로젝트(cgydvjqhsllpeuxbephb)가
--- 속한 조직이 아닌 다른 조직 계정으로 돼 있어 Management API 가 전부 403 이다.
--- 올바른 계정으로 `supabase login` 후 이 파일 SQL 을 Management API 또는
--- Supabase Dashboard → SQL Editor 에서 그대로 실행하면 된다.
+-- 적용은 Supabase Management API(`/v1/projects/{ref}/database/query`)로 직접 수행했다
+-- (2026-09-18). 이 프로젝트는 다른 앱과 DB 를 공유하므로 `supabase db push` 를 쓰지 않는다.
+-- pg_cron jobid 9, jobname 'humease_purge_expired_data' 로 등록 확인됨. 함수 EXECUTE 권한은
+-- service_role/postgres 뿐이며 anon/authenticated 에는 없음을 information_schema 로 확인.
 
 create extension if not exists pg_cron with schema extensions;
 
@@ -36,7 +33,7 @@ $$;
 revoke all on function public.humease_purge_expired_data() from public, anon, authenticated;
 
 select cron.schedule(
-  'humease-purge-expired-data',
+  'humease_purge_expired_data',
   '0 18 * * *', -- 매일 UTC 18:00 = KST 03:00
   $$select public.humease_purge_expired_data();$$
 );
