@@ -77,3 +77,11 @@ CLAUDE.md §4 의 독립 정적 리뷰(구현자와 리뷰어 분리)는 이 세
 ## 배포
 main 푸시 → GitHub Actions(deploy.yml) → GitHub Pages production.
 대표 지시서에 "Production까지 배포하고 QA 요청하라" 가 명시돼 승인으로 간주한다.
+
+## 게이트 — 동적 QA (사람 확인) 2026-09-24
+대표님이 직접 QA 수행, "QA 완료" 보고받음. 반려·지적 사항 없음.
+CLAUDE.md §4 의 "E2E 없으면 사람 확인을 기다린다" 조건 충족.
+dead-zone 체감(트랙 6%, 두 문구 모두 비는 구간)에 대한 조정 요청 없음 — 현재 설계 유지.
+
+## 상태
+done. queue 비어 있음, main == origin/main, production 반영 확인됨(www.humease.com).
