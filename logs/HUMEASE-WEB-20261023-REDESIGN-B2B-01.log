@@ -1,0 +1,27 @@
+작업: HUMEASE-WEB-20261023-REDESIGN-B2B-01 — 공개 홈페이지 UI/UX 전면 재설계
+착수: 2026-10-23 11:00 KST · 구현 Claude Code · 리뷰 Codex(read-only) · E2E agy(worktrees/redesign-e2e)
+브랜치: redesign/b2b-uiux-2026-10 (원격 보존) → main fast-forward
+배포: 2026-10-23 19:27 KST push dbc1163..b5da8c3 · 대표 승인("진행해") 후
+Actions: https://github.com/humease21/humease-web-v2/actions/runs/39939260488 — success (19:30)
+
+게이트
+- 정적: tsc·eslint PASS / verify 10종 + verify-entities PASS (preview·basePath·production 3조합)
+- 코드 리뷰(Codex): 1차 fail(major 모바일 메뉴 포커스 이탈) → 2차 fail(major 1차 조치 회귀: 폭 전환 시 inert 잔존)
+  → 3차 pass → 4차 pass → 5차 pass(minor 1 반영). 기록 docs/agent/reviews/redesign-b2b-uiux.md
+- E2E(agy 작성): 최종 30 pass / 3 skip(뷰포트 분기) / 0 fail, Claude 독립 재실행 동일. 기록 docs/agent/e2e/redesign-b2b-uiux.md
+  2차 실행에서 Shift+Tab 포커스 이탈 실제 결함 발견 → 수정 후 통과
+- 접근성: axe(wcag2a/aa·21a/aa) 21개 페이지 × PC·모바일 위반 0
+- 동적 QA: 대표 로컬 확인(이미지 배치 복원, 고지 띠 제거, 서비스 캡처 썸네일 요청 반영)
+
+배포 후 운영 확인(www.humease.com, 19:31~)
+- last-modified 2026-10-23 10:29:19 GMT, 공개 페이지·법률 페이지 200, 별칭 11개 200
+- meta robots index,follow · canonical 자기참조 · JSON-LD 출력 · sitemap 21건 (운영 색인 계약 유지)
+- Playwright 63샷(21개 페이지 × 3 뷰포트): 콘솔 오류 0, 실패 요청 0, 깨진 이미지 0, 가로 스크롤 0, h1 1개
+- 문의 폼: 운영 빌드에 Supabase 연결 포함 확인. 실제 제출 테스트는 운영 DB·Discord 에 기록되므로 수행하지 않음(미검증)
+
+실패·특이사항
+- agy 헤드리스 권한 거부(curl)·탐색 반복으로 무산출 2회(약 30만 토큰) — 권한 등록 후 새 세션으로 해결
+- Codex 사용량 한도로 1차 리뷰 약 2시간 지연
+- agy 사용량이 목표 10% 를 크게 초과 — docs/agent/usage.md 비율 점검 참조
+
+롤백: git revert 또는 dbc1163 기준 되돌림 커밋 push (main push = 즉시 재배포)
