@@ -1,7 +1,9 @@
-import { CinematicHero } from '@/components/brand/CinematicHero';
-import { Scene, Statement, NumberedScene } from '@/components/sections/Scene';
+import { PageHero } from '@/components/sections/PageHero';
+import { Section, SectionHeader } from '@/components/sections/Section';
+import { FeatureSplit } from '@/components/sections/FeatureSplit';
+import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { ClosingContact } from '@/components/sections/ClosingContact';
-import { Reveal } from '@/components/interactive/Reveal';
+import { RelatedLinks, relatedServices } from '@/components/sections/RelatedLinks';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
 import { metaForPath } from '@/content/search-pages';
@@ -17,51 +19,41 @@ const STEPS = [
 export default function Page() {
   return (
     <>
-      <CinematicHero
+      <PageHero
         eyebrow="기업 데이터"
-        titleKo={<>기업 데이터의 수명주기,<br />하나의 기준으로</>}
-        lead={
-          <>
-            보존·검색·접근·통제·조사까지
-            <br />
-            기업 데이터가 필요한 순간 제 역할을 할 수 있도록
-            <br />
-            정책과 시스템을 함께 설계합니다
-          </>
-        }
-        ctas={[{ label: '데이터 환경 상담', href: '/contact' }]}
+        title={<>기업 데이터의 수명주기,<br />하나의 기준으로</>}
+        lead={<>보존·검색·접근·통제·조사까지<br /> 기업 데이터가 필요한 순간 제 역할을 할 수 있도록<br className="hidden sm:inline" /> 정책과 시스템을 함께 설계합니다</>}
+        ctas={[{ label: '데이터 환경 상담', href: '/contact' }, { label: '전문 영역 보기', href: '#expertise', primary: false }]}
         image={assets.A04}
-        ambient="silver"
+        breadcrumbs={[{ name: '홈', href: '/' }, { name: '사업영역' }, { name: '기업 데이터', href: '/enterprise-data' }]}
       />
 
-      <NumberedScene
-        ordinal="01"
-        eyebrow="전문 영역"
-        titleKo="보존 · 통제 · 조사"
-        lead="어떤 제품을 쓸지보다, 어떤 문제를 해결할지가 먼저입니다."
-        capabilities={[
-          { title: 'e-Discovery', body: '조사와 분쟁 대응을 위한 데이터 검색·보존·검토' },
-          { title: '내부 통제', body: '커뮤니케이션 위험 탐지·검토·후속 조치' },
-          { title: 'Exchange 아카이빙', body: '메일 보존·검색·복원·운영 체계' },
-        ]}
-        cta={{ label: '검토 가능한 솔루션 보기', href: '/solutions' }}
-        image={assets.A05}
-        ambient="silver"
-      />
+      <Section id="expertise" labelledBy="ed-expertise-title">
+        <FeatureSplit
+          eyebrow="전문 영역"
+          headingId="ed-expertise-title"
+          title="보존 · 통제 · 조사"
+          lead="어떤 제품을 쓸지보다, 어떤 문제를 해결할지가 먼저입니다."
+          capabilities={[
+            { title: 'e-Discovery', body: '조사와 분쟁 대응을 위한 데이터 검색·보존·검토', icon: 'scale', href: '/consulting/e-discovery' },
+            { title: '내부 통제', body: '커뮤니케이션 위험 탐지·검토·후속 조치', icon: 'shield', href: '/consulting/internal-control' },
+            { title: 'Exchange 아카이빙', body: '메일 보존·검색·복원·운영 체계', icon: 'mail', href: '/consulting/exchange-archive' },
+          ]}
+          cta={{ label: '검토 가능한 솔루션 보기', href: '/solutions' }}
+          image={assets.A05}
+        />
+      </Section>
 
-      <Scene mask="none">
-        <Statement eyebrow="접근 방식" titleKo={<>진단에서,<br />안정적인 운영까지</>} />
-        <ul className="mt-12">
-          {STEPS.map((s, i) => (
-            <Reveal as="li" key={s.k} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
-              <h3 className="text-[24px] font-medium text-[var(--color-accent)] md:text-[30px]">{s.k}</h3>
-              <p className="lead">{s.v}</p>
-            </Reveal>
-          ))}
-        </ul>
-      </Scene>
+      <Section tone="alt" labelledBy="ed-approach-title">
+        <SectionHeader eyebrow="접근 방식" id="ed-approach-title" title={<>진단에서,<br />안정적인 운영까지</>} />
+        <div className="mt-10"><ProcessSteps steps={STEPS} /></div>
+      </Section>
 
-      <ClosingContact image={assets.A13} />
+      <Section tight>
+        <RelatedLinks title="전문 컨설팅 살펴보기" items={relatedServices('/enterprise-data')} />
+      </Section>
+
+      <ClosingContact />
     </>
   );
 }

@@ -6,10 +6,10 @@ import { Reveal } from '@/components/interactive/Reveal';
  */
 export function AnswerBlock({ term, definition }: { term: string; definition: React.ReactNode }) {
   return (
-    <div className="measure">
+    <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-6 md:p-10">
       <Reveal as="p" className="eyebrow">{term}</Reveal>
       <Reveal delay={1}>
-        <p className="mt-6 text-[18px] leading-[1.75] text-[var(--color-text)] md:text-[21px]">
+        <p className="mt-4 text-[19px] font-medium leading-[1.7] text-[var(--color-text)] md:text-[22px]">
           {definition}
         </p>
       </Reveal>

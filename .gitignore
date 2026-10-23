@@ -24,3 +24,8 @@ C:*
 
 # Supabase CLI 로컬 링크 상태(pooler URL 등 연결 정보 포함) — 커밋하지 않는다
 supabase/.temp/
+
+# 리디자인 원본 전체 캡처(PNG, 수십 MB) — 저장소에는 압축 비교본(docs/agent/redesign/compare)만 둔다
+docs/agent/redesign/before/
+docs/agent/redesign/after/
+docs/agent/redesign/e2e-shots/

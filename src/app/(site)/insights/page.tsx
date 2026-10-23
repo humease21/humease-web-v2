@@ -1,7 +1,8 @@
-import { CinematicHero } from '@/components/brand/CinematicHero';
-import { Scene } from '@/components/sections/Scene';
+import { PageHero } from '@/components/sections/PageHero';
+import { Section } from '@/components/sections/Section';
 import { InsightsEditorial, type Article } from '@/components/sections/InsightsEditorial';
 import { ClosingContact } from '@/components/sections/ClosingContact';
+import { RelatedLinks, SERVICE_LINKS } from '@/components/sections/RelatedLinks';
 import { assets } from '@/content/assets';
 import { pageMeta } from '@/lib/seo';
 import { metaForPath } from '@/content/search-pages';
@@ -14,17 +15,19 @@ const articles: Article[] = [];
 export default function Page() {
   return (
     <>
-      <CinematicHero
+      <PageHero
         eyebrow="인사이트"
-        titleKo={<>Enterprise Data와<br />AX의 현장</>}
-        lead={<>기업 데이터, 컴플라이언스, AI 전환 과정에서<br />마주하는 기술과 운영의 문제를 다룹니다</>}
+        title={<>Enterprise Data와<br />AX의 현장</>}
+        lead={<>기업 데이터, 컴플라이언스, AI 전환 과정에서<br className="hidden sm:inline" /> 마주하는 기술과 운영의 문제를 다룹니다</>}
         image={assets.A03}
-        ambient="silver"
-        align="center"
+        breadcrumbs={[{ name: '홈', href: '/' }, { name: '인사이트', href: '/insights' }]}
       />
-      <Scene mask="none">
+      <Section>
         <InsightsEditorial articles={articles} />
-      </Scene>
+      </Section>
+      <Section tone="alt" tight>
+        <RelatedLinks title="사업영역 살펴보기" items={SERVICE_LINKS.slice(0, 4)} />
+      </Section>
       <ClosingContact />
     </>
   );

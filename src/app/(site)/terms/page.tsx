@@ -1,4 +1,4 @@
-import { Scene } from '@/components/sections/Scene';
+
 import { LegalH2, LegalMeta, LegalOl, LegalP } from '@/components/legal/LegalProse';
 import { pageMeta } from '@/lib/seo';
 import { metaForPath } from '@/content/search-pages';
@@ -11,10 +11,10 @@ export const metadata = pageMeta({ ...metaForPath('/terms'), path: '/terms' });
  */
 export default function Page() {
   return (
-    <Scene mask="none">
-      <article className="measure">
+    <div className="section">
+      <article className="shell max-w-[860px]">
         <p className="eyebrow">이용약관</p>
-        <h1 className="title-ko-sm mt-6">홈페이지 이용약관</h1>
+        <h1 className="display-page mt-4">홈페이지 이용약관</h1>
         <LegalMeta>시행일: 2026년 9월 18일</LegalMeta>
 
         <LegalH2>제1조 목적</LegalH2>
@@ -108,6 +108,6 @@ export default function Page() {
           본 약관은 2026년 9월 18일부터 시행합니다.
         </LegalMeta>
       </article>
-    </Scene>
+    </div>
   );
 }

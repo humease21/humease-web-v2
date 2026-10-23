@@ -1,65 +1,49 @@
 import { Reveal } from '@/components/interactive/Reveal';
+import { stagger } from '@/lib/stagger';
 import { company } from '@/content/company';
+import { Arrow } from '@/components/ui/Icon';
 import { A } from '@/components/ui/Link';
 
 export type Article = {
   title: string; date: string; category: string; href: string; summary: string; image?: string;
 };
 
-/**
- * premium editorial/magazine 스타일. 3-card SaaS 레이아웃을 쓰지 않는다.
- * 실제 글이 없으면 dummy article 을 만들지 않는다(docs/03 P12).
- */
-export function InsightsEditorial({ articles, compact }: { articles: Article[]; compact?: boolean }) {
+/** 실제 글이 없으면 dummy article 을 만들지 않는다(docs/03 P12). 블로그로 안내하는 배너만 둔다. */
+export function InsightsEditorial({ articles }: { articles: Article[] }) {
   if (articles.length === 0) {
     return (
-      <div className={compact ? '' : 'max-w-[820px]'}>
-        <Reveal as="p" className="eyebrow">인사이트</Reveal>
-        <Reveal delay={1} slow>
-          <h2 className="title-ko mt-6">기술에서,<br />실제 적용까지</h2>
-        </Reveal>
-        <Reveal delay={2}>
-          <p className="lead measure mt-8">
-            기업 데이터 관리와 AX 전환에 따른 휴미즈 컨설팅을 만나보세요
-          </p>
-        </Reveal>
+      <div className="grid gap-8 rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-6 md:p-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-12">
+        <div>
+          <Reveal as="p" className="eyebrow">인사이트</Reveal>
+          <Reveal delay={1}><h2 className="heading-xl mt-4">기술에서,<br />실제 적용까지</h2></Reveal>
+          <Reveal delay={2}>
+            <p className="lead mt-5">기업 데이터 관리와 AX 전환에 따른 휴미즈 컨설팅을 만나보세요</p>
+          </Reveal>
+        </div>
         <Reveal delay={3}>
-          <p className="lead measure mt-5">
-            휴미즈 블로그에서 다양한 뉴스와 AI 정보들을 확인하실 수 있습니다
-          </p>
-        </Reveal>
-        <Reveal delay={4}>
-          <A href={company.blogUrl} target="_blank" rel="noopener noreferrer" className="cta-ghost mt-10">
-            휴미즈 블로그 보기<span aria-hidden="true">↗</span>
-          </A>
+          <div>
+            <p className="body">휴미즈 블로그에서 다양한 뉴스와 AI 정보들을 확인하실 수 있습니다</p>
+            <A href={company.blogUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-6">
+              휴미즈 블로그 보기<Arrow external /><span className="sr-only">(새 탭에서 열림)</span>
+            </A>
+          </div>
         </Reveal>
       </div>
     );
   }
 
-  const [lead, ...rest] = articles;
   return (
     <div>
       <Reveal as="p" className="eyebrow">인사이트</Reveal>
-      <article className="mt-10 border-t border-[color-mix(in_srgb,var(--color-line)_55%,transparent)] pt-10">
-        <Reveal>
-          <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--color-accent)]">
-            {lead.category} · {lead.date}
-          </p>
-          <A href={lead.href} className="mt-4 block title-ko-sm hover:text-[var(--color-accent)]">{lead.title}</A>
-          <p className="lead measure mt-5">{lead.summary}</p>
-        </Reveal>
-      </article>
-      {rest.length > 0 && (
-        <ul className="mt-4">
-          {rest.map((a, i) => (
-            <Reveal as="li" key={a.href} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
-              <p className="text-[12px] uppercase tracking-[0.16em] text-[var(--color-muted)]">{a.category} · {a.date}</p>
-              <A href={a.href} className="text-[17px] font-medium hover:text-[var(--color-accent)]">{a.title}</A>
-            </Reveal>
-          ))}
-        </ul>
-      )}
+      <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((a, i) => (
+          <Reveal as="li" key={a.href} delay={stagger(i)} className="card card-link">
+            <p className="caption">{a.category} · {a.date}</p>
+            <h3 className="heading-md mt-2"><A href={a.href} className="stretched">{a.title}</A></h3>
+            <p className="body-sm mt-3">{a.summary}</p>
+          </Reveal>
+        ))}
+      </ul>
     </div>
   );
 }

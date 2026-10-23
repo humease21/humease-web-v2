@@ -28,18 +28,18 @@ export function LegacyRedirect({ to, label }: { to: string; label: string }) {
       {/* Metadata API 에 http-equiv 가 없어 이것만 raw 로 둔다. React 19 가 head 로 호이스팅한다. */}
       <meta httpEquiv="refresh" content={`0; url=${target}`} />
 
-      <main className="flex min-h-[70svh] items-center">
-        <div className="shell w-full">
+      <div className="flex min-h-[60svh] items-center">
+        <div className="shell section w-full">
           <p className="eyebrow">페이지가 이동했습니다</p>
-          <h1 className="title-ko mt-6">{label} 페이지로 이동합니다.</h1>
-          <p className="lead measure mt-7">
+          <h1 className="display-page mt-4">{label} 페이지로 이동합니다.</h1>
+          <p className="lead measure mt-5">
             자동으로 이동하지 않으면 아래 링크를 눌러 주세요.
           </p>
-          <A href={to} className="cta-primary mt-11">
+          <A href={to} className="btn btn-primary mt-9">
             {label} 바로가기<span aria-hidden="true">→</span>
           </A>
         </div>
-      </main>
+      </div>
     </>
   );
 }

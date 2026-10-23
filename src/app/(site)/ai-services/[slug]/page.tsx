@@ -1,7 +1,10 @@
 import { notFound } from 'next/navigation';
-import { CinematicHero } from '@/components/brand/CinematicHero';
-import { Scene, Statement } from '@/components/sections/Scene';
+import { PageHero } from '@/components/sections/PageHero';
+import { Section } from '@/components/sections/Section';
+import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
+import { stagger } from '@/lib/stagger';
+import { Arrow } from '@/components/ui/Icon';
 import { assets } from '@/content/assets';
 import { publishedProjects, projectBySlug } from '@/content/portfolio';
 import { pageMeta } from '@/lib/seo';
@@ -72,8 +75,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 function Block({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="cap-row">
-      <h2 className="text-[15px] font-semibold tracking-[-0.005em] text-[var(--color-text)]">{title}</h2>
+    <div className="def-row">
+      <h2 className="heading-md">{title}</h2>
       <div className="space-y-3">{children}</div>
     </div>
   );
@@ -89,6 +92,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const copy = detailCopy[p.slug];
 
   const path = `/ai-services/${p.slug}`;
+  const ctaLabel = isMomIe ? '맘이음 협업 문의' : '협업 문의';
+  const external = p.externalUrl && p.externalLinkVerifiedAt ? p.externalUrl : null;
 
   return (
     <>
@@ -104,61 +109,69 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         ]),
         creativeWorkNode({ name: p.name, description: p.summary, path }),
       ]} />
-      <CinematicHero
-        eyebrow="휴미즈 AI 프로젝트"
+      <PageHero
+        eyebrow={`휴미즈 AI 프로젝트 · ${p.category}`}
         badge={p.stage ?? undefined}
-        titleKo={p.name}
+        title={p.name}
         lead={copy ? copy.lead : p.summary}
+        ctas={[
+          { label: ctaLabel, href: '/contact' },
+          ...(external ? [{ label: '서비스 방문', href: external, primary: false }] : []),
+        ]}
         image={cover}
-        ambient={isMomIe ? 'warm' : 'cool'}
+        focus="68% 50%"
+        breadcrumbs={[{ name: '홈', href: '/' }, { name: 'AI 포트폴리오', href: '/ai-services' }, { name: p.name, href: path }]}
       />
 
       {copy && (
-        <Scene mask="none" ambient={isMomIe ? 'warm' : 'cool'}>
-          <Statement titleKo={copy.headline} />
-        </Scene>
+        <Section tone="alt" tight>
+          <Reveal><p className="heading-xl">{copy.headline}</p></Reveal>
+        </Section>
       )}
 
       {p.highlights.length > 0 && (
-        <Scene mask="none">
-          <ul>
+        <Section>
+          <ul className="grid gap-4 md:grid-cols-3">
             {p.highlights.map((h, i) => (
-              <Reveal as="li" key={h.title} delay={((i % 3) + 1) as 1 | 2 | 3} className="cap-row">
-                <h2 className="title-ko-sm">{h.title}</h2>
-                <p className="lead">{h.body}</p>
+              <Reveal as="li" key={h.title} delay={stagger(i)} className="card">
+                <h2 className="heading-lg">{h.title}</h2>
+                <p className="body mt-3">{h.body}</p>
               </Reveal>
             ))}
           </ul>
-        </Scene>
+        </Section>
       )}
 
       {p.principle && (
-        <Scene mask="none">
-          <Reveal as="h2" className="title-ko">{p.principle.title}</Reveal>
-          <Reveal delay={1}><p className="lead measure mt-8">{p.principle.body}</p></Reveal>
-        </Scene>
+        <Section tone="alt">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
+            <Reveal as="h2" className="heading-xl">{p.principle.title}</Reveal>
+            <Reveal delay={1}><p className="lead lg:pt-2">{p.principle.body}</p></Reveal>
+          </div>
+        </Section>
       )}
 
-      <Scene mask="none">
+      <Section labelledBy="story-title">
         <Reveal as="p" className="eyebrow">프로젝트 이야기</Reveal>
-        <div className="mt-10">
+        <h2 id="story-title" className="sr-only">프로젝트 이야기</h2>
+        <div className="mt-8">
           <Block title={copy ? copy.problem : '어떤 문제에서 시작했나요?'}>
-            {p.problem.map((t) => <p key={t} className="lead">{t}</p>)}
+            {p.problem.map((t) => <p key={t} className="body">{t}</p>)}
           </Block>
 
           <Block title={copy ? copy.solution : '어떻게 풀었나요?'}>
-            {p.approach.map((t) => <p key={t} className="lead">{t}</p>)}
+            {p.approach.map((t) => <p key={t} className="body">{t}</p>)}
           </Block>
 
           {(p.implementedFeatures.length > 0 || p.plannedFeatures.length > 0) && (
             <Block title="무엇을 구현했나요?">
               {p.implementedFeatures.length > 0 && (
-                <ul className="space-y-2">{p.implementedFeatures.map((t) => <li key={t} className="lead">· {t}</li>)}</ul>
+                <ul className="list-disc space-y-2 pl-5 marker:text-[var(--color-muted)]">{p.implementedFeatures.map((t) => <li key={t} className="body">{t}</li>)}</ul>
               )}
               {p.plannedFeatures.length > 0 && (
                 <div className="pt-2">
-                  <p className="text-[13px] uppercase tracking-[0.16em] text-[var(--color-muted)]">계획</p>
-                  <ul className="mt-2 space-y-2">{p.plannedFeatures.map((t) => <li key={t} className="lead">· {t}</li>)}</ul>
+                  <p className="text-[14px] font-semibold text-[var(--color-brand-ink)]">계획</p>
+                  <ul className="mt-2 list-disc space-y-2 pl-5 marker:text-[var(--color-muted)]">{p.plannedFeatures.map((t) => <li key={t} className="body">{t}</li>)}</ul>
                 </div>
               )}
             </Block>
@@ -166,47 +179,47 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
           {p.aiRole.length > 0 && (
             <Block title="AI는 어디에서 작동하나요?">
-              {p.aiRole.map((t) => <p key={t} className="lead">{t}</p>)}
+              {p.aiRole.map((t) => <p key={t} className="body">{t}</p>)}
             </Block>
           )}
 
           {p.validationNotes.length > 0 && (
             <Block title="어떻게 검증하고 있나요?">
-              {p.validationNotes.map((t) => <p key={t} className="lead">{t}</p>)}
+              {p.validationNotes.map((t) => <p key={t} className="body">{t}</p>)}
             </Block>
           )}
 
           {(p.contribution || p.operatorLabel) && (
             <Block title="휴미즈의 역할">
-              {p.contribution && <p className="lead">{p.contribution}</p>}
-              {p.operatorLabel && <p className="text-[14px] text-[var(--color-muted)]">{p.operatorLabel}</p>}
+              {p.contribution && <p className="body">{p.contribution}</p>}
+              {p.operatorLabel && <p className="caption">{p.operatorLabel}</p>}
             </Block>
           )}
 
           {(p.currentStageNote || (p.stage && p.stageVerifiedAt)) && (
             <Block title="현재 단계">
-              {p.currentStageNote && <p className="lead">{p.currentStageNote}</p>}
+              {p.currentStageNote && <p className="body">{p.currentStageNote}</p>}
               {p.stage && p.stageVerifiedAt && (
-                <p className="text-[14px] text-[var(--color-muted)]">단계 확인일: {p.stageVerifiedAt}</p>
+                <p className="caption">단계 확인일: {p.stageVerifiedAt}</p>
               )}
             </Block>
           )}
         </div>
 
-        <Reveal delay={3}>
-          <div className="mt-14 flex flex-wrap items-center gap-x-10 gap-y-4">
-            <A href="/contact" className="cta-primary">
-              {isMomIe ? '맘이음 협업 문의' : '협업 문의'}<span aria-hidden="true">→</span>
-            </A>
-            {p.externalUrl && p.externalLinkVerifiedAt && (
-              <A href={p.externalUrl} target="_blank" rel="noopener noreferrer" className="cta-ghost">
-                서비스 방문<span aria-hidden="true">↗</span><span className="sr-only">(새 탭에서 열림)</span>
+        <Reveal>
+          <div className="mt-12 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <A href="/contact" className="btn btn-primary">{ctaLabel}<Arrow /></A>
+            {external && (
+              <A href={external} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                서비스 방문<Arrow external /><span className="sr-only">(새 탭에서 열림)</span>
               </A>
             )}
-            <A href="/ai-services" className="cta-ghost">AI 포트폴리오</A>
+            <A href="/ai-services" className="link-arrow sm:ml-3">AI 포트폴리오 전체 보기<Arrow /></A>
           </div>
         </Reveal>
-      </Scene>
+      </Section>
+
+      <ClosingContact />
     </>
   );
 }

@@ -1,0 +1,204 @@
+# redesign-b2b-uiux 코드 지도
+
+갱신 2026-10-23 · 브랜치 redesign/b2b-uiux-2026-10 · 형식: `파일:라인 — 설명`
+
+## 디자인 토큰·전역
+- src/app/globals.css:8 — @theme {
+- src/app/globals.css:42 — body:has(> .theme-site) { background-color: #FAFAF8; }
+- src/app/globals.css:58 — [data-reveal] { opacity: 1 !important; transform: none !important; }
+- src/app/globals.css:65 — .theme-site {
+- src/app/globals.css:85 — .on-dark {
+- src/app/globals.css:104 — .shell {
+- src/app/globals.css:116 — .section { padding-block: 72px; }
+- src/app/globals.css:122 — .section + .section:not(.section-alt):not(.on-dark) { border-top: 1px solid var(--color-line); }
+- src/app/globals.css:125 — .eyebrow {
+- src/app/globals.css:144 — .display-hero {
+- src/app/globals.css:150 — .display-page {
+- src/app/globals.css:156 — .heading-xl {
+- src/app/globals.css:176 — .lead {
+- src/app/globals.css:199 — .btn {
+- src/app/globals.css:215 — .btn .btn-arrow { transition: transform 180ms ease; }
+- src/app/globals.css:217 — .btn-primary { background: var(--color-text); color: var(--color-bg); }
+- src/app/globals.css:219 — .on-dark .btn-primary { background: var(--color-brand); color: var(--color-on-brand); }
+- src/app/globals.css:220 — .on-dark .btn-primary:hover { background: #D8CDB6; }
+- src/app/globals.css:221 — .btn-secondary { background: transparent; color: var(--color-text); border-color: var(--color-line-strong); }
+- src/app/globals.css:227 — .link-arrow {
+- src/app/globals.css:242 — .link-arrow .btn-arrow { transition: transform 180ms ease; }
+- src/app/globals.css:246 — .card {
+- src/app/globals.css:259 — .card-link .stretched::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+- src/app/globals.css:261 — .media {
+- src/app/globals.css:267 — .media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+- src/app/globals.css:269 — .icon-tile {
+- src/app/globals.css:279 — .card .icon-tile { background: var(--color-bg); }
+- src/app/globals.css:322 — .field-control {
+- src/app/globals.css:342 — .admin-ui {
+- src/app/globals.css:348 — [data-reveal] {
+- src/app/layout.tsx:2 — import localFont from 'next/font/local';
+- src/app/layout.tsx:13 — const notoSansKr = localFont({
+- src/app/layout.tsx:17 — weight: '400 700',
+- src/app/(site)/layout.tsx:5 — /** 공개 사이트 공통 레이아웃. `.theme-site` 가 라이트 팔레트 토큰을 적용한다(DESIGN.
+- src/app/(site)/layout.tsx:8 — <div className="theme-site flex min-h-screen flex-col">
+
+## 공통 컴포넌트
+- src/components/sections/ClosingContact.tsx:7 — export function ClosingContact({
+- src/components/sections/ExperienceScene.tsx:21 — export function ExperienceScene({ aboutCopy }: { aboutCopy?: boolean } = {}) {
+- src/components/sections/FeatureSplit.tsx:8 — export type Capability = { title: string; body: string; icon?: IconName; href?: string };
+- src/components/sections/FeatureSplit.tsx:14 — export function FeatureSplit({
+- src/components/sections/InsightsEditorial.tsx:7 — export type Article = {
+- src/components/sections/InsightsEditorial.tsx:12 — export function InsightsEditorial({ articles }: { articles: Article[] }) {
+- src/components/sections/PageHero.tsx:11 — export type Crumb = { name: string; href?: string };
+- src/components/sections/PageHero.tsx:17 — export function PageHero({
+- src/components/sections/PortfolioList.tsx:13 — export function PortfolioList({ items, columns = 3 }: { items: Project[]; columns?: 2 | 3 }) {
+- src/components/sections/ProcessSteps.tsx:5 — export function ProcessSteps({ steps }: { steps: { k: string; v?: string }[] }) {
+- src/components/sections/RelatedLinks.tsx:7 — export function RelatedLinks({ title = '함께 살펴보기', items }: {
+- src/components/sections/RelatedLinks.tsx:30 — export const SERVICE_LINKS = [
+- src/components/sections/RelatedLinks.tsx:39 — export const relatedServices = (current: string) => SERVICE_LINKS.filter((l) => l.href !== current).slice(0, 4
+- src/components/sections/Section.tsx:8 — export function Section({
+- src/components/sections/Section.tsx:27 — export function SectionHeader({
+- src/components/sections/Section.tsx:77 — export function Statement({
+- src/components/templates/ConsultingPage.tsx:16 — export function ConsultingPage({
+- src/components/content/AnswerBlock.tsx:7 — export function AnswerBlock({ term, definition }: { term: string; definition: React.ReactNode }) {
+- src/components/content/NoticeBar.tsx:4 — export function NoticeBar({ children }: { children: React.ReactNode }) {
+- src/components/content/QuestionList.tsx:10 — export function QuestionList({
+- src/components/content/SourceNotes.tsx:9 — export function SourceNotes({
+- src/components/layout/LegacyRedirect.tsx:10 — export const legacyMetadata = (to: string): Metadata => ({
+- src/components/layout/LegacyRedirect.tsx:24 — export function LegacyRedirect({ to, label }: { to: string; label: string }) {
+- src/components/layout/SiteFooter.tsx:10 — export function SiteFooter() {
+- src/components/layout/SiteHeader.tsx:10 — export function SiteHeader() {
+- src/components/interactive/HeaderShell.tsx:6 — export function HeaderShell({ children }: { children: React.ReactNode }) {
+- src/components/interactive/MobileNav.tsx:16 — export function MobileNav() {
+- src/components/interactive/NavDropdown.tsx:14 — export function NavDropdown({ label, items }: { label: string; items: NavChild[] }) {
+- src/components/interactive/NavLink.tsx:7 — export function isActivePath(pathname: string | null, href: string) {
+- src/components/interactive/NavLink.tsx:13 — export function NavLink({ href, children, className }: { href: string; children: React.ReactNode; className?: 
+- src/components/interactive/Reveal.tsx:9 — export function Reveal({
+- src/components/ui/Icon.tsx:5 — export type IconName =
+- src/components/ui/Icon.tsx:33 — export function Icon({ name, size = 22, className, strokeWidth = 1.6 }: {
+- src/components/ui/Icon.tsx:48 — export function Arrow({ external }: { external?: boolean }) {
+- src/components/ui/Link.tsx:10 — export function A({
+- src/components/ui/Modal.tsx:13 — export function Modal({
+- src/lib/stagger.ts:2 — export const stagger = (i: number) => ((i % 4) + 1) as 1 | 2 | 3 | 4;
+- src/content/navigation.ts:1 — export type NavChild = { label: string; href: string; description?: string };
+- src/content/navigation.ts:2 — export type NavItem = { label: string; href: string; children?: NavChild[] };
+- src/content/navigation.ts:9 — export const primaryNav: NavItem[] = [
+- src/content/navigation.ts:11 — label: '사업영역',
+- src/content/navigation.ts:14 — { label: '기업 데이터', href: '/enterprise-data', description: '보존·검색·접근·통제·조사까
+- src/content/navigation.ts:15 — { label: 'e-Discovery', href: '/consulting/e-discovery', description: '조사·감사·분쟁 대응 체계' }
+- src/content/navigation.ts:16 — { label: '내부 통제', href: '/consulting/internal-control', description: '커뮤니케이션 위험 탐지
+- src/content/navigation.ts:17 — { label: 'Exchange 아카이빙', href: '/consulting/exchange-archive', description: '메일 보존·검색·�
+- src/content/navigation.ts:18 — { label: 'AI 서비스', href: '/consulting/ai-transformation', description: 'AI 서비스 설계·자동화·
+- src/content/navigation.ts:22 — label: 'Arctera 솔루션',
+- src/content/navigation.ts:25 — { label: 'Arctera 솔루션 전체', href: '/solutions', description: 'Capture에서, Compliance까지' },
+- src/content/navigation.ts:26 — { label: 'Enterprise Vault Complete', href: '/solutions/enterprise-vault' },
+- src/content/navigation.ts:27 — { label: 'Enterprise Vault Capture', href: '/solutions/enterprise-vault-capture' },
+- src/content/navigation.ts:28 — { label: 'Data Insight', href: '/solutions/data-insight' },
+- src/content/navigation.ts:29 — { label: 'eDiscovery Platform', href: '/solutions/ediscovery-platform' },
+- src/content/navigation.ts:32 — { label: 'AI 포트폴리오', href: '/ai-services' },
+- src/content/navigation.ts:33 — { label: '인사이트', href: '/insights' },
+- src/content/navigation.ts:34 — { label: '회사소개', href: '/about' },
+- src/content/navigation.ts:37 — export const primaryCta = { label: '프로젝트 문의', href: '/contact' } as const;
+- src/content/navigation.ts:43 — export const staticPublicRoutes = [
+
+## 페이지
+- src/app/(site)/about/page.tsx:28 — <PageHero
+- src/app/(site)/about/page.tsx:38 — <Section>
+- src/app/(site)/about/page.tsx:49 — <Section tone="alt">
+- src/app/(site)/about/page.tsx:70 — <Section>
+- src/app/(site)/about/page.tsx:82 — <ExperienceScene aboutCopy />
+- src/app/(site)/about/page.tsx:84 — <Section tight>
+- src/app/(site)/about/page.tsx:105 — <ClosingContact />
+- src/app/(site)/ai-services/[slug]/page.tsx:112 — <PageHero
+- src/app/(site)/ai-services/[slug]/page.tsx:127 — <Section tone="alt" tight>
+- src/app/(site)/ai-services/[slug]/page.tsx:133 — <Section>
+- src/app/(site)/ai-services/[slug]/page.tsx:146 — <Section tone="alt">
+- src/app/(site)/ai-services/[slug]/page.tsx:154 — <Section labelledBy="story-title">
+- src/app/(site)/ai-services/[slug]/page.tsx:222 — <ClosingContact />
+- src/app/(site)/ai-services/page.tsx:26 — <PageHero
+- src/app/(site)/ai-services/page.tsx:35 — <Section id="projects" labelledBy="projects-title">
+- src/app/(site)/ai-services/page.tsx:37 — <div className="mt-10"><PortfolioList items={items} columns={2} /></div>
+- src/app/(site)/ai-services/page.tsx:45 — <ClosingContact
+- src/app/(site)/consulting/ai-transformation/page.tsx:25 — <PageHero
+- src/app/(site)/consulting/ai-transformation/page.tsx:34 — <Section labelledBy="offer-title">
+- src/app/(site)/consulting/ai-transformation/page.tsx:35 — <FeatureSplit
+- src/app/(site)/consulting/ai-transformation/page.tsx:49 — <Section tone="alt" labelledBy="ai-process-title">
+- src/app/(site)/consulting/ai-transformation/page.tsx:60 — <Section labelledBy="ai-portfolio-title">
+- src/app/(site)/consulting/ai-transformation/page.tsx:85 — <Section tone="alt" tight>
+- src/app/(site)/consulting/ai-transformation/page.tsx:86 — <RelatedLinks items={relatedServices(PATH)} />
+- src/app/(site)/consulting/ai-transformation/page.tsx:89 — <ClosingContact />
+- src/app/(site)/consulting/e-discovery/page.tsx:10 — <ConsultingPage
+- src/app/(site)/consulting/exchange-archive/page.tsx:10 — <ConsultingPage
+- src/app/(site)/consulting/internal-control/page.tsx:10 — <ConsultingPage
+- src/app/(site)/contact/page.tsx:61 — <PageHero
+- src/app/(site)/contact/page.tsx:69 — <Section>
+- src/app/(site)/contact/page.tsx:89 — <PageHero
+- src/app/(site)/enterprise-data/page.tsx:22 — <PageHero
+- src/app/(site)/enterprise-data/page.tsx:31 — <Section id="expertise" labelledBy="ed-expertise-title">
+- src/app/(site)/enterprise-data/page.tsx:32 — <FeatureSplit
+- src/app/(site)/enterprise-data/page.tsx:47 — <Section tone="alt" labelledBy="ed-approach-title">
+- src/app/(site)/enterprise-data/page.tsx:52 — <Section tight>
+- src/app/(site)/enterprise-data/page.tsx:53 — <RelatedLinks title="전문 컨설팅 살펴보기" items={relatedServices('/enterprise-data')} />
+- src/app/(site)/enterprise-data/page.tsx:56 — <ClosingContact />
+- src/app/(site)/insights/page.tsx:18 — <PageHero
+- src/app/(site)/insights/page.tsx:25 — <Section>
+- src/app/(site)/insights/page.tsx:28 — <Section tone="alt" tight>
+- src/app/(site)/insights/page.tsx:29 — <RelatedLinks title="사업영역 살펴보기" items={SERVICE_LINKS.slice(0, 4)} />
+- src/app/(site)/insights/page.tsx:31 — <ClosingContact />
+- src/app/(site)/page.tsx:48 — <PageHero
+- src/app/(site)/page.tsx:63 — <Section id="business" tight labelledBy="areas-title">
+- src/app/(site)/page.tsx:78 — <Section tone="alt" labelledBy="why-title">
+- src/app/(site)/page.tsx:106 — <Section labelledBy="enterprise-data-title">
+- src/app/(site)/page.tsx:107 — <FeatureSplit
+- src/app/(site)/page.tsx:125 — <Section tone="alt" tight labelledBy="arctera-title">
+- src/app/(site)/page.tsx:150 — <Section labelledBy="ai-service-title">
+- src/app/(site)/page.tsx:151 — <FeatureSplit
+- src/app/(site)/page.tsx:170 — <Section tone="alt" labelledBy="process-title">
+- src/app/(site)/page.tsx:176 — <Section labelledBy="portfolio-title">
+- src/app/(site)/page.tsx:185 — <div className="mt-10 md:mt-12"><PortfolioList items={featuredProjects(3)} /></div>
+- src/app/(site)/page.tsx:188 — <ExperienceScene />
+- src/app/(site)/page.tsx:191 — <Section>
+- src/app/(site)/page.tsx:192 — <QuestionList
+- src/app/(site)/page.tsx:206 — <Section tone="alt" tight>
+- src/app/(site)/page.tsx:210 — <ClosingContact />
+- src/app/(site)/privacy/page.tsx:20 — <h1 className="display-page mt-4">개인정보처리방침</h1>
+- src/app/(site)/solutions/[slug]/page.tsx:83 — <PageHero
+- src/app/(site)/solutions/[slug]/page.tsx:91 — <NoticeBar>휴미즈는 Arctera의 공식 파트너가 아닙니다. 제품명과 상표는 각 권리자에�
+- src/app/(site)/solutions/[slug]/page.tsx:93 — <Section>
+- src/app/(site)/solutions/[slug]/page.tsx:103 — <Section id="features" tone="alt" labelledBy="features-title">
+- src/app/(site)/solutions/[slug]/page.tsx:130 — <Section labelledBy="review-title">
+- src/app/(site)/solutions/[slug]/page.tsx:155 — <Section tone="alt">
+- src/app/(site)/solutions/[slug]/page.tsx:156 — <QuestionList items={p.faq} />
+- src/app/(site)/solutions/[slug]/page.tsx:160 — <Section tight>
+- src/app/(site)/solutions/[slug]/page.tsx:161 — <RelatedLinks title="관련 페이지" items={p.related} />
+- src/app/(site)/solutions/[slug]/page.tsx:172 — <ClosingContact ctaLabel={p.ctaLabel} />
+- src/app/(site)/solutions/page.tsx:40 — <PageHero
+- src/app/(site)/solutions/page.tsx:51 — <NoticeBar>휴미즈는 Arctera의 공식 파트너가 아닙니다. 이 영역은 제품 정보와 기술 검
+- src/app/(site)/solutions/page.tsx:53 — <Section>
+- src/app/(site)/solutions/page.tsx:67 — <Section tone="alt" labelledBy="challenges-title">
+- src/app/(site)/solutions/page.tsx:86 — <Section id="products" labelledBy="products-title">
+- src/app/(site)/solutions/page.tsx:103 — <Section tone="alt">
+- src/app/(site)/solutions/page.tsx:110 — <RelatedLinks title="관련 컨설팅" items={[
+- src/app/(site)/solutions/page.tsx:119 — <Section>
+- src/app/(site)/solutions/page.tsx:120 — <QuestionList
+- src/app/(site)/solutions/page.tsx:138 — <ClosingContact ctaLabel="솔루션 상담" />
+- src/app/(site)/terms/page.tsx:17 — <h1 className="display-page mt-4">홈페이지 이용약관</h1>
+- src/app/not-found.tsx:12 — <h1 className="display-page mt-4">페이지를 찾을 수 없습니다.</h1>
+
+## 보존 계약 지점
+- src/components/contact/ContactForm.tsx:40 — async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+- src/components/contact/ContactForm.tsx:52 — const privacyConsent = data.get('privacy_consent') === 'on';
+- src/components/contact/ContactForm.tsx:67 — const { data: result, error } = await supabase.functions.invoke('submit-inquiry', {
+- src/components/contact/ContactForm.tsx:76 — privacy_consent: true,
+- src/components/contact/ContactForm.tsx:112 — <input type="text" name="website" tabIndex={-1} autoComplete="off"
+- src/components/contact/ContactForm.tsx:152 — name="privacy_consent"
+- src/components/layout/LegacyRedirect.tsx:7 — * 별칭 페이지의 metadata. canonical 과 robots 는 Metadata API 로 넘긴다.
+- src/components/layout/LegacyRedirect.tsx:8 — * 컴포넌트에서 raw <meta name="robots"> 를 렌더하면 root layout 의 값과 중복된다.
+- src/components/layout/LegacyRedirect.tsx:14 — robots: { index: false, follow: true },
+- src/components/layout/LegacyRedirect.tsx:29 — <meta httpEquiv="refresh" content={`0; url=${target}`} />
+- src/lib/seo.ts:28 — export function adminMeta(title: string): Metadata {
+- src/lib/seo.ts:35 — export function pageMeta(opts: {
+
+## 검증
+- tests/visual/capture.mjs:13 — export const ROUTES = [
+- tests/visual/capture.mjs:23 — const VIEWPORTS = [
+- tests/visual/capture.mjs:61 — return { horizontalOverflow: docW > vw + 1, docW, broken, smallText: small, smallTapTargets: tapTargets, h1 };
+- tests/visual/capture.mjs:72 — const issues = report.filter((r) => r.status !== 200 || r.consoleErrors.length || r.failed.length || r.horizon
+- tests/visual/capture.mjs:74 — for (const i of issues) console.log(JSON.stringify({ vp: i.viewport, route: i.route, status: i.status, err: i.

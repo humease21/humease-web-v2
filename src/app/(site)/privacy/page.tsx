@@ -1,4 +1,4 @@
-import { Scene } from '@/components/sections/Scene';
+
 import { LegalH2, LegalH3, LegalMeta, LegalOl, LegalP, LegalUl } from '@/components/legal/LegalProse';
 import { pageMeta } from '@/lib/seo';
 import { metaForPath } from '@/content/search-pages';
@@ -14,10 +14,10 @@ export const metadata = pageMeta({ ...metaForPath('/privacy'), path: '/privacy' 
  */
 export default function Page() {
   return (
-    <Scene mask="none">
-      <article className="measure">
+    <div className="section">
+      <article className="shell max-w-[860px]">
         <p className="eyebrow">개인정보처리방침</p>
-        <h1 className="title-ko-sm mt-6">개인정보처리방침</h1>
+        <h1 className="display-page mt-4">개인정보처리방침</h1>
         <LegalP>
           주식회사 휴미즈(이하 “회사”)는 정보주체의 개인정보를 중요하게 생각하며, 「개인정보 보호법」 등 관련 법령을 준수합니다.
         </LegalP>
@@ -263,6 +263,6 @@ export default function Page() {
           개정 이력 — V1.1(2026-09-18): 신규 문의 Discord 알림에 회사명·담당자명·관심 분야·문의 내용 일부(최대 20자)가 전송되는 사실을 반영해 제4조·제5조·제6조를 개정(이메일·전화번호·문의 내용 전문·문의 식별번호는 전송하지 않음). V1.0(2026-09-18)에서 변경.
         </LegalMeta>
       </article>
-    </Scene>
+    </div>
   );
 }

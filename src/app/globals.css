@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
-/* docs/02 §2 고정 색상 토큰 — 값은 유지하고 시각 레이어만 재설계한다 */
+/*
+ * 기본 토큰은 관리자 콘솔(/admin)의 다크 팔레트다 — 관리자 화면은 이번 리디자인 대상이 아니므로 값을 바꾸지 않는다.
+ * 공개 사이트는 (site)/layout 의 `.theme-site` 범위에서 같은 이름의 토큰을 라이트 팔레트로 재정의한다.
+ * 기준 문서: DESIGN.md
+ */
 @theme {
   --color-bg: #090B0E;
   --color-surface: #11151B;
@@ -12,31 +16,38 @@
   --color-cool: #819AB7;
   --color-warm: #D8B895;
 
-  --font-display: var(--font-source-serif), Georgia, serif;
-  --font-sans: var(--font-noto-sans-kr), system-ui, sans-serif;
+  /* 사이트 전용 보조 토큰 — 기본값은 다크 문맥 기준 */
+  --color-body: #D5D9DF;
+  --color-subtle: #141922;
+  --color-line-strong: #4A5360;
+  --color-brand: #C7B99D;
+  --color-brand-ink: #C7B99D;
+  --color-navy: #819AB7;
+  --color-on-brand: #0E1217;
+
+  --font-sans: var(--font-noto-sans-kr), system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 }
 
 @layer base {
-  /* 사이트 전체가 항상 다크 테마다(라이트 모드 없음). 이 선언이 없으면 네이티브 <select>
-     드롭다운·스크롤바 등 OS 폼 컨트롤이 밝은 배경으로 렌더돼, 상속된 밝은 글자색과
-     겹쳐 옵션 텍스트를 읽을 수 없게 된다(요청서 §3-4 — Enterprise Data 등 옵션 가독성 버그). */
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; color-scheme: dark; }
   body {
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     overflow-x: clip;
   }
-  h1, h2, h3, p, li, dt, dd { word-break: keep-all; overflow-wrap: anywhere; }
+  /* 공개 사이트에서는 오버스크롤 영역도 라이트 배경으로 맞춘다. 관리자 화면에는 적용되지 않는다. */
+  body:has(> .theme-site) { background-color: #FAFAF8; }
+  h1, h2, h3, h4, p, li, dt, dd, summary { word-break: keep-all; overflow-wrap: anywhere; }
   :focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 4px;
-    border-radius: 2px;
+    outline: 2px solid var(--color-brand-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
-  ::selection { background: var(--color-accent); color: #12100C; }
+  ::selection { background: var(--color-brand); color: var(--color-on-brand); }
 
-  /* 모션 감소 — 모든 장면이 애니메이션 없이 완전한 상태로 보여야 한다 */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after {
@@ -45,280 +56,304 @@
       transition-duration: 1ms !important;
     }
     [data-reveal] { opacity: 1 !important; transform: none !important; }
-    [data-parallax] { transform: none !important; }
   }
 }
 
 @layer components {
+  /* ---------- 테마 범위 ---------- */
+  /* 공개 사이트 — 라이트 퍼스트. 신뢰감 있는 잉크 텍스트, 따뜻한 오프화이트, 브랜드 샴페인은 포인트로만. */
+  .theme-site {
+    --color-bg: #FAFAF8;
+    --color-surface: #FFFFFF;
+    --color-raised: #FFFFFF;
+    --color-subtle: #F1F0EB;
+    --color-text: #0E1217;
+    --color-body: #3D4552;
+    --color-muted: #5A6371;
+    --color-line: #E2E0D9;
+    --color-line-strong: #C9C6BC;
+    --color-brand: #C7B99D;
+    --color-brand-ink: #80694A;
+    --color-accent: #80694A;
+    --color-navy: #1F3A5F;
+    --color-on-brand: #0E1217;
+    color-scheme: light;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+  /* 다크 밴드 — 마무리 CTA, 전문성, 푸터. 기존 브랜드 다크 팔레트를 그대로 잇는다. */
+  .on-dark {
+    --color-bg: #0B0E12;
+    --color-surface: #141922;
+    --color-raised: #1A2029;
+    --color-subtle: #141922;
+    --color-text: #F2EFE8;
+    --color-body: #D5D9DF;
+    --color-muted: #A9B1BC;
+    --color-line: #2A313B;
+    --color-line-strong: #3E4652;
+    --color-brand-ink: #C7B99D;
+    --color-accent: #C7B99D;
+    --color-navy: #9DB3CE;
+    color-scheme: dark;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
   /* ---------- 레이아웃 ---------- */
-  /* 최대 1440px. 좌우 여백 desktop 48~96px */
   .shell {
     width: 100%;
-    max-width: 1440px;
+    max-width: 1280px;
     margin-inline: auto;
     padding-inline: 20px;
   }
-  @media (min-width: 768px)  { .shell { padding-inline: 48px; } }
-  @media (min-width: 1280px) { .shell { padding-inline: 72px; } }
-  @media (min-width: 1600px) { .shell { padding-inline: 96px; } }
+  @media (min-width: 768px)  { .shell { padding-inline: 40px; } }
+  @media (min-width: 1280px) { .shell { padding-inline: 48px; } }
 
-  /* 본문 읽기 폭 — 52~65ch */
-  .measure    { max-width: 62ch; }
+  .measure    { max-width: 64ch; }
   .measure-sm { max-width: 52ch; }
 
-  /* 하나의 장면. 카드 묶음이 아니라 한 화면에 하나의 메시지 */
-  .scene {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 70svh;
-    padding-block: 96px;
-  }
-  @media (min-width: 768px)  { .scene { padding-block: 140px; min-height: 82svh; } }
-  @media (min-width: 1280px) { .scene { padding-block: 176px; } }
+  .section { padding-block: 72px; }
+  @media (min-width: 768px)  { .section { padding-block: 96px; } }
+  @media (min-width: 1280px) { .section { padding-block: 112px; } }
+  .section-tight { padding-block: 56px; }
+  @media (min-width: 768px) { .section-tight { padding-block: 72px; } }
+  .section-alt { background-color: var(--color-subtle); }
+  .section + .section:not(.section-alt):not(.on-dark) { border-top: 1px solid var(--color-line); }
 
-  .scene-tall { min-height: 88svh; }
-  @media (min-width: 768px) { .scene-tall { min-height: 94svh; } }
-
-  /* ---------- 타이포 ---------- */
+  /* ---------- 타이포그래피 ---------- */
   .eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-brand-ink);
   }
-  @media (min-width: 768px) { .eyebrow { font-size: 12px; } }
+  .eyebrow::before {
+    content: "";
+    width: 20px;
+    height: 1.5px;
+    background: currentColor;
+    opacity: 0.8;
+  }
+  @media (min-width: 768px) { .eyebrow { font-size: 14px; } }
 
-  /* Hero 영문 Display — 64~120px */
   .display-hero {
-    font-family: var(--font-display);
-    font-weight: 400;
-    line-height: 0.96;
-    letter-spacing: -0.022em;
-    font-size: clamp(44px, 8.2vw, 120px);
-  }
-  /* 섹션 영문 Display */
-  .display-en {
-    font-family: var(--font-display);
-    font-weight: 400;
-    line-height: 1.02;
-    letter-spacing: -0.018em;
-    font-size: clamp(36px, 5.2vw, 76px);
-  }
-  /*
-   * 한글 대형 제목. Source Serif 4 에는 한글 글리프가 없어
-   * .display-en 을 한글에 쓰면 폰트 폴백이 일어나 본문과 다른 글자체가 된다.
-   * 한글 Hero 제목은 이 클래스를 쓴다.
-   */
-  .display-ko {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    line-height: 1.18;
-    letter-spacing: -0.022em;
-    font-size: clamp(32px, 5.6vw, 76px);
-  }
-
-  /*
-   * 홈 Hero 의 한국어 제목. 영문 Display 를 걷어냈으므로 한글이 첫 화면의 무게를 감당한다.
-   * 한글은 같은 px 에서 라틴보다 크게 보이므로 상한을 76px 로 둔다.
-   */
-  .display-hero-ko {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    line-height: 1.22;
+    font-weight: 700;
+    line-height: 1.2;
     letter-spacing: -0.03em;
-    font-size: clamp(34px, 6.4vw, 76px);
+    font-size: clamp(34px, 5.2vw, 60px);
   }
-
-  /* 한글 섹션 제목 — 40~72px */
-  .title-ko {
-    font-weight: 500;
+  .display-page {
+    font-weight: 700;
     line-height: 1.22;
-    letter-spacing: -0.015em;
-    font-size: clamp(26px, 4.4vw, 72px);
+    letter-spacing: -0.028em;
+    font-size: clamp(30px, 4.2vw, 50px);
   }
-  .title-ko-sm {
-    font-weight: 500;
+  .heading-xl {
+    font-weight: 700;
     line-height: 1.28;
-    letter-spacing: -0.01em;
-    font-size: clamp(22px, 3vw, 40px);
+    letter-spacing: -0.024em;
+    font-size: clamp(26px, 3.2vw, 40px);
   }
+  .heading-lg {
+    font-weight: 700;
+    line-height: 1.34;
+    letter-spacing: -0.018em;
+    font-size: clamp(22px, 2.3vw, 28px);
+  }
+  .heading-md {
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: -0.012em;
+    font-size: 19px;
+  }
+  @media (min-width: 768px) { .heading-md { font-size: 20px; } }
+
   .lead {
-    font-size: 16px;
-    line-height: 1.78;
-    color: var(--color-muted);
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--color-body);
   }
   @media (min-width: 768px) { .lead { font-size: 19px; } }
-
-  /* 대형 숫자 01/02 */
-  .ordinal {
-    font-family: var(--font-display);
-    font-weight: 400;
-    line-height: 1;
-    font-size: clamp(64px, 11vw, 168px);
-    color: transparent;
-    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-line) 88%, transparent);
-    user-select: none;
+  .body {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-body);
+  }
+  .body-sm {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+  .caption {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-muted);
   }
 
-  /* ---------- Full-bleed 비주얼 ---------- */
-  /* 이미지는 카드가 아니다. 화면에 녹아든 장면이어야 한다. */
-  .bleed {
-    position: absolute;
-    inset: 0;
+  /* ---------- 버튼 ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    padding-inline: 26px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  }
+  .btn .btn-arrow { transition: transform 180ms ease; }
+  .btn:hover .btn-arrow { transform: translateX(3px); }
+  .btn-primary { background: var(--color-text); color: var(--color-bg); }
+  .btn-primary:hover { background: color-mix(in srgb, var(--color-text) 86%, var(--color-bg)); }
+  .on-dark .btn-primary { background: var(--color-brand); color: var(--color-on-brand); }
+  .on-dark .btn-primary:hover { background: #D8CDB6; }
+  .btn-secondary { background: transparent; color: var(--color-text); border-color: var(--color-line-strong); }
+  .btn-secondary:hover { border-color: var(--color-text); }
+  .btn-block { width: 100%; }
+  @media (min-width: 640px) { .btn-block { width: auto; } }
+
+  /* 텍스트 링크 — 섹션 안 보조 이동 */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 180ms ease, color 180ms ease;
+  }
+  .link-arrow:hover { text-decoration-color: currentColor; }
+  .link-arrow .btn-arrow { transition: transform 180ms ease; }
+  .link-arrow:hover .btn-arrow { transform: translateX(3px); }
+
+  /* ---------- 카드·패널 ---------- */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+  }
+  @media (min-width: 768px) { .card { padding: 32px; } }
+  .card-link:hover { border-color: var(--color-line-strong); box-shadow: 0 10px 30px -18px rgb(14 18 23 / 0.28); }
+  /* 카드 전체를 클릭 영역으로 — 제목 링크의 ::after 가 카드를 덮는다 */
+  .card-link .stretched::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+
+  .media {
+    position: relative;
     overflow: hidden;
-    z-index: 0;
+    border-radius: 16px;
+    background: #0B0E12;
   }
-  .bleed img {
+  .media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  .icon-tile {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--color-subtle);
+    color: var(--color-navy);
+    flex-shrink: 0;
+  }
+  .card .icon-tile { background: var(--color-bg); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding-inline: 10px;
+    border-radius: 999px;
+    border: 1px solid var(--color-line-strong);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-body);
+    background: var(--color-surface);
+  }
+  .badge-brand { border-color: color-mix(in srgb, var(--color-brand-ink) 45%, transparent); color: var(--color-brand-ink); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding-inline: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-body);
+  }
+
+  /* 편집형 정의 행 — 긴 설명 목록 */
+  .def-row {
+    display: grid;
+    gap: 6px;
+    padding-block: 20px;
+    border-top: 1px solid var(--color-line);
+  }
+  .def-row:last-child { border-bottom: 1px solid var(--color-line); }
+  @media (min-width: 900px) {
+    .def-row { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 40px; padding-block: 24px; }
+  }
+
+  /* 폼 */
+  .field { display: grid; gap: 8px; font-size: 15px; font-weight: 600; color: var(--color-text); }
+  .field-control {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    min-height: 50px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 400;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
   }
-
-  /* 텍스트 가독성용 gradient mask — 이미지 파일은 수정하지 않는다 */
-  .mask-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to right, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 82%, transparent) 34%, transparent 68%),
-      linear-gradient(to top, var(--color-bg) 2%, color-mix(in srgb, var(--color-bg) 55%, transparent) 32%, transparent 62%);
-  }
-  .mask-scene::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to right, var(--color-bg) 4%, color-mix(in srgb, var(--color-bg) 70%, transparent) 46%, color-mix(in srgb, var(--color-bg) 24%, transparent) 100%);
-  }
-  .mask-soft::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 22%, transparent 74%, var(--color-bg) 100%);
-  }
-
-  /* ambient light — 팔레트 안에서 아주 제한적으로 */
-  .ambient-cool::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    inset-inline-end: -12%;
-    inset-block-start: 8%;
-    width: min(62vw, 760px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--color-cool) 15%, transparent) 0%, transparent 66%);
-    pointer-events: none;
-  }
-  .ambient-warm::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    inset-inline-start: -8%;
-    inset-block-end: -14%;
-    width: min(58vw, 700px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--color-warm) 13%, transparent) 0%, transparent 64%);
-    pointer-events: none;
-  }
-  .ambient-silver::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    inset-inline-end: 4%;
-    inset-block-start: -10%;
-    width: min(54vw, 660px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, #ffffff 7%, transparent) 0%, transparent 62%);
-    pointer-events: none;
-  }
-
-  .layer { position: relative; z-index: 2; }
+  .field-control:focus { outline: none; border-color: var(--color-navy); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-navy) 22%, transparent); }
+  textarea.field-control { min-height: 160px; resize: vertical; }
 
   /*
    * 관리자 콘솔 전용 서체.
-   *
-   * 공개 사이트의 본문 폰트는 **공개 카피만** 담은 Noto Sans KR 서브셋이다
-   * (scripts/subset-font.mjs). 내부 도구인 관리자 화면의 어휘까지 그 서브셋에 넣으면
-   * 모든 방문자가 쓰지 않을 글리프를 내려받게 된다. 그래서 관리자 화면은 서브셋을 쓰지 않고
-   * 시스템 UI 서체로 렌더한다 — 일부 글자만 폴백되는 혼용을 막기 위해 서브셋을 아예 벗긴다.
-   * subset-font.mjs 와 verify-font-subset.mjs 도 out/admin 을 집계에서 제외한다.
+   * 공개 사이트의 본문 폰트는 공개 카피만 담은 Noto Sans KR 서브셋이다(scripts/subset-font.mjs).
+   * 관리자 화면은 서브셋을 벗기고 시스템 UI 서체로 렌더한다.
    */
   .admin-ui {
     font-family: system-ui, -apple-system, 'Segoe UI', 'Malgun Gothic',
       'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   }
 
-  /* ---------- 등장 모션 ---------- */
-  /* 450~900ms, 이동 8~20px, 1회. bounce·shake 없음 */
-  [data-reveal] {
+  /* ---------- 등장 모션 — 짧고 절제된 1회 ----------
+     RevealObserver 가 html.reveal-ready 를 붙인 뒤에만 숨긴다. JS 가 없으면 처음부터 보인다. */
+  .reveal-ready [data-reveal] {
     opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 760ms cubic-bezier(0.16, 0.84, 0.3, 1),
-      transform 760ms cubic-bezier(0.16, 0.84, 0.3, 1);
+    transform: translateY(12px);
+    transition: opacity 520ms cubic-bezier(0.2, 0.7, 0.3, 1), transform 520ms cubic-bezier(0.2, 0.7, 0.3, 1);
   }
-  [data-reveal][data-shown="true"] { opacity: 1; transform: none; }
-  [data-reveal="slow"] { transition-duration: 900ms; }
-  [data-delay="1"] { transition-delay: 90ms; }
-  [data-delay="2"] { transition-delay: 180ms; }
-  [data-delay="3"] { transition-delay: 270ms; }
-  [data-delay="4"] { transition-delay: 360ms; }
-
-  /* 배경 깊이 — 아주 약한 스케일 변화만 */
-  [data-parallax] {
-    transition: transform 1200ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    will-change: transform;
-  }
-
-  /* ---------- 요소 ---------- */
-  .rule {
-    height: 1px;
-    background: linear-gradient(to right, color-mix(in srgb, var(--color-line) 90%, transparent), transparent);
-  }
-
-  .cta-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 54px;
-    padding-inline: 30px;
-    background: var(--color-accent);
-    color: #12100C;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    transition: background-color 220ms ease, transform 220ms ease;
-  }
-  .cta-primary:hover { background: #d8cdb6; transform: translateY(-1px); }
-
-  .cta-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 54px;
-    padding-inline: 26px;
-    color: var(--color-text);
-    font-size: 15px;
-    font-weight: 500;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-line) 100%, transparent);
-    transition: border-color 220ms ease, color 220ms ease;
-  }
-  .cta-ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
-
-  /* 능력 항목 — 카드가 아니라 편집형 행 */
-  .cap-row {
-    display: grid;
-    gap: 6px;
-    padding-block: 22px;
-    border-top: 1px solid color-mix(in srgb, var(--color-line) 55%, transparent);
-  }
-  @media (min-width: 900px) {
-    .cap-row { grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 40px; padding-block: 26px; }
-  }
+  .reveal-ready [data-reveal][data-shown="true"] { opacity: 1; transform: none; }
+  [data-delay="1"] { transition-delay: 60ms; }
+  [data-delay="2"] { transition-delay: 120ms; }
+  [data-delay="3"] { transition-delay: 180ms; }
+  [data-delay="4"] { transition-delay: 240ms; }
 }

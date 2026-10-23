@@ -51,7 +51,7 @@ export function Modal({
       aria-labelledby={titleId}
       onClose={handleNativeClose}
       onClick={(e) => { if (e.target === dialogRef.current) handleNativeClose(); }}
-      className="m-auto max-h-[85svh] w-[min(560px,calc(100vw-32px))] border border-[var(--color-line)] bg-[var(--color-surface)] p-0 text-[var(--color-text)] backdrop:bg-black/70"
+      className="m-auto max-h-[85svh] w-[min(600px,calc(100vw-32px))] rounded-xl border border-[var(--color-line)] bg-[var(--color-surface)] p-0 text-[var(--color-text)] backdrop:bg-black/70"
     >
       {open && children}
     </dialog>

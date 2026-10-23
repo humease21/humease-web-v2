@@ -17,15 +17,15 @@ export function LegalH3({ children }: { children: React.ReactNode }) {
 }
 
 export function LegalP({ children }: { children: React.ReactNode }) {
-  return <p className="mt-4 text-[15px] leading-[1.8] text-[var(--color-muted)]">{children}</p>;
+  return <p className="mt-4 text-[16px] leading-[1.8] text-[var(--color-body)]">{children}</p>;
 }
 
 export function LegalUl({ children }: { children: React.ReactNode }) {
-  return <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[15px] leading-[1.8] text-[var(--color-muted)]">{children}</ul>;
+  return <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[16px] leading-[1.8] text-[var(--color-body)]">{children}</ul>;
 }
 
 export function LegalOl({ children }: { children: React.ReactNode }) {
-  return <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-[15px] leading-[1.8] text-[var(--color-muted)]">{children}</ol>;
+  return <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-[16px] leading-[1.8] text-[var(--color-body)]">{children}</ol>;
 }
 
 export function LegalMeta({ children }: { children: React.ReactNode }) {

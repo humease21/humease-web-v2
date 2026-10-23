@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
-/** Hero 위에 떠 있다가 스크롤하면 반투명 dark backdrop 으로 전환된다. */
+/** 상단 고정 헤더. 스크롤하면 얇은 그림자로 본문과 구분한다. 배경은 항상 불투명에 가깝게 유지해 가독성을 지킨다. */
 export function HeaderShell({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -15,10 +15,8 @@ export function HeaderShell({ children }: { children: React.ReactNode }) {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ${
-        scrolled
-          ? 'border-b border-[color-mix(in_srgb,var(--color-line)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-bg)_86%,transparent)] supports-[backdrop-filter]:backdrop-blur-md'
-          : 'border-b border-transparent bg-transparent'
+      className={`sticky top-0 z-50 border-b bg-[color-mix(in_srgb,var(--color-bg)_94%,transparent)] transition-shadow duration-300 supports-[backdrop-filter]:backdrop-blur-md ${
+        scrolled ? 'border-[var(--color-line)] shadow-[0_6px_24px_-18px_rgb(14_18_23/0.35)]' : 'border-transparent'
       }`}
     >
       {children}
