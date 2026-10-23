@@ -25,3 +25,9 @@ Actions: https://github.com/humease21/humease-web-v2/actions/runs/39939260488 �
 - agy 사용량이 목표 10% 를 크게 초과 — docs/agent/usage.md 비율 점검 참조
 
 롤백: git revert 또는 dbc1163 기준 되돌림 커밋 push (main push = 즉시 재배포)
+
+[2026-10-24] live contact submit check (approved by owner)
+- https://www.humease.com/contact/ via Playwright (chromium, 1440x900)
+- attempt 1: browser closed while "접수 중" (30s wait); request may have reached server -> possible test row #1
+- attempt 2: POST functions/v1/submit-inquiry (ap-northeast-1) -> 200, UI "문의가 접수되었습니다" -> PASS
+- test rows marked "[테스트]" in company_name/contact_name; owner to delete via admin
