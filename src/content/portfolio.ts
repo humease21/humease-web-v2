@@ -27,7 +27,7 @@ export type Project = {
   sortOrder: number;
   coverAssetId: 'A09' | 'A10' | null;
   /** 공개 서비스 웹사이트 화면 캡처(assets.screenshots). 공개 사이트가 없으면 null — 가짜 화면을 만들지 않는다. */
-  screenshotId: 'k-bestie' | 'hairai' | 'anybuild' | null;
+  screenshotId: 'k-bestie' | 'hairai' | 'anybuild' | 'mom-ie' | null;
   coverAlt: string;
   visualType: VisualType;
   externalUrl: string | null;
@@ -63,9 +63,9 @@ export const projects: Project[] = [
     featured: true,
     sortOrder: 4,
     coverAssetId: 'A10',
-    screenshotId: null,
+    screenshotId: 'mom-ie',
     coverAlt: '',
-    visualType: 'brand-image',
+    visualType: 'product-capture',
     externalUrl: null,
     externalLinkVerifiedAt: null,
     contribution: '기획·설계·개발',

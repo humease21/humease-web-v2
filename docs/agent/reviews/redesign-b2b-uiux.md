@@ -43,3 +43,8 @@ Codex 사용 토큰(4차): 21,922.
 | src/content/portfolio.ts:150 | minor | 캡처를 쓰는 HairAI·내친구 케이 visualType 이 'none', AnyBuild 가 'brand-image' 로 남아 표시 이미지와 메타데이터 불일치 | 'product-capture' 로 맞춤 | 세 프로젝트 visualType → 'product-capture' |
 
 Codex 사용 토큰(5차): 56,283. 검증: E2E 스위트(agy 작성) Claude 재실행 30 pass / 3 skip, axe 0건, verify 10종 + entities PASS.
+
+## 6차 (2026-10-24) — 맘이음 썸네일·회사정보 카드 제거·대표자 성명 제거
+대상: assets.ts, portfolio.ts, company.ts, about/page.tsx, privacy/page.tsx, portfolio 캡처 4장
+- 지적 사항 없음. 타입 검사와 변경 파일 ESLint 통과.
+VERDICT: pass

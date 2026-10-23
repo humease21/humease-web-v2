@@ -6,7 +6,6 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { stagger } from '@/lib/stagger';
 import { assets } from '@/content/assets';
-import { company } from '@/content/company';
 import { pageMeta } from '@/lib/seo';
 import { metaForPath } from '@/content/search-pages';
 import { Arrow, Icon, type IconName } from '@/components/ui/Icon';
@@ -80,27 +79,6 @@ export default function AboutPage() {
       </Section>
 
       <ExperienceScene aboutCopy />
-
-      <Section tight>
-        <dl className="grid gap-6 rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-6 sm:grid-cols-3 md:p-8">
-          <div>
-            <dt className="caption">회사명</dt>
-            <dd className="mt-1 text-[17px] font-semibold">{company.nameKo}</dd>
-          </div>
-          {company.representative && (
-            <div>
-              <dt className="caption">대표</dt>
-              <dd className="mt-1 text-[17px] font-semibold">{company.representative}</dd>
-            </div>
-          )}
-          <div>
-            <dt className="caption">문의</dt>
-            <dd className="mt-1 text-[17px] font-semibold">
-              <a href={`mailto:${company.email}`} className="underline decoration-[var(--color-line-strong)] underline-offset-[6px] hover:decoration-current">{company.email}</a>
-            </dd>
-          </div>
-        </dl>
-      </Section>
 
       <ClosingContact />
     </>

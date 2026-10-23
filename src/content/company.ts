@@ -13,7 +13,8 @@ export const company = {
   email: 'contact@humease.com',
   blogUrl: 'https://blog.humease.com/',
   siteUrl: 'https://www.humease.com',
-  representative: '정미경 대표이사' as string | null,
+  // 대표자 성명은 공개하지 않는다(대표 지시 2026-10-24).
+  representative: null as string | null,
   // 승인 전까지 비워 둔다. 렌더링 측에서 값이 있을 때만 표시한다.
   businessNumber: null as string | null,
   address: null as string | null,

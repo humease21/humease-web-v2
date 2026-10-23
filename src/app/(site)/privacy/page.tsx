@@ -242,7 +242,7 @@ export default function Page() {
         <LegalH2>제11조 개인정보 보호책임자</LegalH2>
         <LegalP>회사는 개인정보 보호와 관련한 업무 및 정보주체의 고충처리를 담당하기 위해 다음과 같이 개인정보 보호책임자를 두고 있습니다.</LegalP>
         <LegalUl>
-          <li>개인정보 보호책임자: 정미경 대표이사</li>
+          <li>개인정보 보호책임자: 대표이사</li>
           <li>소속: 주식회사 휴미즈</li>
           <li>이메일: contact@humease.com</li>
         </LegalUl>

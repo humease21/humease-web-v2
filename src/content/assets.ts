@@ -41,7 +41,7 @@ export const assets = {
 
 /**
  * 서비스 화면 캡처(product-capture). 각 서비스의 공개 웹사이트 첫 화면을 그대로 캡처했다.
- * 가공·합성 없이 1440×900 화면을 1200×750 으로 줄였다. 캡처일 2026-10-23.
+ * 가공·합성 없이 1440×900 화면을 1200×750 으로 줄였다. 캡처일 2026-10-24.
  * 생성 이미지가 아니라 실제 공개 화면이며, 서비스 화면이 바뀌면 다시 캡처한다.
  */
 const S = (id: string, file: string, alt: string): Asset => ({
@@ -52,9 +52,10 @@ export const screenshots = {
   'k-bestie': S('S-KBESTIE', 'k-bestie-screen.webp', '내친구 케이 서비스 웹사이트 첫 화면'),
   hairai: S('S-HAIRAI', 'hairai-screen.webp', 'HairAI 서비스 웹사이트 첫 화면'),
   anybuild: S('S-ANYBUILD', 'anybuild-screen.webp', 'AnyBuild 서비스 웹사이트 첫 화면'),
+  'mom-ie': S('S-MOMIE', 'mom-ie-screen.webp', '맘이음 서비스 웹사이트 첫 화면'),
 } as const;
 export type ScreenshotId = keyof typeof screenshots;
-export const SCREENSHOTS_CAPTURED_AT = '2026-10-23';
+export const SCREENSHOTS_CAPTURED_AT = '2026-10-24';
 
 /**
  * A14–A16 은 실제 글이 있을 때만 사용한다(docs/05 §2).
