@@ -266,6 +266,45 @@
   }
   .media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
+  /* ---------- 풀블리드 장면 — 기존 홈페이지의 이미지 배치를 계승 ----------
+     이미지는 배경으로 깔고, 텍스트 쪽(왼쪽·아래)으로 바탕색 그라데이션 마스크를 둬 대비를 확보한다. */
+  .bleed {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .bleed img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* A01 원본 상단의 검은 띠가 헤더 아래 이음새로 보이지 않도록 아래 기준으로 살짝 확대한다 */
+  .bleed img.crop-top { transform: scale(1.1); transform-origin: 70% 100%; }
+  .mask-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 84%, transparent) 36%, transparent 70%),
+      linear-gradient(to top, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 55%, transparent) 30%, transparent 60%);
+  }
+  .mask-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--color-bg) 6%, color-mix(in srgb, var(--color-bg) 78%, transparent) 46%, color-mix(in srgb, var(--color-bg) 22%, transparent) 100%);
+  }
+  .mask-soft::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, var(--color-bg) 0%, color-mix(in srgb, var(--color-bg) 40%, transparent) 30%, color-mix(in srgb, var(--color-bg) 40%, transparent) 70%, var(--color-bg) 100%);
+  }
+  /* 좁은 화면은 텍스트가 이미지 전체를 덮으므로 마스크를 균일하게 짙게 둔다 */
+  @media (max-width: 767px) {
+    .mask-hero::after, .mask-scene::after {
+      background: linear-gradient(to top, var(--color-bg) 6%, color-mix(in srgb, var(--color-bg) 72%, transparent) 50%, color-mix(in srgb, var(--color-bg) 18%, transparent) 100%);
+    }
+  }
+  .layer { position: relative; z-index: 1; }
+
   .icon-tile {
     display: inline-grid;
     place-items: center;

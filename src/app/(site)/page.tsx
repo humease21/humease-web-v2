@@ -1,6 +1,7 @@
 import { PageHero } from '@/components/sections/PageHero';
 import { Section, SectionHeader } from '@/components/sections/Section';
 import { FeatureSplit } from '@/components/sections/FeatureSplit';
+import { BleedScene } from '@/components/sections/BleedScene';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { PortfolioList } from '@/components/sections/PortfolioList';
 import { ExperienceScene } from '@/components/sections/ExperienceScene';
@@ -55,8 +56,7 @@ export default function HomePage() {
           { label: '사업영역 살펴보기', href: '#business', primary: false },
         ]}
         image={assets.A01}
-        imagePortrait={assets.A02}
-        focus="70% 50%"
+        imageMobile={assets.A02}
       />
 
       {/* 사업영역 한눈에 */}
@@ -102,12 +102,13 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 01 기업 데이터 */}
-      <Section labelledBy="enterprise-data-title">
+      {/* 01 기업 데이터 — 풀블리드 장면 */}
+      <BleedScene image={assets.A04} labelledBy="enterprise-data-title">
         <FeatureSplit
           index="01"
           eyebrow="기업 데이터"
           headingId="enterprise-data-title"
+          onImage
           title={<>보관을 넘어,<br />데이터 거버넌스로</>}
           lead={<>무엇을 남기고, 누가 접근하며<br className="hidden md:inline" /> 필요한 순간 어떻게 찾고 활용할지<br /><br />기업 데이터의 전체 수명주기를<br className="hidden md:inline" /> 정책과 운영 기준에 맞춰 설계합니다</>}
           capabilities={[
@@ -117,9 +118,8 @@ export default function HomePage() {
             { title: '대응', body: '감사·조사·eDiscovery 대응 체계', icon: 'scale' },
           ]}
           cta={{ label: '기업 데이터 알아보기', href: '/enterprise-data' }}
-          image={assets.A04}
         />
-      </Section>
+      </BleedScene>
 
       {/* Arctera 솔루션 연결 */}
       <Section tone="alt" tight labelledBy="arctera-title">
@@ -146,13 +146,13 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 02 AI 서비스 */}
-      <Section labelledBy="ai-service-title">
+      {/* 02 AI 서비스 — 풀블리드 장면 */}
+      <BleedScene image={assets.A08} labelledBy="ai-service-title">
         <FeatureSplit
           index="02"
           eyebrow="AI 서비스"
           headingId="ai-service-title"
-          reverse
+          onImage
           title={<>AI 도입에서,<br />업무 혁신으로</>}
           lead={<>기업의 문제와 업무 흐름을 먼저 정의하고<br className="hidden md:inline" /> 데이터·AI·사용자 경험을 연결해<br className="hidden md:inline" /> 실제 운영되는 서비스로 구현합니다</>}
           capabilities={[
@@ -162,9 +162,8 @@ export default function HomePage() {
             { title: '웹 애플리케이션·프로토타입', body: '핵심 가설을 확인할 수 있는 범위부터 구현합니다.', icon: 'code' },
           ]}
           cta={{ label: 'AI 서비스 알아보기', href: '/consulting/ai-transformation' }}
-          image={assets.A08}
         />
-      </Section>
+      </BleedScene>
 
       {/* 일하는 방식 */}
       <Section tone="alt" labelledBy="process-title">
@@ -207,7 +206,7 @@ export default function HomePage() {
         <InsightsEditorial articles={[]} />
       </Section>
 
-      <ClosingContact />
+      <ClosingContact image={assets.A13} />
     </>
   );
 }

@@ -13,9 +13,9 @@
 | 원칙 | 적용 |
 |---|---|
 | 읽히는 화면 | 오프화이트 바탕 + 잉크 텍스트, 본문 16–19px, 최소 13px |
-| 절제 | 그라데이션 장식·광원 효과·스크롤 연출 없음. 등장 모션은 520ms 페이드 1회 |
+| 절제 | 장식용 광원 효과·스크롤 연출 없음(그라데이션은 이미지 위 글자 대비용 마스크에만). 등장 모션은 520ms 페이드 1회 |
 | 브랜드 연속성 | 기존 로고 형태 유지, 샴페인(#C7B99D)·다크(#0B0E12)는 포인트와 다크 밴드로 계승 |
-| 이미지 | 기존 승인 자산(A01–A13)만 사용. 둥근 미디어 패널에 담고 피사체 쪽(오른쪽)으로 크롭 |
+| 이미지 | 기존 승인 자산(A01–A13)만 사용. **첫 화면·홈 주요 장면·홈 마무리 문의는 기존 홈페이지처럼 풀블리드 배경**(대표 선호, 2026-10-23), 그 밖의 본문 이미지는 둥근 미디어 패널 |
 | 사실 | 고객사 로고·수치·인증·수상 없음. 개인 경력은 "전문가 개인 경력" 아래에만 |
 
 ## 2. 색 토큰
@@ -71,7 +71,8 @@ brand-ink/bg 4.98 · 다크 muted 7.6 이상 · 샴페인 버튼 위 잉크 9.71
 | 서브메뉴 | `interactive/NavDropdown` | 클릭·키보드 전용(hover 없음), Esc·바깥 클릭·경로 변경 시 닫힘, 항목에 한 줄 설명 |
 | 모바일 메뉴 | `interactive/MobileNav` | 전체 화면 dialog, 그룹 라벨 + 48px 행, 하단 고정 CTA, 열리면 닫기 버튼에 포커스 |
 | 푸터 | `layout/SiteFooter` | 다크, 회사 정보(승인값만) · 3개 링크 그룹 · 법률 링크 |
-| 히어로 | `sections/PageHero` | 좌 메시지 / 우 미디어 패널. 브레드크럼(분류명은 링크 없음), CTA 최대 2개(주·보조) |
+| 히어로 | `sections/PageHero` | 이미지가 있으면 풀블리드 다크 장면(배경 이미지 + `.mask-hero`, 메시지 왼쪽 아래), 문의 페이지는 밝은 2열(안내 | 폼). 브레드크럼(분류명은 링크 없음), CTA 최대 2개 |
+| 풀블리드 장면 | `sections/BleedScene` | 홈 01 기업 데이터·02 AI 서비스. 배경 이미지 + `.mask-scene`, 내용은 왼쪽 680px 열(`FeatureSplit onImage`) |
 | 구간 | `sections/Section` | `Section`·`SectionHeader`(left·center·split)·`Statement`(제목 | 본문 2열) |
 | 사업 소개 | `sections/FeatureSplit` | 메시지 + 패널, 아래 아이콘 역량 그리드(카드 아님) |
 | 단계 | `sections/ProcessSteps` | 번호 카드 `<ol>`. 4단계는 모바일 2열 |
@@ -79,7 +80,7 @@ brand-ink/bg 4.98 · 다크 muted 7.6 이상 · 샴페인 버튼 위 잉크 9.71
 | FAQ | `content/QuestionList` | `details/summary` — 답변은 항상 HTML 에 존재, 좌 제목 / 우 목록 |
 | 고지 | `content/NoticeBar`, `SourceNotes` | Arctera 관계 고지는 히어로 바로 아래 + 하단 자료 안내 |
 | 연관 이동 | `sections/RelatedLinks` | 페이지 하단 다음 탐색 4개 |
-| 마무리 CTA | `sections/ClosingContact` | 다크 밴드, 주 버튼 + 이메일 버튼 |
+| 마무리 CTA | `sections/ClosingContact` | 다크 밴드, 주 버튼 + 이메일 버튼. 홈은 배경 이미지(A13, `.mask-soft`) |
 | 상담 페이지 | `templates/ConsultingPage` | e-Discovery·내부 통제·Exchange 아카이빙 공통 골격 |
 
 버튼: `.btn` + `.btn-primary`(라이트: 잉크 / 다크: 샴페인) · `.btn-secondary`(테두리). 높이 52px(헤더 44px), 반경 8px.

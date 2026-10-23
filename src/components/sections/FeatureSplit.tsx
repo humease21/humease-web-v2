@@ -12,7 +12,7 @@ export type Capability = { title: string; body: string; icon?: IconName; href?: 
  * 역량은 카드 반복 대신 아이콘 + 짧은 설명의 그리드로 둔다.
  */
 export function FeatureSplit({
-  index, eyebrow, title, lead, capabilities, cta, image, reverse, focus = '72% 50%', headingId,
+  index, eyebrow, title, lead, capabilities, cta, image, reverse, focus = '72% 50%', headingId, onImage,
 }: {
   index?: string;
   eyebrow: string;
@@ -24,11 +24,13 @@ export function FeatureSplit({
   reverse?: boolean;
   focus?: string;
   headingId?: string;
+  /** 풀블리드 배경 이미지 위(BleedScene) — 내용을 왼쪽 열에 모아 이미지 피사체와 겹치지 않게 한다 */
+  onImage?: boolean;
 }) {
-  const cols = capabilities.length === 4 ? 'sm:grid-cols-2 xl:grid-cols-4' : 'sm:grid-cols-2 lg:grid-cols-3';
+  const cols = onImage ? 'sm:grid-cols-2' : capabilities.length === 4 ? 'sm:grid-cols-2 xl:grid-cols-4' : 'sm:grid-cols-2 lg:grid-cols-3';
   return (
-    <div>
-      <div className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+    <div className={onImage ? 'max-w-[680px]' : ''}>
+      <div className={`grid items-center gap-10 lg:gap-16 ${onImage ? '' : 'lg:grid-cols-2'} ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
         <div>
           <Reveal as="p" className="eyebrow">
             {index && <span className="tabular-nums text-[var(--color-muted)]">{index}</span>}
