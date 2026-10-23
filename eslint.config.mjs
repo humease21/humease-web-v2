@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Deno 런타임(Supabase Edge Functions) — Next.js/Node lint 대상 아님
     "supabase/functions/**",
+    // agy E2E 작업용 격리 worktree(CLAUDE.md §5) — 메인 체크아웃의 검사 대상이 아니다
+    "worktrees/**",
   ]),
 ]);
 
