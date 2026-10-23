@@ -192,6 +192,32 @@ test.describe('redesign-b2b-uiux E2E Tests', () => {
     const activeLink = arcteraMenu.locator('a[aria-current="page"]');
     await expect(activeLink).toBeVisible();
     await expect(activeLink).toContainText('Data Insight');
+    await page.keyboard.press('Escape');
+
+    // (4) 데스크톱 '사업영역' 드롭다운을 연 채로 하위 링크로 이동 후 goBack()/goForward() 해도 드롭다운이 닫혀 있다.
+    await page.goto('/');
+    const bizBtn2 = page.getByRole('button', { name: '사업영역' });
+    await bizBtn2.click();
+    await expect(bizBtn2).toHaveAttribute('aria-expanded', 'true');
+    const bizControlsId2 = await bizBtn2.getAttribute('aria-controls');
+    const bizMenu2 = page.locator(`[id="${bizControlsId2}"]`);
+    await expect(bizMenu2).toBeVisible();
+
+    const subLink = bizMenu2.getByRole('link', { name: '기업 데이터' });
+    await subLink.click();
+    await page.waitForURL('**/enterprise-data/**');
+    await expect(bizBtn2).toHaveAttribute('aria-expanded', 'false');
+    await expect(bizMenu2).not.toBeVisible();
+
+    await page.goBack();
+    await expect(bizBtn2).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator(`[id="${bizControlsId2}"]`)).not.toBeVisible();
+
+    await page.goForward();
+    const bizBtnFwd = page.getByRole('button', { name: '사업영역' });
+    await expect(bizBtnFwd).toHaveAttribute('aria-expanded', 'false');
+    const bizControlsIdFwd = await bizBtnFwd.getAttribute('aria-controls');
+    await expect(page.locator(`[id="${bizControlsIdFwd}"]`)).not.toBeVisible();
   });
 
   // S4: 모바일·태블릿(<1024) 내비
@@ -214,6 +240,42 @@ test.describe('redesign-b2b-uiux E2E Tests', () => {
     const overflow = await page.evaluate(() => document.body.style.overflow);
     expect(overflow).toBe('hidden');
 
+    // (2) 메뉴가 열린 상태에서 main 요소에 inert 속성이 있고, 닫으면 사라진다.
+    const isMainInertOpen = await page.locator('main').evaluate((el) => {
+      return el.hasAttribute('inert') || el.closest('[inert]') !== null;
+    });
+    expect(isMainInertOpen, '메뉴 열림 시 main 요소에 inert 적용').toBe(true);
+
+    // (1) 메뉴가 열린 상태에서 '메뉴 닫기' 버튼에서 Shift+Tab, 그리고 패널의 마지막 링크/버튼에서 Tab 을 눌러도 document.activeElement 가 #mobile-menu 안에 있다.
+    await closeBtn.focus();
+    await page.keyboard.press('Shift+Tab');
+    const isInside1 = await page.evaluate(() => {
+      const menu = document.getElementById('mobile-menu');
+      return !!menu && menu.contains(document.activeElement);
+    });
+    expect(isInside1, 'Shift+Tab 후 activeElement 가 #mobile-menu 안에 있어야 함').toBe(true);
+
+    const lastFocusable = dialog.locator('a, button').last();
+    await lastFocusable.focus();
+    await page.keyboard.press('Tab');
+    const isInside2 = await page.evaluate(() => {
+      const menu = document.getElementById('mobile-menu');
+      return !!menu && menu.contains(document.activeElement);
+    });
+    expect(isInside2, '마지막 요소에서 Tab 후 activeElement 가 #mobile-menu 안에 있어야 함').toBe(true);
+
+    // 메뉴 닫힘 시 inert 사라짐 검증
+    await page.keyboard.press('Escape');
+    await expect(dialog).not.toBeVisible();
+    const isMainInertClosed = await page.locator('main').evaluate((el) => {
+      return el.hasAttribute('inert') || el.closest('[inert]') !== null;
+    });
+    expect(isMainInertClosed, '메뉴 닫힘 시 main 의 inert 속성 해제').toBe(false);
+
+    // 다시 열기
+    await openBtn.click();
+    await expect(dialog).toBeVisible();
+
     // 'e-Discovery' 링크 클릭 → 이동 후 dialog 사라짐
     const eDiscoveryLink = dialog.getByRole('link', { name: 'e-Discovery' });
     await expect(eDiscoveryLink).toBeVisible();
@@ -222,11 +284,20 @@ test.describe('redesign-b2b-uiux E2E Tests', () => {
     await page.waitForURL('**/consulting/e-discovery/**');
     await expect(dialog).not.toBeVisible();
 
-    // 다시 열고 Escape → 닫히고 포커스가 '메뉴 열기' 버튼으로 복귀
+    // (3) 홈에서 메뉴를 열고 'e-Discovery' 로 이동한 뒤 page.goBack() → page.goForward() 를 해도 #mobile-menu 가 보이지 않는다.
+    await page.goBack();
+    await expect(page.locator('#mobile-menu')).not.toBeVisible();
+
+    await page.goForward();
+    await expect(page.locator('#mobile-menu')).not.toBeVisible();
+
+    // 홈으로 돌아가서 나머지 테스트 수행
+    await page.goto('/');
     const openBtnAgain = page.getByRole('button', { name: '메뉴 열기' });
     await openBtnAgain.click();
     await expect(dialog).toBeVisible();
 
+    // 다시 열고 Escape → 닫히고 포커스가 '메뉴 열기' 버튼으로 복귀
     await page.keyboard.press('Escape');
     await expect(dialog).not.toBeVisible();
     await expect(openBtnAgain).toBeFocused();
@@ -245,6 +316,44 @@ test.describe('redesign-b2b-uiux E2E Tests', () => {
     }
 
     await page.keyboard.press('Escape');
+
+    // (5) 메뉴를 연 상태에서 page.setViewportSize({width:1280,height:900}) 로 넓히면 #mobile-menu 가 사라지고, main 의 inert 속성이 없고, document.body.style.overflow 가 'hidden' 이 아니다. 이후 원래 크기로 되돌려도 메뉴가 다시 열려 있지 않다.
+    const originalViewport = viewport ?? { width: 390, height: 844 };
+    await openBtnAgain.click();
+    await expect(dialog).toBeVisible();
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await expect(page.locator('#mobile-menu')).not.toBeVisible();
+
+    const isMainInertAfterResize = await page.locator('main').evaluate((el) => {
+      return el.hasAttribute('inert') || el.closest('[inert]') !== null;
+    });
+    expect(isMainInertAfterResize, '1280px 확대 시 main 의 inert 해제').toBe(false);
+
+    const overflowAfterResize = await page.evaluate(() => document.body.style.overflow);
+    expect(overflowAfterResize, '1280px 확대 시 body overflow hidden 해제').not.toBe('hidden');
+
+    await page.setViewportSize({ width: originalViewport.width, height: originalViewport.height });
+    await expect(page.locator('#mobile-menu')).not.toBeVisible();
+
+    // (6) '메뉴 닫기' 버튼으로 닫으면 inert·overflow 가 해제되고 포커스가 '메뉴 열기' 버튼으로 돌아온다.
+    const openBtnForCloseTest = page.getByRole('button', { name: '메뉴 열기' });
+    await openBtnForCloseTest.click();
+    await expect(dialog).toBeVisible();
+
+    const closeBtnInPanel = dialog.getByRole('button', { name: '메뉴 닫기' });
+    await closeBtnInPanel.click();
+    await expect(dialog).not.toBeVisible();
+
+    const isMainInertAfterCloseBtn = await page.locator('main').evaluate((el) => {
+      return el.hasAttribute('inert') || el.closest('[inert]') !== null;
+    });
+    expect(isMainInertAfterCloseBtn, '메뉴 닫기 버튼으로 닫았을 때 main inert 해제').toBe(false);
+
+    const overflowAfterCloseBtn = await page.evaluate(() => document.body.style.overflow);
+    expect(overflowAfterCloseBtn, '메뉴 닫기 버튼으로 닫았을 때 body overflow hidden 해제').not.toBe('hidden');
+
+    await expect(openBtnForCloseTest).toBeFocused();
   });
 
   // S5: 문의(/contact/)

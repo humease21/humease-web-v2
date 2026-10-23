@@ -18,21 +18,21 @@ export function NavDropdown({ label, items }: { label: string; items: NavChild[]
   const pathname = usePathname();
   const active = items.some((c) => isActivePath(pathname, c.href));
 
-  // 열린 시점의 경로를 기억한다. 경로가 바뀌면(링크 이동) 별도 effect 없이 자동으로 닫힌 상태가 된다.
-  const [openedAt, setOpenedAt] = useState<string | null>(null);
-  const open = openedAt !== null && openedAt === pathname;
-  const setOpen = (v: boolean | ((prev: boolean) => boolean)) => {
-    const next = typeof v === 'function' ? v(open) : v;
-    setOpenedAt(next ? pathname : null);
-  };
+  const [open, setOpen] = useState(false);
+  // 경로가 바뀌면(링크 이동·뒤로/앞으로) 렌더 중에 닫는다 — effect 안 setState 를 피하는 React 권장 패턴.
+  const [seenPath, setSeenPath] = useState(pathname);
+  if (seenPath !== pathname) {
+    setSeenPath(pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setOpenedAt(null); btnRef.current?.focus(); }
+      if (e.key === 'Escape') { setOpen(false); btnRef.current?.focus(); }
     };
     const onDown = (e: MouseEvent) => {
-      if (!wrapRef.current?.contains(e.target as Node)) setOpenedAt(null);
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener('keydown', onKey);
     document.addEventListener('mousedown', onDown);
