@@ -11,7 +11,7 @@ agy 는 JSON 결과의 `usage.total_tokens` 를 작업별로 기록한다.
 | 2026-10-23 | redesign-b2b-uiux | agy | E2E 3차(새 세션) | 378078 | 성공 — spec 437줄 + 보고서. 독립 재실행 30 pass |
 | 2026-10-23 | redesign-b2b-uiux | agy | E2E 2차(리뷰 수정 반영·시나리오 추가) | 555122 | 28 pass / 2 fail — Shift+Tab 포커스 이탈(실제 결함) |
 | 2026-10-23 | redesign-b2b-uiux | agy | E2E 3차(폭 전환·닫기 시나리오 추가) | 728173 | 30 pass / 0 fail — Claude 독립 재실행 동일 |
-| 2026-10-23 | redesign-b2b-uiux | Codex | 리뷰 1~4차 | 233,000 (79,295 + 76,824 + 54,941 + 21,922) | 1차 fail(major 1) → 2차 fail(major 1, 1차 조치의 회귀) → 3차 pass → 4차 pass |
+| 2026-10-23 | redesign-b2b-uiux | Codex | 리뷰 1~5차 | 289,265 (79,295 + 76,824 + 54,941 + 21,922 + 56,283) | 1차 fail(major 1) → 2차 fail(major 1, 1차 조치의 회귀) → 3차 pass → 4차 pass |
 
 ### 비율 점검 — redesign-b2b-uiux (2026-10-23)
 - agy 합계 ≈ 1,994,000 토큰(무산출 2회 301k 포함), Codex ≈ 233,000 토큰. Claude 토큰은 세션 계측값이 없어 수치 비교 불가.

@@ -26,6 +26,8 @@ export type Project = {
   featured: boolean;
   sortOrder: number;
   coverAssetId: 'A09' | 'A10' | null;
+  /** 공개 서비스 웹사이트 화면 캡처(assets.screenshots). 공개 사이트가 없으면 null — 가짜 화면을 만들지 않는다. */
+  screenshotId: 'k-bestie' | 'hairai' | 'anybuild' | null;
   coverAlt: string;
   visualType: VisualType;
   externalUrl: string | null;
@@ -61,6 +63,7 @@ export const projects: Project[] = [
     featured: true,
     sortOrder: 4,
     coverAssetId: 'A10',
+    screenshotId: null,
     coverAlt: '',
     visualType: 'brand-image',
     externalUrl: null,
@@ -114,8 +117,9 @@ export const projects: Project[] = [
     featured: true,
     sortOrder: 2,
     coverAssetId: 'A09',
+    screenshotId: 'anybuild',
     coverAlt: '',
-    visualType: 'brand-image',
+    visualType: 'product-capture',
     externalUrl: 'https://anybuild.humease.com/',
     externalLinkVerifiedAt: '2026-09-06',
     contribution: null,
@@ -145,8 +149,9 @@ export const projects: Project[] = [
     featured: true,
     sortOrder: 3,
     coverAssetId: null,
+    screenshotId: 'hairai',
     coverAlt: '',
-    visualType: 'none',
+    visualType: 'product-capture',
     externalUrl: 'https://hairai.humease.com/',
     externalLinkVerifiedAt: '2026-09-06',
     contribution: null,
@@ -176,8 +181,9 @@ export const projects: Project[] = [
     featured: true,
     sortOrder: 1,
     coverAssetId: null,
+    screenshotId: 'k-bestie',
     coverAlt: '',
-    visualType: 'none',
+    visualType: 'product-capture',
     externalUrl: 'https://www.k-bestie.com/',
     externalLinkVerifiedAt: '2026-09-06',
     contribution: null,

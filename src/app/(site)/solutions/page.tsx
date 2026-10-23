@@ -5,7 +5,6 @@ import { RelatedLinks } from '@/components/sections/RelatedLinks';
 import { Reveal } from '@/components/interactive/Reveal';
 import { stagger } from '@/lib/stagger';
 import { AnswerBlock } from '@/components/content/AnswerBlock';
-import { NoticeBar } from '@/components/content/NoticeBar';
 import { QuestionList } from '@/components/content/QuestionList';
 import { SourceNotes } from '@/components/content/SourceNotes';
 import { assets } from '@/content/assets';
@@ -48,7 +47,6 @@ export default function Page() {
         image={assets.A12}
         breadcrumbs={[{ name: '홈', href: '/' }, { name: 'Arctera 솔루션', href: '/solutions' }]}
       />
-      <NoticeBar>휴미즈는 Arctera의 공식 파트너가 아닙니다. 이 영역은 제품 정보와 기술 검토 범위를 한국어로 정리한 안내입니다.</NoticeBar>
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">

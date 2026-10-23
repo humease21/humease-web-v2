@@ -40,6 +40,23 @@ export const assets = {
 } as const;
 
 /**
+ * 서비스 화면 캡처(product-capture). 각 서비스의 공개 웹사이트 첫 화면을 그대로 캡처했다.
+ * 가공·합성 없이 1440×900 화면을 1200×750 으로 줄였다. 캡처일 2026-10-23.
+ * 생성 이미지가 아니라 실제 공개 화면이며, 서비스 화면이 바뀌면 다시 캡처한다.
+ */
+const S = (id: string, file: string, alt: string): Asset => ({
+  id, src: asset(`/images/portfolio/${file}`), width: 1200, height: 750, role: 'product-capture', alt, sourceStatus: 'verified',
+});
+
+export const screenshots = {
+  'k-bestie': S('S-KBESTIE', 'k-bestie-screen.webp', '내친구 케이 서비스 웹사이트 첫 화면'),
+  hairai: S('S-HAIRAI', 'hairai-screen.webp', 'HairAI 서비스 웹사이트 첫 화면'),
+  anybuild: S('S-ANYBUILD', 'anybuild-screen.webp', 'AnyBuild 서비스 웹사이트 첫 화면'),
+} as const;
+export type ScreenshotId = keyof typeof screenshots;
+export const SCREENSHOTS_CAPTURED_AT = '2026-10-23';
+
+/**
  * A14–A16 은 실제 글이 있을 때만 사용한다(docs/05 §2).
  * 현재 확인된 글이 없으므로 화면에서 사용하지 않는다 — 미사용 사유 기록.
  * A17(og-background)은 OG 이미지 합성 확정 후 연결한다.

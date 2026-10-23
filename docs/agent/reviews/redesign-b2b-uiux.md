@@ -33,3 +33,13 @@
 
 대상: MobileNav 포커스 순환·폭 전환 닫기·inert 원복, NavDropdown 경로 변경 닫기. 지적 없음.
 Codex 사용 토큰(4차): 21,922.
+
+## 5차 리뷰 (2026-10-23) — VERDICT: pass
+
+대상: Arctera 관계 고지 띠 제거(하단 SourceNotes·FAQ 고지는 유지), AI 포트폴리오 서비스 화면 캡처 썸네일.
+
+| 파일:라인 | 심각도 | 근거 | 제안 | 조치 |
+|---|---|---|---|---|
+| src/content/portfolio.ts:150 | minor | 캡처를 쓰는 HairAI·내친구 케이 visualType 이 'none', AnyBuild 가 'brand-image' 로 남아 표시 이미지와 메타데이터 불일치 | 'product-capture' 로 맞춤 | 세 프로젝트 visualType → 'product-capture' |
+
+Codex 사용 토큰(5차): 56,283. 검증: E2E 스위트(agy 작성) Claude 재실행 30 pass / 3 skip, axe 0건, verify 10종 + entities PASS.

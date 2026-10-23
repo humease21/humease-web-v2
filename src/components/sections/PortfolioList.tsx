@@ -1,25 +1,29 @@
 /* eslint-disable @next/next/no-img-element -- 사전 최적화된 정적 자산을 raw <img> 로 쓴다(docs/05 §5). */
 import { Reveal } from '@/components/interactive/Reveal';
 import { stagger } from '@/lib/stagger';
-import { assets } from '@/content/assets';
+import { assets, screenshots } from '@/content/assets';
 import type { Project } from '@/content/portfolio';
 import { Arrow, Icon } from '@/components/ui/Icon';
 import { A } from '@/components/ui/Link';
 
 /**
- * 프로젝트 카드 그리드. 대표 이미지가 없는 프로젝트는 가짜 화면을 만들지 않고 분류만 담은 중립 패널을 쓴다.
+ * 프로젝트 카드 그리드. 공개 서비스가 있으면 실제 웹사이트 화면 캡처를, 없으면 브랜드 이미지를 쓴다.
+ * 둘 다 없으면 가짜 화면을 만들지 않고 이름만 담은 중립 패널을 쓴다.
  * 카드 전체가 상세로 가는 링크이며(stretched link), 외부 서비스 링크는 별도 버튼으로 둔다.
  */
 export function PortfolioList({ items, columns = 3 }: { items: Project[]; columns?: 2 | 3 }) {
   return (
     <ul className={`grid gap-5 md:grid-cols-2 ${columns === 3 ? 'lg:grid-cols-3' : ''}`}>
       {items.map((p, i) => {
+        const shot = p.screenshotId ? screenshots[p.screenshotId] : null;
         const cover = p.coverAssetId ? assets[p.coverAssetId] : null;
         return (
           <Reveal as="li" key={p.slug} delay={stagger(i)} className="flex">
             <article className="card card-link w-full !p-0">
               <div className="media aspect-[16/10] !rounded-b-none !rounded-t-[13px]">
-                {cover ? (
+                {shot ? (
+                  <img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" style={{ objectPosition: '50% 0%' }} />
+                ) : cover ? (
                   <img src={cover.src} alt={p.coverAlt} width={cover.width} height={cover.height} loading="lazy" decoding="async" style={{ objectPosition: '70% 50%' }} />
                 ) : (
                   <div className="flex h-full flex-col justify-between bg-[linear-gradient(145deg,#141922,#0B0E12)] p-6 text-[#D5D9DF]">

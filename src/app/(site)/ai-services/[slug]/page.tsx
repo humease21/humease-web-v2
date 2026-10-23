@@ -5,7 +5,7 @@ import { ClosingContact } from '@/components/sections/ClosingContact';
 import { Reveal } from '@/components/interactive/Reveal';
 import { stagger } from '@/lib/stagger';
 import { Arrow } from '@/components/ui/Icon';
-import { assets } from '@/content/assets';
+import { assets, screenshots, SCREENSHOTS_CAPTURED_AT } from '@/content/assets';
 import { publishedProjects, projectBySlug } from '@/content/portfolio';
 import { pageMeta } from '@/lib/seo';
 import {
@@ -94,6 +94,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const path = `/ai-services/${p.slug}`;
   const ctaLabel = isMomIe ? '맘이음 협업 문의' : '협업 문의';
   const external = p.externalUrl && p.externalLinkVerifiedAt ? p.externalUrl : null;
+  const shot = p.screenshotId ? screenshots[p.screenshotId] : null;
 
   return (
     <>
@@ -147,6 +148,38 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
             <Reveal as="h2" className="heading-xl">{p.principle.title}</Reveal>
             <Reveal delay={1}><p className="lead lg:pt-2">{p.principle.body}</p></Reveal>
+          </div>
+        </Section>
+      )}
+
+      {shot && (
+        <Section tone="alt" labelledBy="screen-title">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-14">
+            <div>
+              <Reveal as="p" className="eyebrow">서비스 화면</Reveal>
+              <Reveal delay={1}><h2 id="screen-title" className="heading-xl mt-4">{p.name}<br />웹사이트 첫 화면</h2></Reveal>
+              {external && (
+                <Reveal delay={2}>
+                  <A href={external} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5">
+                    서비스 방문<Arrow external /><span className="sr-only">(새 탭에서 열림)</span>
+                  </A>
+                </Reveal>
+              )}
+            </div>
+            <Reveal delay={2}>
+              <figure>
+                <div className="overflow-hidden rounded-xl border border-[var(--color-line-strong)] bg-[var(--color-surface)] shadow-[0_24px_60px_-30px_rgb(14_18_23/0.45)]">
+                  <div aria-hidden="true" className="flex h-8 items-center gap-1.5 border-b border-[var(--color-line)] px-3">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-line-strong)]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-line-strong)]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-line-strong)]" />
+                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- 사전 최적화된 정적 캡처 */}
+                  <img src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" className="block h-auto w-full" />
+                </div>
+                <figcaption className="caption mt-3">공개 웹사이트 첫 화면 · {SCREENSHOTS_CAPTURED_AT} 캡처</figcaption>
+              </figure>
+            </Reveal>
           </div>
         </Section>
       )}

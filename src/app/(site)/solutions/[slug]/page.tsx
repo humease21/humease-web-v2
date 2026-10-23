@@ -5,7 +5,6 @@ import { Section } from '@/components/sections/Section';
 import { ClosingContact } from '@/components/sections/ClosingContact';
 import { RelatedLinks } from '@/components/sections/RelatedLinks';
 import { AnswerBlock } from '@/components/content/AnswerBlock';
-import { NoticeBar } from '@/components/content/NoticeBar';
 import { QuestionList } from '@/components/content/QuestionList';
 import { SourceNotes } from '@/components/content/SourceNotes';
 import { Reveal } from '@/components/interactive/Reveal';
@@ -88,7 +87,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         image={COVER[p.slug as keyof typeof COVER] ?? assets.A12}
         breadcrumbs={[{ name: '홈', href: '/' }, { name: 'Arctera 솔루션', href: '/solutions' }, { name: p.name, href: path }]}
       />
-      <NoticeBar>휴미즈는 Arctera의 공식 파트너가 아닙니다. 제품명과 상표는 각 권리자에게 귀속됩니다.</NoticeBar>
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">

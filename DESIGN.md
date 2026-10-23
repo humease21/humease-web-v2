@@ -78,7 +78,7 @@ brand-ink/bg 4.98 · 다크 muted 7.6 이상 · 샴페인 버튼 위 잉크 9.71
 | 단계 | `sections/ProcessSteps` | 번호 카드 `<ol>`. 4단계는 모바일 2열 |
 | 포트폴리오 | `sections/PortfolioList` | 카드 전체 링크(stretched), 외부 링크는 별도. 이미지 없으면 이름만 담은 중립 패널 |
 | FAQ | `content/QuestionList` | `details/summary` — 답변은 항상 HTML 에 존재, 좌 제목 / 우 목록 |
-| 고지 | `content/NoticeBar`, `SourceNotes` | Arctera 관계 고지는 히어로 바로 아래 + 하단 자료 안내 |
+| 고지 | `content/SourceNotes` | Arctera 관계 고지는 하단 "공개 자료 안내"와 FAQ 에 둔다(히어로 아래 별도 띠는 두지 않는다 — 대표 지시 2026-10-23) |
 | 연관 이동 | `sections/RelatedLinks` | 페이지 하단 다음 탐색 4개 |
 | 마무리 CTA | `sections/ClosingContact` | 다크 밴드, 주 버튼 + 이메일 버튼. 홈은 배경 이미지(A13, `.mask-soft`) |
 | 상담 페이지 | `templates/ConsultingPage` | e-Discovery·내부 통제·Exchange 아카이빙 공통 골격 |
