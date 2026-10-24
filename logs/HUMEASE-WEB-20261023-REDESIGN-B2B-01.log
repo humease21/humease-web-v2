@@ -31,3 +31,9 @@ Actions: https://github.com/humease21/humease-web-v2/actions/runs/39939260488 �
 - attempt 1: browser closed while "접수 중" (30s wait); request may have reached server -> possible test row #1
 - attempt 2: POST functions/v1/submit-inquiry (ap-northeast-1) -> 200, UI "문의가 접수되었습니다" -> PASS
 - test rows marked "[테스트]" in company_name/contact_name; owner to delete via admin
+
+[2026-10-25] follow-up deploys (owner directives)
+- 927ed91 맘이음 캡처 썸네일, 회사정보 카드·대표자 성명 제거 -> live verified (name=0 on all checked pages)
+- 06f9644 휴미즈 블로그 폐쇄: 블로그 메뉴·링크·문구 제거 -> live verified (blog=0 on /, /insights, /about, /contact, /privacy, /terms, /llms.txt)
+- Codex review rounds 6–7: VERDICT pass
+- project closed by owner
