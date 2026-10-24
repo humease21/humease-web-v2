@@ -1,6 +1,6 @@
 import { Reveal } from '@/components/interactive/Reveal';
 import { stagger } from '@/lib/stagger';
-import { company } from '@/content/company';
+import { primaryCta } from '@/content/navigation';
 import { Arrow } from '@/components/ui/Icon';
 import { A } from '@/components/ui/Link';
 
@@ -8,7 +8,7 @@ export type Article = {
   title: string; date: string; category: string; href: string; summary: string; image?: string;
 };
 
-/** 실제 글이 없으면 dummy article 을 만들지 않는다(docs/03 P12). 블로그로 안내하는 배너만 둔다. */
+/** 실제 글이 없으면 dummy article 을 만들지 않는다(docs/03 P12). 문의로 안내하는 배너만 둔다(휴미즈 블로그 폐쇄, 2026-10-24). */
 export function InsightsEditorial({ articles }: { articles: Article[] }) {
   if (articles.length === 0) {
     return (
@@ -22,9 +22,9 @@ export function InsightsEditorial({ articles }: { articles: Article[] }) {
         </div>
         <Reveal delay={3}>
           <div>
-            <p className="body">휴미즈 블로그에서 다양한 뉴스와 AI 정보들을 확인하실 수 있습니다</p>
-            <A href={company.blogUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-6">
-              휴미즈 블로그 보기<Arrow external /><span className="sr-only">(새 탭에서 열림)</span>
+            <p className="body">기업 데이터와 AI 전환에 대해 궁금한 점을 알려주세요</p>
+            <A href={primaryCta.href} className="btn btn-secondary mt-6">
+              {primaryCta.label}<Arrow />
             </A>
           </div>
         </Reveal>

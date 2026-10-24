@@ -70,7 +70,6 @@ export function GET(): Response {
   L.push('## 채널');
   L.push('');
   L.push(`- 공식 홈페이지: ${deployedUrl('/')}`);
-  L.push('- 기술 블로그: https://blog.humease.com');
   L.push('');
 
   L.push('## 이 파일에 대하여');

@@ -52,11 +52,6 @@ export function SiteFooter() {
                   <li key={i.href}><Link href={i.href} className={linkCls}>{i.label}</Link></li>
                 ))}
                 <li><Link href={primaryCta.href} className={linkCls}>문의</Link></li>
-                <li>
-                  <a href={company.blogUrl} target="_blank" rel="noopener noreferrer" className={linkCls}>
-                    휴미즈 블로그<span aria-hidden="true">&nbsp;↗</span><span className="sr-only">(새 탭에서 열림)</span>
-                  </a>
-                </li>
               </ul>
             </div>
           </nav>

@@ -67,6 +67,12 @@
       "supersededBy": "Korean-first 요청서 §6",
       "reason": "사업영역 개념을 첫 언급만 병기하고 이후 한국어",
       "text": "Enterprise Data와 Applied AI는 서로 다른 서비스를 나열한 것이 아닙니다. 데이터를 다뤄 온 경험을 바탕으로 신뢰할 수 있는 기술을 만들고, 그 기술이 실제로 쓰이게 한다는 같은 원칙을 공유합니다."
+    },
+    {
+      "page": "P12",
+      "supersededBy": "대표 지시 2026-10-24",
+      "reason": "휴미즈 블로그 폐쇄 — 블로그 안내 문구·CTA 제거",
+      "text": "휴미즈 블로그에서 다양한 뉴스와 AI 정보들을 확인하실 수 있습니다"
     }
   ],
   "supersededByAlso": "HUMEASE-KOREAN-FIRST-PREMIUM-20260906"

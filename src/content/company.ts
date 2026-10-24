@@ -11,7 +11,6 @@ export const company = {
   nameKo: '주식회사 휴미즈',
   nameEn: 'HUMEASE',
   email: 'contact@humease.com',
-  blogUrl: 'https://blog.humease.com/',
   siteUrl: 'https://www.humease.com',
   // 대표자 성명은 공개하지 않는다(대표 지시 2026-10-24).
   representative: null as string | null,

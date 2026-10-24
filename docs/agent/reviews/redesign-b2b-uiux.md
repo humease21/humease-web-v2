@@ -48,3 +48,8 @@ Codex 사용 토큰(5차): 56,283. 검증: E2E 스위트(agy 작성) Claude 재�
 대상: assets.ts, portfolio.ts, company.ts, about/page.tsx, privacy/page.tsx, portfolio 캡처 4장
 - 지적 사항 없음. 타입 검사와 변경 파일 ESLint 통과.
 VERDICT: pass
+
+## 7차 (2026-10-25) — 휴미즈 블로그 폐쇄에 따른 블로그 링크 제거
+대상: SiteFooter, InsightsEditorial, company.ts, llms.txt route, verify-llms, copy-supersessions, privacy·terms
+- 지적 사항 없음.
+VERDICT: pass

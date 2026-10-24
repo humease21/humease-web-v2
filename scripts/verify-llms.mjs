@@ -17,7 +17,7 @@ const sitemap = await readFile(path.join(OUT, 'sitemap.xml'), 'utf8');
 const locs = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
 
 const urls = [...llms.matchAll(/\]\((https?:\/\/[^)]+)\)/g)].map((m) => m[1]);
-const internal = urls.filter((u) => !/^https:\/\/blog\.humease\.com/.test(u));
+const internal = urls;
 
 // 1) 내부 URL 은 전부 사이트맵에 있어야 한다 — draft·별칭·없는 경로 유출 차단
 if (target === 'production') {
