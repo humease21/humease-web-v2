@@ -1,7 +1,13 @@
-/** docs/04 §2 — 공개 12개 라우트가 정적 산출물로 실제 존재하는지 검사한다. */
+/**
+ * docs/04 §2 — 공개 라우트가 정적 산출물로 실제 존재하는지 검사한다.
+ * 임시 축소 운영(site-mode.ts) 중에는 임시 공개 경로가 대상이다. 닫힌 경로의 부재는 verify-temp-site.mjs 가 검사한다.
+ */
 import { access } from 'node:fs/promises';
 import path from 'node:path';
-import { staticPublicRoutes as publicRoutes } from '../src/content/navigation.ts';
+import { staticPublicRoutes } from '../src/content/navigation.ts';
+import { TEMP_SITE, TEMP_PUBLIC_PATHS } from '../src/content/site-mode.ts';
+
+const publicRoutes = TEMP_SITE ? TEMP_PUBLIC_PATHS : staticPublicRoutes;
 
 const OUT = path.join(process.cwd(), 'out');
 const missing = [];

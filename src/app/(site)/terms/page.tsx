@@ -2,6 +2,7 @@
 import { LegalH2, LegalMeta, LegalOl, LegalP } from '@/components/legal/LegalProse';
 import { pageMeta } from '@/lib/seo';
 import { metaForPath } from '@/content/search-pages';
+import { A } from '@/components/ui/Link';
 
 export const metadata = pageMeta({ ...metaForPath('/terms'), path: '/terms' });
 
@@ -75,7 +76,7 @@ export default function Page() {
         <LegalH2>제9조 개인정보 보호</LegalH2>
         <LegalP>회사는 홈페이지 이용 과정에서 개인정보를 처리하는 경우 「개인정보 보호법」 등 관계 법령을 준수합니다.</LegalP>
         <LegalP>
-          개인정보 처리에 관한 자세한 사항은 홈페이지의 <a href="/privacy" className="text-[var(--color-accent)] underline underline-offset-2">개인정보처리방침</a>에서 확인할 수 있습니다.
+          개인정보 처리에 관한 자세한 사항은 홈페이지의 <A href="/privacy" className="text-[var(--color-accent)] underline underline-offset-2">개인정보처리방침</A>에서 확인할 수 있습니다.
         </LegalP>
 
         <LegalH2>제10조 서비스의 변경 및 중단</LegalH2>

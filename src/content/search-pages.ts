@@ -9,6 +9,7 @@
  * 포트폴리오·제품 상세는 각 데이터에서 생성하므로 여기에 넣지 않는다.
  */
 import type { Metadata } from 'next';
+import { TEMP_SITE, isTempPublicPath } from '@/content/site-mode';
 
 export type PublicationState = 'draft' | 'published' | 'archived';
 export type PageKind =
@@ -35,7 +36,11 @@ export const searchPages: SearchPage[] = [
   {
     id: 'home', path: '/', kind: 'home', publication: 'published', indexable: true,
     title: '휴미즈 | Enterprise Data · Applied AI',
-    description: '기업 데이터의 보존·검색·통제와 AI 서비스 설계·구현을 연결합니다. 휴미즈의 전문 영역, AI 포트폴리오와 Arctera Solutions를 소개합니다.',
+    // 임시 축소 운영 중 홈은 회사소개 핵심 5개 섹션이다 — 닫힌 포트폴리오·Arctera 를 소개한다고 쓰지 않는다.
+    // 문장은 홈 히어로 승인 카피다. 전체 사이트 설명은 태그 humease-fullsite-2026-10-26 참조.
+    description: TEMP_SITE
+      ? '20년 이상의 기업 IT 경험을 바탕으로 데이터 거버넌스와 AI를 실제 비즈니스 환경에 연결합니다.'
+      : '기업 데이터의 보존·검색·통제와 AI 서비스 설계·구현을 연결합니다. 휴미즈의 전문 영역, AI 포트폴리오와 Arctera Solutions를 소개합니다.',
     primaryIntent: '휴미즈가 무엇을 하는 회사인지 확인',
     sourceIds: [], contentUpdatedAt: '2026-09-17',
     relatedPaths: ['/enterprise-data', '/consulting/ai-transformation', '/ai-services', '/solutions'],
@@ -141,8 +146,9 @@ export const searchPages: SearchPage[] = [
 export const pageByPath = (path: string) =>
   searchPages.find((p) => p.path === path.replace(/\/$/, '') || (path === '/' && p.path === '/'));
 
+/** 임시 축소 운영 중에는 실제로 빌드되는 공개 경로만 색인 대상이다(site-mode.ts). */
 export const indexablePages = () =>
-  searchPages.filter((p) => p.publication === 'published' && p.indexable);
+  searchPages.filter((p) => p.publication === 'published' && p.indexable && (!TEMP_SITE || isTempPublicPath(p.path)));
 
 /** §5.3 지정 메타데이터를 Metadata 로. 개별 페이지에서 경로만 넘긴다. */
 export function metaForPath(path: string): Pick<SearchPage, 'title' | 'description'> {

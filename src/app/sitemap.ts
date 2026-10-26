@@ -3,6 +3,7 @@ import { canonicalUrl, searchIndexingEnabled } from '@/lib/search-config';
 import { indexablePages } from '@/content/search-pages';
 import { publishedProjects } from '@/content/portfolio';
 import { products, PRODUCT_INFO_VERIFIED_AT } from '@/content/solutions';
+import { TEMP_SITE } from '@/content/site-mode';
 
 export const dynamic = 'force-static';
 
@@ -29,6 +30,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   };
 
   for (const p of indexablePages()) push(p.path, p.contentUpdatedAt);
+  // 임시 축소 운영 중 포트폴리오·제품 상세는 빌드되지 않는다(site-mode.ts).
+  if (TEMP_SITE) return entries;
   // 프로젝트: 단계 확인일이 있으면 그것이 마지막 실제 정보 변경일이다.
   for (const p of publishedProjects()) push(`/ai-services/${p.slug}`, p.stageVerifiedAt ?? p.reviewedAt);
   // 제품: 제품 정보 확인일

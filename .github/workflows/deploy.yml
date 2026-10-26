@@ -43,12 +43,15 @@ jobs:
           NEXT_PUBLIC_SITE_ORIGIN: https://humease21.github.io
           NEXT_PUBLIC_BASE_PATH: /humease-web-v2
 
+      # 임시 축소 운영(src/content/site-mode.ts) 중에는 copy·request-copy·content·aliases 가
+      # 스스로 SKIP 하고 verify-temp-site 가 공개 범위를 검사한다. 보안·색인·JSON-LD·llms 검사는 그대로다.
       - name: 검증 — preview 산출물
         env:
           NEXT_PUBLIC_SITE_DEPLOY_TARGET: preview
           NEXT_PUBLIC_BASE_PATH: /humease-web-v2
         run: |
           node scripts/verify-routes.mjs
+          node scripts/verify-temp-site.mjs
           node scripts/verify-indexing-policy.mjs
           node scripts/verify-copy.mjs
           node scripts/verify-request-copy.mjs
@@ -84,6 +87,7 @@ jobs:
           NEXT_PUBLIC_SEARCH_INDEXING_ENABLED: 'true'
         run: |
           node scripts/verify-routes.mjs
+          node scripts/verify-temp-site.mjs
           node scripts/verify-indexing-policy.mjs
           node scripts/verify-copy.mjs
           node scripts/verify-request-copy.mjs

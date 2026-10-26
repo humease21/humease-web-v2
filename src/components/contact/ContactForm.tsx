@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { FunctionRegion } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import { Modal } from '@/components/ui/Modal';
+import { A } from '@/components/ui/Link';
 
 /**
  * 실제 문의 접수 폼. `submit-inquiry` Supabase Edge Function을 호출한다.
@@ -164,6 +165,15 @@ export function ContactForm({ sourcePage }: { sourcePage: string }) {
         >
           내용 보기
         </button>
+        {/* 임시 축소 운영 중 푸터에 이용약관 링크가 없으므로 동의 영역에서 두 문서를 모두 열람할 수 있게 한다. 새 탭 — 입력 중인 내용을 잃지 않는다. */}
+        <p className="flex w-full flex-wrap items-center gap-x-4 text-[14px] text-[var(--color-muted)]">
+          <A href="/privacy" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-[var(--color-text)]">
+            개인정보처리방침<span className="sr-only">(새 탭에서 열림)</span>
+          </A>
+          <A href="/terms" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center underline underline-offset-4 hover:text-[var(--color-text)]">
+            이용약관<span className="sr-only">(새 탭에서 열림)</span>
+          </A>
+        </p>
       </div>
 
       <Modal open={consentModalOpen} onClose={() => setConsentModalOpen(false)} titleId={consentTitleId}>
@@ -210,9 +220,9 @@ export function ContactForm({ sourcePage }: { sourcePage: string }) {
 
           <p className="mt-4">
             문의 처리 시스템 운영을 위해 문의정보는 일본 도쿄 지역의 Supabase 인프라를 통해 처리·보관될 수 있습니다. 자세한 내용은{' '}
-            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--color-text)] underline underline-offset-2">
+            <A href="/privacy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[var(--color-text)] underline underline-offset-2">
               개인정보처리방침
-            </a>
+            </A>
             의 「개인정보의 국외 이전」 항목에서 확인할 수 있습니다.
           </p>
           <p className="mt-3">

@@ -7,6 +7,7 @@
  */
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { TEMP_SITE } from '../src/content/site-mode.ts';
 
 const OUT = path.join(process.cwd(), 'out');
 const target = process.env.NEXT_PUBLIC_SITE_DEPLOY_TARGET === 'production' ? 'production' : 'preview';
@@ -31,7 +32,8 @@ if (target === 'production') {
 }
 
 // 3) 관계 고지가 반드시 들어 있어야 한다 — 파트너 오인 방지
-if (!/공식 파트너가 아닙니다/.test(llms)) fails.push('Arctera 관계 고지 누락');
+// 임시 축소 운영 중에는 Arctera 구간 자체가 없다(site-mode.ts).
+if (!TEMP_SITE && !/공식 파트너가 아닙니다/.test(llms)) fails.push('Arctera 관계 고지 누락');
 
 // 4) 금지 표현 — 구 llms.txt 가 담고 있던 미승인 주장이 되살아나면 안 된다
 const banned = [
@@ -46,7 +48,7 @@ const banned = [
 for (const [re, label] of banned) if (re.test(llms)) fails.push(`금지 표현: ${label}`);
 
 // 5) Capture 는 신·구 명칭이 함께 나와야 한다
-if (!/Enterprise Vault Capture \(formerly Merge1\)/.test(llms)) {
+if (!TEMP_SITE && !/Enterprise Vault Capture \(formerly Merge1\)/.test(llms)) {
   fails.push('Capture 신·구 명칭 연속성 누락');
 }
 // Merge1 이 단독으로 쓰이면 안 된다

@@ -64,7 +64,6 @@ export default function Page() {
           lead={<>기업의 현재 환경과 해결해야 할 문제를 알려주세요<br className="hidden sm:inline" /> 필요한 기술과 적용 방향을 함께 검토합니다</>}
           ctas={[{ label: company.email, href: `mailto:${company.email}` }]}
           image={assets.A13}
-          breadcrumbs={[{ name: '홈', href: '/' }, { name: '문의', href: '/contact' }]}
         />
         <Section>
           <div className="max-w-[720px]">
@@ -90,7 +89,6 @@ export default function Page() {
       eyebrow="문의"
       title={<>데이터와 AI,<br />다음 단계로</>}
       lead={<>기업의 현재 환경과 해결해야 할 문제를 알려주세요<br className="hidden sm:inline" /> 필요한 기술과 적용 방향을 함께 검토합니다</>}
-      breadcrumbs={[{ name: '홈', href: '/' }, { name: '문의', href: '/contact' }]}
       aside={
         <div className="card !p-6 md:!p-10">
           <h2 className="heading-lg">프로젝트 상담</h2>

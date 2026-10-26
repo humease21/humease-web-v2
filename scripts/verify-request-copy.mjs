@@ -4,6 +4,10 @@
  */
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { TEMP_SITE } from '../src/content/site-mode.ts';
+// 전체 사이트 콘텐츠 계약이다. 임시 축소 운영 중에는 대상 페이지가 빌드되지 않으므로 건너뛴다.
+// 임시 공개 구조는 verify-temp-site.mjs 가 검사하고, 원복(태그 humease-fullsite-2026-10-26) 시 이 검사가 다시 적용된다.
+if (TEMP_SITE) { console.log('SKIP  임시 축소 운영 — verify-request-copy 는 전체 사이트 원복 시 적용'); process.exit(0); }
 
 const OUT = path.join(process.cwd(), 'out');
 const norm = (s) => s.replace(/\s+/g, ' ').replace(/[“”]/g, '"').trim();

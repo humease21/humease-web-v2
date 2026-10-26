@@ -7,6 +7,7 @@ import {
   PRODUCT_INFO_VERIFIED_AT,
 } from '@/content/solutions';
 import { deployedUrl, deployTarget } from '@/lib/search-config';
+import { TEMP_SITE } from '@/content/site-mode';
 
 export const dynamic = 'force-static';
 
@@ -42,30 +43,33 @@ export function GET(): Response {
   }
   L.push('');
 
-  L.push('## AI 포트폴리오');
-  L.push('');
-  L.push('휴미즈가 직접 만들었거나 개발에 참여한 서비스입니다.');
-  L.push('');
-  for (const p of publishedProjects()) {
-    const facts = [p.kind, p.stage ? `${p.stage} (확인일 ${p.stageVerifiedAt})` : null]
-      .filter(Boolean)
-      .join(' · ');
-    L.push(`- [${p.name}](${deployedUrl(`/ai-services/${p.slug}`)}): ${p.summary}${facts ? ` — ${facts}` : ''}`);
-  }
-  L.push('');
+  // 임시 축소 운영 중에는 포트폴리오·Arctera 페이지가 빌드되지 않는다 — 없는 URL 을 싣지 않는다(site-mode.ts).
+  if (!TEMP_SITE) {
+    L.push('## AI 포트폴리오');
+    L.push('');
+    L.push('휴미즈가 직접 만들었거나 개발에 참여한 서비스입니다.');
+    L.push('');
+    for (const p of publishedProjects()) {
+      const facts = [p.kind, p.stage ? `${p.stage} (확인일 ${p.stageVerifiedAt})` : null]
+        .filter(Boolean)
+        .join(' · ');
+      L.push(`- [${p.name}](${deployedUrl(`/ai-services/${p.slug}`)}): ${p.summary}${facts ? ` — ${facts}` : ''}`);
+    }
+    L.push('');
 
-  L.push('## Arctera 솔루션 안내');
-  L.push('');
-  L.push(RELATIONSHIP_NOTICE);
-  L.push('');
-  L.push(SUPPORT_SCOPE_NOTICE);
-  L.push('');
-  L.push(`제품 정보 확인일: ${PRODUCT_INFO_VERIFIED_AT}`);
-  L.push('');
-  for (const p of products) {
-    L.push(`- [${p.name}](${deployedUrl(`/solutions/${p.slug}`)}): ${p.role}`);
+    L.push('## Arctera 솔루션 안내');
+    L.push('');
+    L.push(RELATIONSHIP_NOTICE);
+    L.push('');
+    L.push(SUPPORT_SCOPE_NOTICE);
+    L.push('');
+    L.push(`제품 정보 확인일: ${PRODUCT_INFO_VERIFIED_AT}`);
+    L.push('');
+    for (const p of products) {
+      L.push(`- [${p.name}](${deployedUrl(`/solutions/${p.slug}`)}): ${p.role}`);
+    }
+    L.push('');
   }
-  L.push('');
 
   L.push('## 채널');
   L.push('');
