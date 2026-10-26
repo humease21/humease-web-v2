@@ -170,11 +170,12 @@ test.describe('temp-site E2E Scenarios', () => {
     await expect(dialog).toBeHidden();
 
     // 폼 안에 /privacy/ 와 /terms/ 링크 존재(target _blank)
-    const formPrivacy = page.locator('form a[href*="/privacy"]');
+    // 동의 모달 본문에도 처리방침 링크가 있어(닫힘 직후 DOM 잔존 가능) 모달 밖 동의 영역 링크로 한정한다.
+    const formPrivacy = page.locator('form a[href*="/privacy"]:not([role="dialog"] a, dialog a)').first();
     await expect(formPrivacy).toBeVisible();
     await expect(formPrivacy).toHaveAttribute('target', '_blank');
 
-    const formTerms = page.locator('form a[href*="/terms"]');
+    const formTerms = page.locator('form a[href*="/terms"]').first();
     await expect(formTerms).toBeVisible();
     await expect(formTerms).toHaveAttribute('target', '_blank');
   });

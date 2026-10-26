@@ -83,4 +83,20 @@ git switch main && git merge --ff-only restore/fullsite && git push origin main
 - DB 는 원복 대상이 아니다 — 임시 운영 중 접수된 문의·페이지뷰는 그대로 남는다(삭제·초기화 금지)
 
 ## 5. 배포 기록
-(아래에 임시 홈페이지 배포 결과를 기록한다)
+
+| 항목 | 값 |
+|---|---|
+| 임시 홈페이지 commit | `9be48d7`(구현) · `3ac8d4b`(E2E·문서, 배포 대상 HEAD) |
+| Actions | run `40261628385` — success, github-pages deployment `3ac8d4b` 2026-10-26T02:58:13Z |
+| 운영 확인 | `/` `/contact/` `/privacy/` `/terms/` `/admin/` 200 · 닫힌 URL 24개(상세·허브·별칭·슬래시 없는 형태) 404, 리다이렉트 없음 |
+| 색인 | sitemap 4건(`/`·`/contact/`·`/privacy/`·`/terms/`), robots `Sitemap:` 유지·`/admin` Disallow, 홈 canonical 자기참조·index,follow |
+| E2E | 로컬(agy 작성·실행 + Claude 재실행) 39 pass · 운영 URL 대상 재실행 39 pass ×2 (320/390/430/768/1440/1920) |
+| 문의 | 운영 홈 CTA → /contact/ → 실제 제출 POST `submit-inquiry` 200, "문의가 접수되었습니다" (회사명 `[테스트] 임시 홈페이지 배포 확인`) |
+| 관리자 | `/admin/` 비로그인 → `/admin/login/`, Google 로그인 버튼 → accounts.google.com (redirect `cgydvjqhsllpeuxbephb.supabase.co/auth/v1/callback`) |
+| RLS | anon 키로 `humease_inquiries`·`humease_admin_users`·`humease_page_views` 조회 → 모두 빈 결과 |
+| 사람 확인 필요 | 관리자 실제 Google 로그인·Dashboard·문의 상세/상태/메모, Discord 알림 수신, 테스트 문의 삭제 |
+
+### 검색 노출 상태
+- 사이트·sitemap 은 즉시 4개 공개 경로로 바뀌었지만, Google·네이버 등 기존 색인과 캐시에는 닫힌 페이지가 한동안 남는다. 404 응답을 재크롤링하면서 순차적으로 빠진다(보통 수일~수주).
+- 빨리 내리려면 Search Console 「삭제」 도구·네이버 서치어드바이저 「웹페이지 수집 요청/삭제」를 대표 계정으로 사용한다.
+- IndexNow 는 dry-run 만 실행했다(삭제 후보 URL 목록 산출). 실제 전송은 대표 승인 후 `INDEXNOW_ENABLED=true node scripts/indexnow.mjs`.

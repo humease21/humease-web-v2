@@ -37,3 +37,9 @@ Actions: https://github.com/humease21/humease-web-v2/actions/runs/39939260488 �
 - 06f9644 휴미즈 블로그 폐쇄: 블로그 메뉴·링크·문구 제거 -> live verified (blog=0 on /, /insights, /about, /contact, /privacy, /terms, /llms.txt)
 - Codex review rounds 6–7: VERDICT pass
 - project closed by owner
+
+[2026-10-26] TEMP SITE (owner directive) — see docs/ops/TEMP_SITE_RESTORE.md
+- archive: tag humease-fullsite-2026-10-26 + branch archive/humease-fullsite-2026-10-26 -> 4f69fef (remote verified), independent clone build + verify 11 PASS
+- temp site: 9be48d7 + 3ac8d4b, Actions run 40261628385 success, live verified
+- live inquiry submit 200 (test row "[테스트] 임시 홈페이지 배포 확인"), admin OAuth start OK, RLS anon blocked
+- restore rehearsal on clone: diff vs tag 0, full build + verify 11 PASS
